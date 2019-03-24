@@ -19,11 +19,11 @@ class Board {
   boo stalemate = false;
 public:
   ~Board(); // destructor
-  void setObserver(Observer<Info, State> *ob);
+  void setObserver(Observer<Info, State> *ob); // sets the observers for each
   void init(); // sets up 8x8 board and responsible for observer pattern
                // clears the old board, if necessary
-  void move(std::string pos_initial, std::string pos_final);
-  void remove(std::string pos);
+  void move(std::string pos_initial, std::string pos_final); // move a piece
+  void remove(std::string pos); // removes a piece, if nothing, nothing happens
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
   bool gameEnd(); // true if gameover or false otherwise 
   placePiece(std::string piece, std::string pos);

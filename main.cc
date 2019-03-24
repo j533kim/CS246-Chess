@@ -1,8 +1,11 @@
 // CS246 Winter 2019 A5 Chess (By Jiwook, Nipun, and PP)
 #include <iostream>
 #include <string>
+#include <memory>
 #include "board.h"
 #include "main_helper.h"
+#include "computer.h"
+#include "color.h"
 
 using namespace std;
 

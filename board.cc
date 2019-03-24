@@ -1,6 +1,34 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include "cell.h"
+#include "textdisplay.h"
+#include "graphicsdisplay.h"
+#include "color.h"
 #include "board.h"
 
 using namespace std;
 
+Board::~Board() {
+	delete td;
+	delete ob;
+}
+
+  std::vector<std::vector<Cell>> theBoard;
+  TextDisplay *td = nullptr;
+  Observer<Info, State> *ob = nullptr;
+  bool checkmate = false;
+  boo stalemate = false;
+public:
+
+
+  ~Board(); // destructor
+  void setObserver(Observer<Info, State> *ob); // sets the observers for each
+  void init(); // sets up 8x8 board and responsible for observer pattern
+               // clears the old board, if necessary
+  void move(std::string pos_initial, std::string pos_final); // move a piece
+  void remove(std::string pos); // removes a piece, if nothing, nothing happens
+  Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
+  bool gameEnd(); // true if gameover or false otherwise 
+  placePiece(std::string piece, std::string pos);
+  // placePiece() calls move and remove functions
