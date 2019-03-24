@@ -1,6 +1,8 @@
 // CS246 Winter 2019 A5 Chess (By Jiwook, Nipun, and PP)
 #include <iostream>
 #include <string>
+#include "board.h"
+#include "main_helper.h"
 
 using namespace std;
 
@@ -19,6 +21,7 @@ int main(int argc, char *argv[]) {
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
   			string setup_cmd, setup_cmd_1, setup_cmd_2;
+        cout << b;
   			while (true) {
   				cin >> setup_cmd;
   				if (setup_cmd == "done") { // trying to finish setup mode
@@ -29,27 +32,28 @@ int main(int argc, char *argv[]) {
   						break; // exiting setup mode
   					} else { // setup is invalid, the user cannot exit setup mode
   						cout << "Hmmm... Your board setup seems inappropriate." << endl;
-  						cout << "You are not allowed to leave, make some changes." << endl;
+  						cout << "You are not allowed to leave, make some changes:" << endl;
+              cout << b;
   						continue;
   					}
   				} else if (setup_cmd == "+") { // adding a piece in setup
   					cin >> setup_cmd_1 >> setup_cmd_2;
   					try {
   						placePiece(setup_cmd_1, setup_cmd_2);
-  						cout << "You placed " << setup_cmd_1 << " on " << setup_cmd_2;
-  						cout << "successfully!" << endl;
+  						cout << b;
   					} catch (InvalidMove In) {
+              cout << b;
   						cout << "You cannot place " << setup_cmd_1 << " on ";
   						cout << setup_cmd_2 << ". Try again." << endl;
   						continue;
   					}
   				} else if (setup_cmd == "-") { // removing a piece in setup
   					cin >> setup_cmd_1;
-  					removePiece(setup_cmd_1); // does nothing if piece is not there
-  					cout << "You have emptied " << setup_cmd_1 << endl;
+  					remove(setup_cmd_1); // does nothing if piece is not there
+  					cout << b;
   				} else if (setup_cmd == "=") { // color
   					cin >> setup_cmd_1;
-  					if (setup_cmd_1 == case_insenitive("black")) {
+  					if ("black" == lowercase(setup_cmd_1)) {
   						cout << "Now black-player starts first!" << endl;
   						white_turn = 0; // now black starts first
   					} else {
@@ -65,11 +69,12 @@ int main(int argc, char *argv[]) {
   			int player1_level, player2_level;
   			if (!game_manually_set) { // if the game is not set by user (default game)
   				cout << "Default Game Start" << endl;
-  				game_default_setting();
+  				b.game_default_setting();
   			} else {
   				cout << "Setup Game Start" << endl;
   			}
   			cout << game_cmd_1 << "(W) vs " << game_cmd_2 << "(B)" << endl;
+        cout << b;
   			// human if level=0; if 1,2,3,4, it's a computer with that level
   			player1_level = determine_level(game_cmd_1); // white player
   			player2_level = determine_level(game_cmd_2); // black player
@@ -89,6 +94,7 @@ int main(int argc, char *argv[]) {
   						cin >> game_cmd_1 >> game_cmd_2;
   						try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   							b.move(game_cmd_1, game_cmd_2, white_turn);
+                cout << b;
   						} catch (InvalidMove In) { // when the move is invalid
   							continue;
   						}
@@ -124,6 +130,7 @@ int main(int argc, char *argv[]) {
   								cin >> game_cmd_1 >> game_cmd_2;
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
+                    cout << b;
   								} catch (InvalidMove In) { // when the move is invalid
   									continue;
   								}
@@ -139,6 +146,7 @@ int main(int argc, char *argv[]) {
   							} else { // computer level 4
   								computer_4(b, black);
   							}
+                cout << b;
   							white_turn = 1; // making it human's turn again
   						}
   						if (b.gameEnd()) { // always check if the game is over
@@ -169,6 +177,7 @@ int main(int argc, char *argv[]) {
   							} else { // computer level 4
   								computer_4(b, white);
   							}
+                cout << b;
   							white_turn = 0; // making it human's turn again
   						} else { // human's turn
   							cin >> game_cmd;
@@ -180,6 +189,7 @@ int main(int argc, char *argv[]) {
   								cin >> game_cmd_1 >> game_cmd_2;
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
+                    cout << b;
   								} catch (InvalidMove In) { // when the move is invalid
   									continue;
   								}
@@ -215,6 +225,7 @@ int main(int argc, char *argv[]) {
   						} else { // computer level 4
   							computer_4(b, white);
   						}
+              cout << b;
   						white_turn = 0; // making it human's turn again
   					} else { // computer's turn
   						if (player1_level == 1) {
@@ -226,6 +237,7 @@ int main(int argc, char *argv[]) {
   						} else { // computer level 4
   							computer_4(b, black);
   						}
+              cout << b;
   						white_turn = 1; // making it human's turn again
   					}
   					if (b.gameEnd()) { // always check if the game is over
@@ -248,7 +260,7 @@ int main(int argc, char *argv[]) {
   		}
   	}
   } catch (ios::failure &) { // Any I/O failure quits
-    score_print(); // prints the scoreboard
+    score_print(white_score, black_score); // prints the scoreboard
 	}
   return 0; // program ends
 }

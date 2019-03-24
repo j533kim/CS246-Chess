@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-std::string lowercase(std::string); // converts the string into all lowercases
+std::string lowercase(std::string str); // converts the string into all lowercases
 
 // detemines whether human/computer, if computer, its level
 // 0=human, 1=computer1, ..., 4=computer4
