@@ -14,21 +14,43 @@ Board::~Board() {
 	delete ob;
 }
 
-  std::vector<std::vector<Cell>> theBoard;
-  TextDisplay *td = nullptr;
-  Observer<Info, State> *ob = nullptr;
-  bool checkmate = false;
-  boo stalemate = false;
-public:
+void Board::setObserver(Observer<Info, State> *ob) {
 
+}
 
-  ~Board(); // destructor
-  void setObserver(Observer<Info, State> *ob); // sets the observers for each
-  void init(); // sets up 8x8 board and responsible for observer pattern
-               // clears the old board, if necessary
-  void move(std::string pos_initial, std::string pos_final); // move a piece
-  void remove(std::string pos); // removes a piece, if nothing, nothing happens
-  Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
-  bool gameEnd(); // true if gameover or false otherwise 
-  placePiece(std::string piece, std::string pos);
-  // placePiece() calls move and remove functions
+void Board::init() {
+
+}
+
+void Board::move(string pos_initial, string pos_final) {
+
+}
+
+void Board::remove(string pos) {
+
+}
+
+Color Board::winner() {
+
+}
+
+bool Board::gameEnd() {
+
+}
+
+bool Board::setup_valid() {
+
+}
+
+void Board::game_default_setting() {
+
+}
+
+void Board::placePiece(string piece, string pos) {
+
+}
+
+ostream &operator<<(ostream &out, const Board &b) {
+	out << *(b.td);
+	return out;
+}

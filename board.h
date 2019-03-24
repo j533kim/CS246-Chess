@@ -11,12 +11,14 @@
 
 class TextDisplay;
 template <typename InfoType, typename StateType> class Observer;
+class InvalidMove {};
+
 class Board {
   std::vector<std::vector<Cell>> theBoard;
   TextDisplay *td = nullptr;
   Observer<Info, State> *ob = nullptr;
   bool checkmate = false;
-  boo stalemate = false;
+  bool stalemate = false;
 public:
   ~Board(); // destructor
   void setObserver(Observer<Info, State> *ob); // sets the observers for each
@@ -26,8 +28,13 @@ public:
   void remove(std::string pos); // removes a piece, if nothing, nothing happens
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
   bool gameEnd(); // true if gameover or false otherwise 
-  placePiece(std::string piece, std::string pos);
+  bool setup_valid(); // determines if the current setup mode is valid
+  void game_default_setting(); // places the pieces in right pos in default
+  void placePiece(std::string piece, std::string pos);
   // placePiece() calls move and remove functions
+  friend std::ostream &operator<<(std::ostream &out, const Board &b);
 };
+
+std::ostream &operator<<(std::ostream &out, const Board &b);
 
 #endif
