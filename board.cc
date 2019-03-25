@@ -82,10 +82,48 @@ bool Board::gameEnd() {
 
 bool Board::setup_valid() {
 
+
+
+	
+	e, you must verify that the board contains exactly one white king and exactly one black king; that no pawns are on the first or last row of the board; and that neither king is in check
 }
 
 void Board::game_default_setting() {
+	placePiece("P", "a2"); // White pawns
+	placePiece("P", "b2");
+	placePiece("P", "c2");
+	placePiece("P", "d2");
+	placePiece("P", "e2");
+	placePiece("P", "f2");
+	placePiece("P", "g2");
+	placePiece("P", "h2");
 
+	placePiece("p", "a7"); // Black pawns
+	placePiece("p", "b7");
+	placePiece("p", "c7");
+	placePiece("p", "d7");
+	placePiece("p", "e7");
+	placePiece("p", "f7");
+	placePiece("p", "g7");
+	placePiece("p", "h7");
+
+	placePiece("R", "a1"); // White others
+	placePiece("B", "b1");
+	placePiece("N", "c1");
+	placePiece("Q", "d1");
+	placePiece("K", "e1");
+	placePiece("N", "f1");
+	placePiece("B", "g1");
+	placePiece("R", "h1");
+
+	placePiece("r", "a8"); // Black others
+	placePiece("b", "b8");
+	placePiece("n", "c8");
+	placePiece("q", "d8");
+	placePiece("k", "e8");
+	placePiece("n", "f8");
+	placePiece("b", "g8");
+	placePiece("r", "h8");
 }
 
 void Board::placePiece(string piece, string pos) {
