@@ -4,6 +4,8 @@
 #include <memory>
 #include "board.h"
 #include "main_helper.h"
+#include "object.h"
+#include "subject.h"
 #include "computer.h"
 #include "color.h"
 #include "cell.h"
@@ -28,7 +30,7 @@ int main(int argc, char *argv[]) {
   try {
   	while (true) {
   		cin >> cmd;
-  		b.init() // makes a new empty board and deletes previous pieces if necessary
+  		b.init(); // makes a new empty board and deletes previous pieces if necessary
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
   			string setup_cmd, setup_cmd_1, setup_cmd_2;
@@ -36,7 +38,7 @@ int main(int argc, char *argv[]) {
   			while (true) {
   				cin >> setup_cmd;
   				if (setup_cmd == "done") { // trying to finish setup mode
-  					if (setup_valid()) { // checks if setup is valid
+  					if (b.setup_valid()) { // checks if setup is valid
   						game_manually_set = true; // tells the game is manually set
   						cout << "setup complete!" << endl;
   						cout << "exiting setup mode" << endl;
@@ -50,7 +52,7 @@ int main(int argc, char *argv[]) {
   				} else if (setup_cmd == "+") { // adding a piece in setup
   					cin >> setup_cmd_1 >> setup_cmd_2;
   					try {
-  						placePiece(setup_cmd_1, setup_cmd_2);
+  						b.placePiece(setup_cmd_1, setup_cmd_2);
   						cout << b;
   					} catch (InvalidMove In) {
               cout << b;
@@ -60,7 +62,7 @@ int main(int argc, char *argv[]) {
   					}
   				} else if (setup_cmd == "-") { // removing a piece in setup
   					cin >> setup_cmd_1;
-  					remove(setup_cmd_1); // does nothing if piece is not there
+  					b.remove(setup_cmd_1); // does nothing if piece is not there
   					cout << b;
   				} else if (setup_cmd == "=") { // color
   					cin >> setup_cmd_1;
@@ -95,9 +97,11 @@ int main(int argc, char *argv[]) {
   					if (game_cmd == "resign") {
   						if (white_turn) { // white resigns --> black wins
   							black_score+=1; // black earns a point
+                cout << "white_player resigned!" << endl;
   							cout << "black_player wins! Gets 1 point!" << endl;
   						} else { // black resigns --> white wins
   							white_score+=1; // white earns a point
+                cout << "black_player resigned!" << endl;
   							cout << "white_player wins! Gets 1 point!" << endl;
   						}
   						break;
@@ -113,10 +117,10 @@ int main(int argc, char *argv[]) {
   						else white_turn = 1;
   					}
   					if (b.gameEnd()) { // always check if the game is over
-  						if (b.winner() == "Black") {
+  						if (b.winner() == Color::Black) {
   							black_score+=1; // black earns a point
   							cout << "black_player wins! Gets 1 point!" << endl;
-  						} else if (b.winner() == "White") {
+  						} else if (b.winner() == Color::White) {
   							white_score+=1; // white earns a point
   							cout << "white_player wins! Gets 1 point!" << endl;
   						} else { // Stalemate or simply draw
@@ -143,6 +147,7 @@ int main(int argc, char *argv[]) {
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << b;
   								} catch (InvalidMove In) { // when the move is invalid
+                    cout << "Invalid move... Try again." << endl;
   									continue;
   								}
   								white_turn = 0; // turn changes
@@ -161,10 +166,10 @@ int main(int argc, char *argv[]) {
   							white_turn = 1; // making it human's turn again
   						}
   						if (b.gameEnd()) { // always check if the game is over
-  							if (b.winner() == "Black") {
+  							if (b.winner() == Color::Black) {
   								black_score+=1; // black earns a point
   								cout << "black_player wins! Gets 1 point!" << endl;
-  							} else if (b.winner() == "White") {
+  							} else if (b.winner() == Color::White) {
   								white_score+=1; // white earns a point
   								cout << "white_player wins! Gets 1 point!" << endl;
   							} else { // Stalemate or simply draw
@@ -193,7 +198,7 @@ int main(int argc, char *argv[]) {
   						} else { // human's turn
   							cin >> game_cmd;
   							if (game_cmd == "resign") {
-  								white_score+=1; // white earns a point
+  								++white_score; // white earns a point
   								white_turn = 1; // resetting so white can start in new game
   								break;
   							} else if (game_cmd == "move") {
@@ -202,16 +207,17 @@ int main(int argc, char *argv[]) {
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << b;
   								} catch (InvalidMove In) { // when the move is invalid
+                    cout << "Invalid move... Try again." << endl;
   									continue;
   								}
   								white_turn = 1; // turn changes
   							}
   						}
   						if (b.gameEnd()) { // always check if the game is over
-  							if (b.winner() == "Black") {
-  								black_score+=1; // black earns a point
+  							if (b.winner() == Color::Black) {
+  								++black_score; // black earns a point
   								cout << "black_player wins! Gets 1 point!" << endl;
-  							} else if (b.winner() == "White") {
+  							} else if (b.winner() == Color::White) {
   								white_score+=1; // white earns a point
   								cout << "white_player wins! Gets 1 point!" << endl;
   							} else { // Stalemate or simply draw
@@ -252,11 +258,11 @@ int main(int argc, char *argv[]) {
   						white_turn = 1; // making it human's turn again
   					}
   					if (b.gameEnd()) { // always check if the game is over
-  						if (b.winner() == "Black") {
-  							black_score+=1; // black earns a point
+  						if (b.winner() == Color::Black) {
+  							++black_score; // black earns a point
   							cout << "black_player wins! Gets 1 point!" << endl;
-  						} else if (b.winner() == "White") {
-  							white_score+=1; // white earns a point
+  						} else if (b.winner() == Color::White) {
+  							++white_score; // white earns a point
   							cout << "white_player wins! Gets 1 point!" << endl;
   						} else { // Stalemate or simply draw
   							white_score+=0.5;

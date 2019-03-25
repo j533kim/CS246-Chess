@@ -8,6 +8,7 @@
 #include "textdisplay.h"
 #include "graphicsdisplay.h"
 #include "color.h"
+#include "main_helper.h"
 
 class TextDisplay;
 template <typename InfoType, typename StateType> class Observer;
