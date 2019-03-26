@@ -9,12 +9,13 @@
 
 class Piece {
 	Color color;
-	int value; 
+	int value = 0; 
 	// value of the piece [pawn=1, knight,bishop=3, rook=5, queen=9, king=10]
 public:
-	bool attatcked();
+	virtual Piece()
+	bool attacked();
 	bool attacking();
-	void move();
+	virtual void move() = 0;
 }
 
 #endif

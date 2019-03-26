@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
   				} else if (setup_cmd == "+") { // adding a piece in setup
   					cin >> setup_cmd_1 >> setup_cmd_2;
   					try {
-  						b.placePiece(setup_cmd_1, setup_cmd_2);
+  						b.placePiece_setup(setup_cmd_1, setup_cmd_2);
   						cout << b;
   					} catch (InvalidMove In) {
               cout << b;
@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
   					}
   				} else if (setup_cmd == "-") { // removing a piece in setup
   					cin >> setup_cmd_1;
-  					b.remove(setup_cmd_1); // does nothing if piece is not there
+  					b.removePiece_setup(setup_cmd_1); // does nothing if piece is not there
   					cout << b;
   				} else if (setup_cmd == "=") { // color
   					cin >> setup_cmd_1;
