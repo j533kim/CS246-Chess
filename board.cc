@@ -41,7 +41,6 @@ void Board::setObserver(Observer<State> *ob) {
 void Board::setObserver(Observer<Info, State> *ob) { this->ob = ob; }
 
 void Board::init() {
-	
 	theBoard.clear(); // clear the old board
 	delete td;
 	delete ob;
