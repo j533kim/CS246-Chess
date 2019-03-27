@@ -4,9 +4,15 @@
 #include <vector>
 #include <string>
 #include "piece.h"
+#include "obersver.h"
+#include "subject.h"
 #include "color.h"
 #include "board.h"
 
+class cell : public Observer<State>, public Subject<State> {
+	Piece *piece;
+	
 
 
+}
 #endif

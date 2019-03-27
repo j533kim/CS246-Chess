@@ -1,36 +1,36 @@
-#ifndef SUBJECT_H
+ #ifndef SUBJECT_H
 #define SUBJECT_H
 #include <vector>
 
 // this whole file is from a4q5, so modification needed
 
-template <typename InfoType, typename StateType> class Observer;
+template <typename StateType> class Observer;
 
-template <typename InfoType, typename StateType> class Subject {
-  std::vector<Observer<InfoType, StateType>*> observers;
+template <typename StateType> class Subject {
+  std::vector<Observer<StateType>*> observers;
   StateType state;
  protected:
   void setState(StateType newS);
  public:
-  void attach(Observer<InfoType, StateType> *o);  
+  void attach(Observer<StateType> *o);  
   void notifyObservers();
   virtual InfoType getInfo() const = 0;
   StateType getState() const;
 };
 
-template <typename InfoType, typename StateType>
-void Subject<InfoType, StateType>::attach(Observer<InfoType, StateType> *o) {
+template <typename StateType>
+void Subject<InfoType, StateType>::attach(Observer<StateType> *o) {
   observers.emplace_back(o);
 }
 
-template <typename InfoType, typename StateType>
-void Subject<InfoType, StateType>::notifyObservers() {
+template <typename StateType>
+void Subject<StateType>::notifyObservers() {
   for (auto &ob : observers) ob->notify(*this);
 }
 
-template <typename InfoType, typename StateType>
-void Subject<InfoType, StateType>::setState(StateType newS) { state = newS; }
+template <typename StateType>
+void Subject<StateType>::setState(StateType newS) { state = newS; }
 
-template <typename InfoType, typename StateType>
-StateType Subject<InfoType, StateType>::getState() const { return state; }
+template <typename StateType>
+StateType Subject<StateType>::getState() const { return state; }
 #endif

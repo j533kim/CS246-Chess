@@ -11,18 +11,18 @@
 #include "main_helper.h"
 
 class TextDisplay;
-template <typename InfoType, typename StateType> class Observer;
+template <typename StateType> class Observer;
 class InvalidMove {};
 
 class Board {
   std::vector<std::vector<Cell>> theBoard;
   TextDisplay *td = nullptr;
-  Observer<Info, State> *ob = nullptr;
+  Observer<State> *ob = nullptr;
   bool checkmate = false;
   bool stalemate = false;
 public:
   ~Board(); // destructor
-  void setObserver(Observer<Info, State> *ob); // sets the observers for each
+  void setObserver(Observer<State> *ob); // sets the observers for each
   void init(); // sets up 8x8 board and responsible for observer pattern
                // clears the old board, if necessary
   void move(std::string pos_initial, std::string pos_final); // move a piece

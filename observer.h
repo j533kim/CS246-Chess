@@ -3,12 +3,12 @@
 
 // this is from a4q5, some modification is needed
 
-template <typename InfoType, typename StateType> class Subject;
+template <typename StateType> class Subject;
 class Cell;
 
-template <typename InfoType, typename StateType> class Observer {
+template <typename StateType> class Observer {
  public:
-  virtual void notify(Subject<InfoType, StateType> &whoFrom) = 0;
+  virtual void notify(Subject<StateType> &whoFrom) = 0;
   virtual ~Observer() = default;
 };
 #endif

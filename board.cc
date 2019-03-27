@@ -33,7 +33,7 @@ Board::~Board() {
 	delete ob;
 }
 
-void Board::setObserver(Observer<Info, State> *ob) {
+void Board::setObserver(Observer<State> *ob) {
 
 }
 
