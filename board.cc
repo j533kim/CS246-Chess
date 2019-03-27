@@ -69,7 +69,7 @@ void Board::placePiece(Piece &piece, int row, int col) {
 	}
 }
 
-void Board::removePiece(int row, col) { theBoard.at(row).at(col).remove(); }
+void Board::removePiece(int row, int col) { theBoard.at(row).at(col).remove(); }
 
 void Board::move(string pos_initial, string pos_final) {
 	if (!(valid_pos(pos_initial))) return false;
@@ -78,20 +78,19 @@ void Board::move(string pos_initial, string pos_final) {
 	int col_0 = col_return(pos_initial);
 	int row_f = row_return(pos_final);
 	int col_f = col_return(pos_final);
-	Color moving_piece_color = theBoard.at(row_0).at(col_0).piece->getColor();
-	Color destination_color = theBoard.at(row_f).at(col_f).piece->getColor();
+	Color moving_piece_color = theBoard.at(row_0).at(col_0).piece.getColor();
+	Color destination_color = theBoard.at(row_f).at(col_f).piece.getColor();
 
 
-	// more conditions required (under checkmate, my piece blocking the way)
+	// more conditions required (under checkmate, own piece blocking the way)
 
 	if ((moving_piece_color == Color::NoColor) || (moving_piece_color == destination_color)) {
 		throw InvalidMove();
 		return;
 	}
 	removePiece(row_f, col_f);
-	placePiece(piece, row_f, col_f);
-	removePiece(row_f, col_f);
-
+	placePiece(theBoard.at(row_0).at(col_0).piece, row_f, col_f);
+	removePiece(row_0, col_0);
 }
 
 Color Board::winner() {
@@ -138,27 +137,27 @@ void Board::game_default_setting() {
 	placePiece_setup("p", "c7");
 	placePiece_setup("p", "d7");
 	placePiece_setup("p", "e7");
-	placePiece("p", "f7");
-	placePiece("p", "g7");
-	placePiece("p", "h7");
+	placePiece_setup("p", "f7");
+	placePiece_setup("p", "g7");
+	placePiece_setup("p", "h7");
 
-	placePiece("R", "a1"); // White others
-	placePiece("B", "b1");
-	placePiece("N", "c1");
-	placePiece("Q", "d1");
-	placePiece("K", "e1");
-	placePiece("N", "f1");
-	placePiece("B", "g1");
-	placePiece("R", "h1");
+	placePiece_setup("R", "a1"); // White others
+	placePiece_setup("B", "b1");
+	placePiece_setup("N", "c1");
+	placePiece_setup("Q", "d1");
+	placePiece_setup("K", "e1");
+	placePiece_setup("N", "f1");
+	placePiece_setup("B", "g1");
+	placePiece_setup("R", "h1");
 
-	placePiece("r", "a8"); // Black others
-	placePiece("b", "b8");
-	placePiece("n", "c8");
-	placePiece("q", "d8");
-	placePiece("k", "e8");
-	placePiece("n", "f8");
-	placePiece("b", "g8");
-	placePiece("r", "h8");
+	placePiece_setup("r", "a8"); // Black others
+	placePiece_setup("b", "b8");
+	placePiece_setup("n", "c8");
+	placePiece_setup("q", "d8");
+	placePiece_setup("k", "e8");
+	placePiece_setup("n", "f8");
+	placePiece_setup("b", "g8");
+	placePiece_setup("r", "h8");
 }
 
 void Board::placePiece_setup(string piece, string pos) {

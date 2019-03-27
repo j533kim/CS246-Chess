@@ -29,13 +29,13 @@ public:
                // clears the old board, if necessary
   void move(std::string pos_initial, std::string pos_final); // move a piece
   void removePiece_setup(std::string pos); // removes a piece, if nothing, nothing happens
-  void removePiece(std::string pos);
+  void removePiece(int row, int col);
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
   bool gameEnd(); // true if gameover or false otherwise 
   bool setup_valid(); // determines if the current setup mode is valid
   void game_default_setting(); // places the pieces in right pos in default
   void placePiece_setup(std::string piece, std::string pos);
-  void placePiece();
+  void placePiece(Piece &piece, int row, int col);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);
