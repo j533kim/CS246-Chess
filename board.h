@@ -11,6 +11,7 @@
 #include "color.h"
 #include "main_helper.h"
 #include "piece.h"
+#include <sstream>
 
 class TextDisplay;
 template <typename StateType> class Observer;
