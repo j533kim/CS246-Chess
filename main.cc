@@ -16,6 +16,7 @@
 #include "bishop.h"
 #include "knight.h"
 #include "pawn.h"
+#include "state.h"
 
 using namespace std;
 

@@ -37,6 +37,7 @@ public:
   void game_default_setting(); // places the pieces in right pos in default
   void placePiece_setup(std::string piece, std::string pos);
   void placePiece(Piece &piece, int row, int col);
+  void swapPiece(int row_0, int col_0, int row_f, int col_f);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);

@@ -36,12 +36,13 @@ Board::~Board() {
 }
 
 void Board::setObserver(Observer<State> *ob) {
+
+}
 //////////////////////////////////////////////////
 
 void Board::setObserver(Observer<Info, State> *ob) { this->ob = ob; }
 
 void Board::init() {
-	
 	theBoard.clear(); // clear the old board
 	delete td;
 	delete ob;
@@ -78,6 +79,14 @@ void Board::placePiece(Piece &piece, int row, int col) {
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).remove(); }
 
+void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
+	/// perfect
+	Piece *temp = theBoard.at(row_0).at(col_0).piece;
+	Piece *initial = theBoard.at(row_f).at(col_f).piece;
+	Piece *final = temp;
+	temp = nullptr;
+}
+
 void Board::move(string pos_initial, string pos_final) {
 	if (!(valid_pos(pos_initial))) return false;
 	if (!(valid_pos(pos_final))) return false;
@@ -96,8 +105,7 @@ void Board::move(string pos_initial, string pos_final) {
 		return;
 	}
 	removePiece(row_f, col_f);
-	placePiece(theBoard.at(row_0).at(col_0).piece, row_f, col_f);
-	removePiece(row_0, col_0);
+	swapPiece(row_0, col_0, row_f, col_f);
 }
 
 Color Board::winner() {
@@ -109,6 +117,7 @@ bool Board::gameEnd() {
 }
 
 bool Board::setup_valid() {
+	// perfect
 	int white_king = 0;
 	int black_king = 0;
 	for (int i = 0; i < 8; ++i) { // checks if pawn exists in first/last row
@@ -130,6 +139,7 @@ bool Board::setup_valid() {
 }
 
 void Board::game_default_setting() {
+	//perfect
 	placePiece_setup("P", "a2"); // White pawns
 	placePiece_setup("P", "b2");
 	placePiece_setup("P", "c2");
