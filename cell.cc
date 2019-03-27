@@ -9,6 +9,7 @@ void Cell::notify(Subject<Info, State> &whoFrom) {
 }
 
 void Cell::placePiece(Piece &piece) {
+	delete (this->piece);
 	this->piece = piece;
 	notifyObservers();
 }
@@ -24,6 +25,7 @@ void Cell::placePiece_setup(string piece) {
 		throw InvalidMove();
 		return;
 	}
+	delete piece;
 	// we already checked that the piece is valid type of piece
 	if (piece == "K") this->piece = new King(Color::White);
 	if (piece == "k") this->piece = new King(Color::Black);
