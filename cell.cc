@@ -14,7 +14,8 @@ void Cell::placePiece(Piece &piece) {
 }
 
 void Cell::removePiece() {
-	piece = NoPiece();
+	delete piece;
+	piece = new NoPiece();
 	notifyObservers();
 }
 
@@ -24,19 +25,21 @@ void Cell::placePiece_setup(string piece) {
 		return;
 	}
 	// we already checked that the piece is valid type of piece
-	if (piece == "K") this->piece = King(Color::White);
-	if (piece == "k") this->piece = King(Color::Black);
-	if (piece == "N") this->piece = Knight(Color::White);
-	if (piece == "n") this->piece = Knight(Color::Black);
-	if (piece == "R") this->piece = Rook(Color::White);
-	if (piece == "r") this->piece = Rook(Color::Black);
-	if (piece == "B") this->piece = Bishop(Color::White);
-	if (piece == "b") this->piece = Bishop(Color::Black);
-	if (piece == "Q") this->piece = Queen(Color::White);
-	if (piece == "q") this->piece = Queen(Color::Black);
-	if (piece == "P") this->piece = Pawn(Color::White);
-	if (piece == "p") this->piece = Pawn(Color::Black);
+	if (piece == "K") this->piece = new King(Color::White);
+	if (piece == "k") this->piece = new King(Color::Black);
+	if (piece == "N") this->piece = new Knight(Color::White);
+	if (piece == "n") this->piece = new Knight(Color::Black);
+	if (piece == "R") this->piece = new Rook(Color::White);
+	if (piece == "r") this->piece = new Rook(Color::Black);
+	if (piece == "B") this->piece = new Bishop(Color::White);
+	if (piece == "b") this->piece = new Bishop(Color::Black);
+	if (piece == "Q") this->piece = new Queen(Color::White);
+	if (piece == "q") this->piece = new Queen(Color::Black);
+	if (piece == "P") this->piece = new Pawn(Color::White);
+	if (piece == "p") this->piece = new Pawn(Color::Black);
 	notifyObservers();
 }
 
 Piece Cell::getPiece() { return piece; }
+
+Cell::~Cell() { delete piece; }

@@ -14,7 +14,7 @@ template <typename StateType> class Subject {
  public:
   void attach(Observer<StateType> *o);  
   void notifyObservers();
-  virtual InfoType getInfo() const = 0;
+ // virtual InfoType getInfo() const = 0;
   StateType getState() const;
 };
 
