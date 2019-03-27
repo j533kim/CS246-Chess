@@ -11,6 +11,7 @@ class King : public Piece {
 	bool castlingPossible;
 	bool checked;
 public:
+	King(color color, int value, bool astlingPossible, bool checked): Piece{color, value}, castlingPossible{castlingPossible}, checked{checked} {}
 	void castle();
 	bool getCheck();
 	void setCheck(bool check);

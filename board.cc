@@ -40,7 +40,7 @@ void Board::setObserver(Observer<State> *ob) {
 }
 //////////////////////////////////////////////////
 
-void Board::setObserver(Observer<Info, State> *ob) { this->ob = ob; }
+void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
 	theBoard.clear(); // clear the old board
@@ -52,7 +52,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell(NoPiece(), i, j));
+			theBoard.at(i).emplace_back(Cell( new NoPiece(Color:NoColor,0), i, j));
 		}
 	}
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
@@ -71,7 +71,7 @@ void Board::init() {
 
 void Board::placePiece(Piece &piece, int row, int col) {
 	try {
-		theBoard.at(row).at(col).placePiece(piece);
+		theBoard.at(row).at(col).placePiece(piece);  // placePiece on a cell
 	} catch (InvalidMove in) {
 		throw InvalidMove();
 	}
@@ -79,15 +79,15 @@ void Board::placePiece(Piece &piece, int row, int col) {
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).remove(); }
 
-void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
+void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook was high when he wrote this
 	/// perfect
 	Piece *temp = theBoard.at(row_0).at(col_0).piece;
-	Piece *initial = theBoard.at(row_f).at(col_f).piece;
-	Piece *final = temp;
+	theBoard.at(row_0).at(col_0).piece = theBoard.at(row_f).at(col_f).piece;
+	theBoard.at(row_f).at(col_f).piece = temp;
 	temp = nullptr;
 }
 
-void Board::move(string pos_initial, string pos_final) {
+void Board::move(string pos_initial, string pos_final) { // 
 	if (!(valid_pos(pos_initial))) return false;
 	if (!(valid_pos(pos_final))) return false;
 	int row_0 = row_return(pos_initial);
@@ -104,6 +104,7 @@ void Board::move(string pos_initial, string pos_final) {
 		throw InvalidMove();
 		return;
 	}
+	
 	removePiece(row_f, col_f);
 	swapPiece(row_0, col_0, row_f, col_f);
 }
@@ -116,7 +117,7 @@ bool Board::gameEnd() {
 
 }
 
-bool Board::setup_valid() {
+bool Board::setup_valid() { // called in the setup mode ONLY // 
 	// perfect
 	int white_king = 0;
 	int black_king = 0;
@@ -138,7 +139,7 @@ bool Board::setup_valid() {
 	return true;
 }
 
-void Board::game_default_setting() {
+void Board::game_default_setting() { // initial setup of a gameboard // 
 	//perfect
 	placePiece_setup("P", "a2"); // White pawns
 	placePiece_setup("P", "b2");

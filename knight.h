@@ -8,7 +8,8 @@
 #include "board.h"
 
 class Knight : public Piece {
-	
+public:
+	Knight(Color color, int value): Piece{color, value} {}
 };
 
 

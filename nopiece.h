@@ -5,7 +5,8 @@
 #include "color.h"
 
 class NoPiece : public Piece {
-	
+public:
+	NoPiece(Color color, int value): Piece{color, value} {}
 }
 
 #endif
