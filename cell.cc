@@ -27,7 +27,7 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	}
 	delete piece;
 	// we already checked that the piece is valid type of piece
-	if (piece == "K") this->piece = new King(Color::White, value???);
+	if (piece == "K") this->piece = new King(Color::White);
 	if (piece == "k") this->piece = new King(Color::Black, value???);
 	if (piece == "N") this->piece = new Knight(Color::White, value???);
 	if (piece == "n") this->piece = new Knight(Color::Black, value???);

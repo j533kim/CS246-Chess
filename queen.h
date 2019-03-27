@@ -9,7 +9,7 @@
 
 class Queen : public Piece {
 public:
-	Queen(Color color, int value): Piece{color, value} {}
+	Queen(Color color, int value): Piece{color, 9} {}
 };
 
 

@@ -88,8 +88,14 @@ void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook wa
 }
 
 void Board::move(string pos_initial, string pos_final) { // 
-	if (!(valid_pos(pos_initial))) return false;
-	if (!(valid_pos(pos_final))) return false;
+	if (!(valid_pos(pos_initial))) {
+		throw InvalidMove();
+		return false;
+	}
+	if (!(valid_pos(pos_final))) {
+		throw InvalidMove();
+		return false;
+	}
 	int row_0 = row_return(pos_initial);
 	int col_0 = col_return(pos_initial);
 	int row_f = row_return(pos_final);
