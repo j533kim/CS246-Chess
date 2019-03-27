@@ -3,16 +3,25 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "piece.h"
 #include "obersver.h"
 #include "subject.h"
 #include "color.h"
 #include "board.h"
 
-class cell : public Observer<State>, public Subject<State> {
+class Cell : public Subject<Info, State> public Observer<Info, State> {
 	Piece *piece;
-	
-
+	int row;
+	int col;
+public:
+	Cell(Piece piece, int row, int col); // constructor
+	void notify(Subject<Info, State> &whoFrom) override;
+	void placePiece();
+	void placePiece_setup(string piece); // places the piece on the cell
+	void removePiece(); // simply removes the piece on the cell
+						// and replaces with noPiece
+};
 
 }
 #endif

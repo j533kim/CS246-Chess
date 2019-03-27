@@ -7,6 +7,9 @@
 #include "color.h"
 #include "board.h"
 
+class Queen : public Piece {
+	
+};
 
 
 #endif

@@ -7,6 +7,11 @@
 #include "color.h"
 #include "board.h"
 
-
+class Rook : public Piece {
+	bool castlingPossible;
+public:
+	bool getCastle();
+	void setCastle();
+}
 
 #endif
