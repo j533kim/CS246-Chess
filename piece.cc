@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Piece::Piece(Color color, int value): color{color}, value{value} {}
+Piece::Piece(Color color, int value, string name): 
+color{color}, value{value}, name{name} {}
 
 bool Piece::attacked() {
 

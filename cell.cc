@@ -4,6 +4,10 @@ using namespace std;
 
 Cell::Cell(Piece piece, int row, int col): piece{piece}, row{row}, col{col} {}
 
+int Cell::getRow() const { return row; }
+
+int Cell::getCol() const { return col; }
+
 void Cell::notify(Subject<Info, State> &whoFrom) {
 	
 }
@@ -42,6 +46,6 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	notifyObservers();
 }
 
-Piece Cell::getPiece() { return piece; }
+Piece Cell::getPiece() { return *piece; }
 
 Cell::~Cell() { delete piece; }

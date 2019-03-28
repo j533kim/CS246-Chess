@@ -21,6 +21,9 @@ public:
 	void placePiece_setup(string piece); // places the piece on the cell
 	void removePiece(); // simply removes the piece on the cell
 						// and replaces with noPiece
+	Piece getPiece();
+	int getRow() const;
+	int getCol() const;
 	~Cell();
 };
 

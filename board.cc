@@ -124,7 +124,7 @@ Color Board::winner() {
 }
 
 bool Board::gameEnd() {
-	
+
 }
 
 bool Board::setup_valid() { // called in the setup mode ONLY // 
@@ -268,6 +268,8 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	} else if (name = "queen") {
 
 	} else { // name == "king"
+		if (piece_f->getColor() == piece_0->getColor()) return false;
+		
 
 	}
 	cell_0 = nullptr;

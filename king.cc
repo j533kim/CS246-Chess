@@ -15,6 +15,6 @@ bool King::getCastle() { return castlingPossible; }
 void King::setCastle() { castlingPossible = false; }
 // always from true to false
 
-King::King(color color, bool castlingPossible): Piece{color, 10},
- castlingPossible{castlingPossible}, checked{false} name{"king"} {}
+King::King(color color, bool castlingPossible): Piece{color, 10, "king"},
+ castlingPossible{castlingPossible}, checked{false} {}
  // king should not be checked when first created

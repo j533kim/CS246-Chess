@@ -2,4 +2,4 @@
 
 using namespace std;
 
-NoPiece::NoPiece(): Piece{Color::NoColor, 0} {}
+NoPiece::NoPiece(): Piece{Color::NoColor, 0, "nopiece"} {}

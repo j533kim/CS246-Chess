@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Pawn::Pawn(Color color, bool readyToUpgrade, bool twoStepChance): Piece{color, 1}, 
-readyToUpgrade{false}, twoStepChance{twoStepChance}, name{"pawn"} {}
+Pawn::Pawn(Color color, bool readyToUpgrade, bool twoStepChance):
+ Piece{color, 1, "pawn"}, readyToUpgrade{false}, twoStepChance{twoStepChance} {}
 // pawn should not be ready to upgrade when first created
 
 void Pawn::upgrade(Piece piece) {

@@ -23,8 +23,29 @@ TextDisplay::TextDisplay() {
 	}
 }
 
-void TextDisplay::notify(Subject<Info, State> &whoNotified) {
-	
+void TextDisplay::notify(Subject<State> &whoNotified) {
+	int row = whoNotified.getRow();
+	int col = whoNotified.getCol();
+	string name = whoNotified.getPiece().name;
+	Color color = whoNotified.getPiece().getColor();
+	if (color == Color::White) {
+		if (name == "king") theDisplay.at(row).at(col) = 'K';
+		if (name == "queen") theDisplay.at(row).at(col) = 'Q';
+		if (name == "knight") theDisplay.at(row).at(col) = 'N';
+		if (name == "bishop") theDisplay.at(row).at(col) = 'B';
+		if (name == "rook") theDisplay.at(row).at(col) = 'R';
+		else theDisplay.at(row).at(col) = 'P'; // pawn
+	} else if (color == Color::Black) {
+		if (name == "king") theDisplay.at(row).at(col) = 'k';
+		if (name == "queen") theDisplay.at(row).at(col) = 'q';
+		if (name == "knight") theDisplay.at(row).at(col) = 'n';
+		if (name == "bishop") theDisplay.at(row).at(col) = 'b';
+		if (name == "rook") theDisplay.at(row).at(col) = 'r';
+		else theDisplay.at(row).at(col) = 'p'; // pawn
+	} else {
+		if (row + col % 2 == 0) theDisplay.at(row).at(col) = ' ';
+		else theDisplay.at(row).at(col) = '_';
+	}
 }
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {

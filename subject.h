@@ -1,5 +1,5 @@
- #ifndef SUBJECT_H
-#define SUBJECT_H
+ #ifndef _SUBJECT_H_
+#define _SUBJECT_H_
 #include <vector>
 
 // this whole file is from a4q5, so modification needed
@@ -19,7 +19,7 @@ template <typename StateType> class Subject {
 };
 
 template <typename StateType>
-void Subject<InfoType, StateType>::attach(Observer<StateType> *o) {
+void Subject<StateType>::attach(Observer<StateType> *o) {
   observers.emplace_back(o);
 }
 

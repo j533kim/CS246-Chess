@@ -2,4 +2,4 @@
 
 using namespace std;
 
-Bishop::Bishop(Color color): Piece{color, 3}, name{"bishop"} {}
+Bishop::Bishop(Color color): Piece{color, 3, "bishop"} {}
