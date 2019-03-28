@@ -314,40 +314,36 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_0 == row_f && col_0 - 1 == col_f) return true;
 		if (row_0 == row_f && col_0 + 1 == col_f) return true;
 		for (int i = row_0; i > row_f + 1 ; --i) {
-		  if (!(theBoard.at(i - 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
+			if (!(theBoard.at(i - 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
+		  		valid = 0;
+		  		break;
+		  	} else {
+		  		valid = 1;
+		  	}
 		}
 		for (int j = row_0; j < row_f - 1 && r; ++j) {
-		  if (!(theBoard.at(j + 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
+		  	if (!(theBoard.at(j + 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
+		  		valid = 0;
+		  		break;
+		  	} else {
+		  		valid = 1;
+		  	}
 		}
 		for (int k = col_0; k < col_f - 1; ++k) {
-		  if (!(theBoard.at(row_f).at(k + 1).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
+		  	if (!(theBoard.at(row_f).at(k + 1).getPiece().getColor() == Color::NoColor)) {
+		  		valid = 0;
+		  		break;
+		  	} else {
+		  		valid = 1;
 		  }
 		}
 		for (int l = col_0; l > col_f + 1; --l) {
-		  if (!(theBoard.at(row_f + 1).at(l - 1).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
+		  	if (!(theBoard.at(row_f + 1).at(l - 1).getPiece().getColor() == Color::NoColor)) {
+		  		valid = 0;
+		  		break;
+		  	} else {
+		  		valid = 1;
+		  	}
 		}
 		if (valid == 0) {
 			return false;
@@ -359,7 +355,16 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		 || canmove("rook", int row_0, int col_0, int row_f, int col_f)) return true;
 		else return false;
 	} else { // name == "king"
-
+      if (piece_0->getColor() == piece_f->getColor()) return false;
+	  if (row_f - 1 == row_0 && col_f - 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_f - 1 == row_0 && col_f + 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_f + 1 == row_0 && col_f - 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_f + 1 == row_0 && col_f + 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_0 - 1 == row_f && col_0 == col_f && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_0 + 1 == row_f && col_0 == col_f && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_0 == row_f && col_0 - 1 == col_f && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  if (row_0 == row_f && col_0 + 1 == col_f && (theBoard.at(row_f).at(col_f).getPiece().getCheck() == false)) return true;
+	  return false;
 	}
 	cell_0 = nullptr;
 	cell_f = nullptr;
