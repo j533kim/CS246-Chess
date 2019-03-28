@@ -35,6 +35,11 @@ Board::~Board() {
 	delete ob;
 }
 
+void Board::setObserver(Observer<State> *ob) {
+
+}
+//////////////////////////////////////////////////
+
 void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
@@ -114,10 +119,8 @@ void Board::move(string pos_initial, string pos_final) { //
 	swapPiece(row_0, col_0, row_f, col_f);
 }
 
-Color Board::winner() { // only called when gameEnd() is called
-	if () {
-		re
-	}
+Color Board::winner() {
+
 }
 
 bool Board::gameEnd() {
@@ -219,14 +222,14 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
-	Cell *cell_0 = theBoard.at(row_0).at(col_0);
-	Cell *cell_f = theBoard.at(row_f).at(col_f);
-	Piece *piece_0 = theBoard.at(row_0).at(col_0).getPiece();
-	Piece *piece_f = theBoard.at(row_f).at(col_f).getPiece();
+	Cell *cell_0 = theBoard.at(row_0).at(col_0);  // inital cell
+	Cell *cell_f = theBoard.at(row_f).at(col_f);  // final cell
+	Piece *piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
+	Piece *piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
 			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f + 1).at(col_f).getPiece().getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
-				piece_0->settwoStepChance(); // the pawn cannot move two steps anymore
+				piece_0->settwoStepChance(); // the pawn cannot move two steps anymore // changes to false
 				return true;
 			} else if (row_f + 1 == row_0 && col_0 == col_f && piece_f->getColor() == Color::NoColor) {
 				piece_0->settwoStepChance();
@@ -258,52 +261,47 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_0 - 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
 		return false;
 	} else if (name = "bishop") {
-
+		if (piece_0->getColor() == piece_f->getColor()) return false;
+		if (row_f == row_0 && col_0 == col_f) return true;
+		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // position is south east
+			if (theBoard.at(i-1).at(j-1).getPiece().getColor() == Color::NoColor) {
+				if (i-1 == row_0 && j-1 == col_0) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+		for (int i = row_f, j = col_f; i > row_0 && j < col_0;i--,j++) { // position is south west
+			if (theBoard.at(i-1).at(j+1).getPiece().getColor() == Color::NoColor) {
+				if (i-1 == row_0 && j+1 == col_0) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+		for (int i = row_f, j = col_f; i < row_0 && j > col_0;i++,j--) { // position is north east 
+			if (theBoard.at(i+1).at(j-1).getPiece().getColor() == Color::NoColor) {
+				if (i+1 == row_0 && j-1 == col_0) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+		for (int i = row_f, j = col_f; i < row_0 && j < col_0;i++,j++) { // position is north west 
+			if (theBoard.at(i+1).at(j+1).getPiece().getColor() == Color::NoColor) {
+				if (i+1 == row_0 && j+1 == col_0) {
+					return true;
+				}
+			} else {
+				return false;
+			}
+		}
+		return false;
 	} else if (name = "rook") {
-		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
-		if (col_0 != col_f && row_0 != row_f) return false; // not one the same x or y axis
-		int valid = 0;
-		for (int i = row_0; i > row_f + 1 ; --i) {
-		  if (!(theBoard.at(i - 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
-		}
-		for (int j = row_0; j < row_f - 1 && r; ++j) {
-		  if (!(theBoard.at(j + 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
-		}
-		for (int k = col_0; k < col_f - 1; ++k) {
-		  if (!(theBoard.at(row_f).at(k + 1).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
-		}
-		for (int l = col_0; l > col_f + 1; --l) {
-		  if (!(theBoard.at(row_f + 1).at(l - 1).getPiece().getColor() == Color::NoColor)) {
-		  	valid = 0;
-		  	break;
-		  }
-		  else {
-		  	valid = 1;
-		  }
-		}
-		if (valid == 0) {
-			return false;
-		} else {
-			return true;
-		}		
+
 	} else if (name = "queen") {
 
 	} else { // name == "king"
