@@ -8,8 +8,9 @@
 #include "board.h"
 
 class Knight : public Piece {
+	string name;
 public:
-	Knight(Color color, int value): Piece{color, 3} {}
+	Knight(Color color);
 };
 
 

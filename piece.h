@@ -9,10 +9,10 @@
 
 class Piece {
 	Color color;
-	int value = 0; 
+	int value;
 	// value of the piece [pawn=1, knight,bishop=3, rook=5, queen=9, king=10]
 public:
-	Piece(Color color, int value): color{color}, value{value} {}
+	Piece(Color color, int value);
 	bool attacked();
 	bool attacking();
 	virtual void move() = 0;

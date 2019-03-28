@@ -9,8 +9,9 @@
 
 class Rook : public Piece {
 	bool castlingPossible;
+	string name;
 public:
-	Rook(Color color, int value, bool castlingPossible): Piece{color, 5}, castlingPossible{castlingPossible} {}
+	Rook(Color color, bool castlingPossible);
 	bool getCastle();
 	void setCastle();
 }
