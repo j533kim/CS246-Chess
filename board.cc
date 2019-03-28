@@ -124,7 +124,7 @@ Color Board::winner() {
 }
 
 bool Board::gameEnd() {
-
+	
 }
 
 bool Board::setup_valid() { // called in the setup mode ONLY // 
@@ -254,8 +254,12 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		}
 		// en passant later
 	} else if (name = "knight") {
-
-
+		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
+		if (row_0 + 1 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) return true;
+		if (row_0 + 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
+		if (row_0 - 1 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) return true;
+		if (row_0 - 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
+		return false;
 	} else if (name = "bishop") {
 		for (int i = 0; i < )
 
