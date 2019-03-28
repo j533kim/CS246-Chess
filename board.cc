@@ -91,6 +91,10 @@ void Board::move(string pos_initial, string pos_final) { //
 		throw InvalidMove();
 		return;
 	}
+	if (pos_initial == pos_final) {
+		throw InvalidMove();
+		return;
+	}
 	int row_0 = row_return(pos_initial);
 	int col_0 = col_return(pos_initial);
 	int row_f = row_return(pos_final);
@@ -257,7 +261,6 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		return false;
 	} else if (name = "bishop") {
 		if (piece_0->getColor() == piece_f->getColor()) return false;
-		if (row_f == row_0 && col_0 == col_f) return true;
 		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // position is south east
 			if (theBoard.at(i-1).at(j-1).getPiece().getColor() == Color::NoColor) {
 				if (i-1 == row_0 && j-1 == col_0) {
@@ -342,7 +345,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		}		
 	} else if (name = "queen") {
 		if (canmove("bishop", int row_0, int col_0, int row_f, int col_f)
-		 && canmove("rook", int row_0, int col_0, int row_f, int col_f)) return true;
+		 || canmove("rook", int row_0, int col_0, int row_f, int col_f)) return true;
 		else return false;
 	} else { // name == "king"
 
