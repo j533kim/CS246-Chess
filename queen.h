@@ -8,9 +8,9 @@
 #include "board.h"
 
 class Queen : public Piece {
+	string name;
 public:
-	Queen(Color color, int value): Piece{color, 9} {}
+	Queen(Color color): Piece{color, 9}, name{"queen"} {}
 };
-
 
 #endif
