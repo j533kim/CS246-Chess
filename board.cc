@@ -35,11 +35,6 @@ Board::~Board() {
 	delete ob;
 }
 
-void Board::setObserver(Observer<State> *ob) {
-
-}
-//////////////////////////////////////////////////
-
 void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
@@ -119,8 +114,10 @@ void Board::move(string pos_initial, string pos_final) { //
 	swapPiece(row_0, col_0, row_f, col_f);
 }
 
-Color Board::winner() {
-
+Color Board::winner() { // only called when gameEnd() is called
+	if () {
+		re
+	}
 }
 
 bool Board::gameEnd() {
@@ -261,15 +258,12 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_0 - 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
 		return false;
 	} else if (name = "bishop") {
-		for (int i = 0; i < )
 
 	} else if (name = "rook") {
 
 	} else if (name = "queen") {
 
 	} else { // name == "king"
-		if (piece_f->getColor() == piece_0->getColor()) return false;
-		
 
 	}
 	cell_0 = nullptr;

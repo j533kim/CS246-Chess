@@ -13,5 +13,4 @@ public:
 	Knight(Color color);
 };
 
-
 #endif
