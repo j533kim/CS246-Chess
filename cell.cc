@@ -31,18 +31,32 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	}
 	delete piece;
 	// we already checked that the piece is valid type of piece
-	if (piece == "K") this->piece = new King(Color::White);
-	if (piece == "k") this->piece = new King(Color::Black);
+	if (piece == "K") {
+		if (getRow() == 7 && getCol() == 4) piece = new King(Color::White, true);
+		else piece = new King(Color::White, false);
+	}
+	if (piece == "k") {
+		if (getRow() == 0 && getCol() == 4) piece = new King(Color::Black, true);
+		else piece = new King(Color::Black, false);
+	}
+
+	if (piece == "P") {
+		if (getRow() == 6) piece = new Pawn(Color::White, true);
+		else piece = new Pawn(Color::White, false);
+	}
+
+	if (piece == "p") {
+		if (getRow() == 1) piece = new Pawn(Color::Black, true);
+		else piece = new Pawn(Color::Black, false);
+	}
 	if (piece == "N") this->piece = new Knight(Color::White);
 	if (piece == "n") this->piece = new Knight(Color::Black);
 	if (piece == "R") this->piece = new Rook(Color::White, value???);
 	if (piece == "r") this->piece = new Rook(Color::Black, value???);
-	if (piece == "B") this->piece = new Bishop(Color::White, value???);
-	if (piece == "b") this->piece = new Bishop(Color::Black, value???);
-	if (piece == "Q") this->piece = new Queen(Color::White, value???);
-	if (piece == "q") this->piece = new Queen(Color::Black, value???);
-	if (piece == "P") this->piece = new Pawn(Color::White, value???);
-	if (piece == "p") this->piece = new Pawn(Color::Black, value???);
+	if (piece == "Q") this->piece = new Queen(Color::White);
+	if (piece == "q") this->piece = new Queen(Color::Black);
+	if (piece == "B") this->piece = new Bishop(Color::White);
+	if (piece == "b") this->piece = new Bishop(Color::Black);
 	notifyObservers();
 }
 
