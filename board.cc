@@ -236,7 +236,11 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			} else if (row_f + 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::Black) {
 				piece_0->settwoStepChance();
 				return true;
-			}
+			} /*else if (row_i == 3 && theBoard.at(3).at(col_i - 1).getPiece().getName() == "pawn" &&
+					   theBoard.at(3).at(col_i - 1).getPiece().getColor() == Color::Black
+			 		   && col_f == col_i - 1 && theBoard.at(3).at(col_i - 1).getPiece().getmovedTwoStepsBefore()) { // en passant
+				return true;
+			}*/
 			return false;
 		} else { // color is black
 			if (row_f - 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f - 1).at(col_f).getPiece().getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
@@ -251,7 +255,6 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			}
 			return false;
 		}
-		// en passant later
 	} else if (name = "knight") {
 		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
 		if (row_0 + 1 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) return true;

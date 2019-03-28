@@ -10,8 +10,7 @@
 class Pawn : public Piece {
 	bool readyToUpgrade;
 	bool twoStepChance;
-	//// let's think about en Passan later...
-	string name;
+	bool movedTwoStepsBefore; // for En Passant
 public:
 	Pawn(Color color, bool twoStepChance);
 	void upgrade(Piece piece);
@@ -19,6 +18,8 @@ public:
 	void setUpgrade();
 	bool gettwoStepChance();
 	void settwoStepChance();
+	bool getmovedTwoStepsBefore();
+	void setmovedTwoStepsBefore();
 };
 
 #endif
