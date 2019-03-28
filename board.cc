@@ -35,11 +35,6 @@ Board::~Board() {
 	delete ob;
 }
 
-void Board::setObserver(Observer<State> *ob) {
-
-}
-//////////////////////////////////////////////////
-
 void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
