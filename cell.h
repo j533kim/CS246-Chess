@@ -24,5 +24,4 @@ public:
 	~Cell();
 };
 
-}
 #endif

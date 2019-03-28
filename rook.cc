@@ -1,5 +1,7 @@
 #include "rook.h"
 
+using namespace std;
+
 Rook::Rook(Color color, bool castlingPossible): Piece{color, 5},
  castlingPossible{castlingPossible}, name{"rook"} {}
 

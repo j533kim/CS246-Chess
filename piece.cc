@@ -1,5 +1,7 @@
 #include "piece.h"
 
+using namespace std;
+
 Piece::Piece(Color color, int value): color{color}, value{value} {}
 
 bool Piece::attacked() {
