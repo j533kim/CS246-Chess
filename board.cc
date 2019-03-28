@@ -35,11 +35,6 @@ Board::~Board() {
 	delete ob;
 }
 
-void Board::setObserver(Observer<State> *ob) {
-
-}
-//////////////////////////////////////////////////
-
 void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
@@ -262,7 +257,10 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		return false;
 	} else if (name = "bishop") {
 		if (piece_0->getColor() == piece_f->getColor()) return false;
-		if (row_f == row_0 && col_0 == col_f) return true;
+		if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
+		if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
+		if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
+		if (row_f + 1 == row_0 && col_f + 1 == col_0) return true;
 		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // position is south east
 			if (theBoard.at(i-1).at(j-1).getPiece().getColor() == Color::NoColor) {
 				if (i-1 == row_0 && j-1 == col_0) {
