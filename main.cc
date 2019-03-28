@@ -4,7 +4,7 @@
 #include <memory>
 #include "board.h"
 #include "main_helper.h"
-#include "object.h"
+#include "observer.h"
 #include "subject.h"
 #include "computer.h"
 #include "color.h"
@@ -17,6 +17,7 @@
 #include "knight.h"
 #include "pawn.h"
 #include "state.h"
+//#include "graphicaldisplay.h"
 
 using namespace std;
 
@@ -155,13 +156,13 @@ int main(int argc, char *argv[]) {
   							}
   						} else { // computer's turn
   							if (player1_level == 1) {
-  								computer_1(b, black); // computer's move
+  								computer_1(b, Color::Black); // computer's move
   							} else if (player1_level == 2) {
-  								computer_2(b, black);
+  								computer_2(b, Color::Black);
   							} else if (player1_level == 3) {
-  								computer_3(b, black);
+  								computer_3(b, Color::Black);
   							} else { // computer level 4
-  								computer_4(b, black);
+  								computer_4(b, Color::Black);
   							}
                 cout << b;
   							white_turn = 1; // making it human's turn again
@@ -186,13 +187,13 @@ int main(int argc, char *argv[]) {
   					while (true) {
   						if (white_turn) { // computer's turn
   							if (player1_level == 1) {
-  								computer_1(b, white); // computer's move
+  								computer_1(b, Color::White); // computer's move
   							} else if (player1_level == 2) {
-  								computer_2(b, white);
+  								computer_2(b, Color::White);
   							} else if (player1_level == 3) {
-  								computer_3(b, white);
+  								computer_3(b, Color::White);
   							} else { // computer level 4
-  								computer_4(b, white);
+  								computer_4(b, Color::White);
   							}
                 cout << b;
   							white_turn = 0; // making it human's turn again
@@ -235,25 +236,25 @@ int main(int argc, char *argv[]) {
   				while (true) {
   					if (white_turn) { // computer's turn
   						if (player1_level == 1) {
-  							computer_1(b, white); // computer's move
+  							computer_1(b, Color::White); // computer's move
   						} else if (player1_level == 2) {
-  							computer_2(b, white);
+  							computer_2(b, Color::White);
   						} else if (player1_level == 3) {
-  							computer_3(b, white);
+  							computer_3(b, Color::White);
   						} else { // computer level 4
-  							computer_4(b, white);
+  							computer_4(b, Color::White);
   						}
               cout << b;
   						white_turn = 0; // making it human's turn again
   					} else { // computer's turn
   						if (player1_level == 1) {
-  							computer_1(b, black); // computer's move
+  							computer_1(b, Color::Black); // computer's move
   						} else if (player1_level == 2) {
-  							computer_2(b, black);
+  							computer_2(b, Color::Black);
   						} else if (player1_level == 3) {
-  							computer_3(b, black);
+  							computer_3(b, Color::Black);
   						} else { // computer level 4
-  							computer_4(b, black);
+  							computer_4(b, Color::Black);
   						}
               cout << b;
   						white_turn = 1; // making it human's turn again

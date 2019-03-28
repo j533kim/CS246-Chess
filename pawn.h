@@ -14,11 +14,11 @@ class Pawn : public Piece {
 public:
 	Pawn(Color color, bool twoStepChance);
 	void upgrade(Piece piece);
-	bool getUpgrade();
+	bool getUpgrade() const;
 	void setUpgrade();
-	bool gettwoStepChance();
+	bool gettwoStepChance() const;
 	void settwoStepChance();
-	bool getmovedTwoStepsBefore();
+	bool getmovedTwoStepsBefore() const;
 	void setmovedTwoStepsBefore();
 };
 

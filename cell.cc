@@ -8,7 +8,7 @@ int Cell::getRow() const { return row; }
 
 int Cell::getCol() const { return col; }
 
-void Cell::notify(Subject<Info, State> &whoFrom) {
+void Cell::notify(Subject<State> &whoFrom) {
 	
 }
 
@@ -64,6 +64,6 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	notifyObservers();
 }
 
-Piece Cell::getPiece() { return *piece; }
+Piece Cell::getPiece() const { return *piece; }
 
 Cell::~Cell() { delete piece; }

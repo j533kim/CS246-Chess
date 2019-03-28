@@ -47,7 +47,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell( new NoPiece(Color:NoColor,0), i, j));
+			theBoard.at(i).emplace_back(Cell(new NoPiece(), i, j));
 		}
 	}
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
@@ -64,6 +64,7 @@ void Board::init() {
 	}
 }
 
+/*
 void Board::placePiece(Piece &piece, int row, int col) {
 	try {
 		theBoard.at(row).at(col).placePiece(piece);  // placePiece on a cell
@@ -71,18 +72,20 @@ void Board::placePiece(Piece &piece, int row, int col) {
 		throw InvalidMove();
 	}
 }
+*/
 
-void Board::removePiece(int row, int col) { theBoard.at(row).at(col).remove(); }
+void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece(); }
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook was high when he wrote this
 	/// perfect
-	Piece *temp = theBoard.at(row_0).at(col_0).piece;
-	theBoard.at(row_0).at(col_0).piece = theBoard.at(row_f).at(col_f).piece;
+	Piece *temp = theBoard.at(row_0).at(col_0).getPiece();
+	theBoard.at(row_0).at(col_0).piece = theBoard.at(row_f).at(col_f).getPiece();
 	theBoard.at(row_f).at(col_f).piece = temp;
 	temp = nullptr;
+	////////////////// not sure about swapPiece() function
 }
 
-void Board::move(string pos_initial, string pos_final) { // 
+void Board::move(string pos_initial, string pos_final, bool white_turn) { // 
 	if (!(valid_pos(pos_initial))) {
 		throw InvalidMove();
 		return;
@@ -101,7 +104,10 @@ void Board::move(string pos_initial, string pos_final) { //
 	int col_f = col_return(pos_final);
 	Color moving_piece_color = theBoard.at(row_0).at(col_0).piece.getColor();
 	Color destination_color = theBoard.at(row_f).at(col_f).piece.getColor();
-
+	if (moving_piece_color == Color::Black && white_turn) {
+		throw InvalidMove();
+		return;
+	}
 
 
 	// now only the condition for not moving
@@ -118,21 +124,23 @@ void Board::move(string pos_initial, string pos_final) { //
 	swapPiece(row_0, col_0, row_f, col_f);
 }
 
+//////////////////////temporary///////////////////
 Color Board::winner() {
-
+	return Color::White;
 }
 
 bool Board::gameEnd() {
-	
+	return false;
 }
+//////////////////////////////////////////////////
 
 bool Board::setup_valid() { // called in the setup mode ONLY // 
 	// perfect
 	int white_king = 0;
 	int black_king = 0;
 	for (int i = 0; i < 8; ++i) { // checks if pawn exists in first/last row
-		if (theBoard.at(0).at(i).getPiece().getValue() == 1) return false;
-		if (theBoard.at(7).at(i).getPiece().getValue() == 1) return false;
+		if (theBoard.at(0).at(i).getPiece().getName() == "pawn") return false;
+		if (theBoard.at(7).at(i).getPiece().getName() == "pawn") return false;
 	}
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {

@@ -14,9 +14,10 @@ class Piece {
 	std::string name;
 public:
 	Piece(Color color, int value, std::string name);
+	std::string getName() const;
 	bool attacked();
 	bool attacking();
 	virtual void move() = 0;
-}
+};
 
 #endif

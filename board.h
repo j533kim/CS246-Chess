@@ -7,7 +7,7 @@
 #include <memory>
 #include "cell.h"
 #include "textdisplay.h"
-#include "graphicsdisplay.h"
+//#include "graphicsdisplay.h"
 #include "color.h"
 #include "main_helper.h"
 #include "piece.h"
@@ -29,7 +29,7 @@ public:
   void setObserver(Observer<State> *ob); // sets the observers for each
   void init(); // sets up 8x8 board and responsible for observer pattern
                // clears the old board, if necessary
-  void move(std::string pos_initial, std::string pos_final); // move a piece
+  void move(std::string pos_initial, std::string pos_final, bool white_turn); // move a piece
   void removePiece_setup(std::string pos); // removes a piece, if nothing, nothing happens
   void removePiece(int row, int col);
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
@@ -39,7 +39,7 @@ public:
   void placePiece_setup(std::string piece, std::string pos);
   void placePiece(Piece &piece, int row, int col);
   void swapPiece(int row_0, int col_0, int row_f, int col_f);
-  bool canmove(string name, int row_0, int col_0, int row_f, int col_f);
+  bool canmove(std::string name, int row_0, int col_0, int row_f, int col_f);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);

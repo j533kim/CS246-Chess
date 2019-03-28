@@ -10,13 +10,12 @@
 class King : public Piece {
 	bool castlingPossible;
 	bool checked;
-	string name;
 public:
-	King(color color, bool castlingPossible);
+	King(Color color, bool castlingPossible);
 	void castle();
-	bool getCheck();
+	bool getCheck() const;
 	void setCheck(bool check);
-	bool getCastle();
+	bool getCastle() const;
 	void setCastle();
 };
 

@@ -9,11 +9,10 @@
 
 class Rook : public Piece {
 	bool castlingPossible;
-	string name;
 public:
 	Rook(Color color, bool castlingPossible);
-	bool getCastle();
+	bool getCastle() const;
 	void setCastle();
-}
+};
 
 #endif

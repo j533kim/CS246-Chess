@@ -11,17 +11,17 @@ void Pawn::upgrade(Piece piece) {
 
 }
 	
-bool Pawn::getUpgrade() { return readyToUpgrade; }
+bool Pawn::getUpgrade() const { return readyToUpgrade; }
 	
 void Pawn::setUpgrade() { readyToUpgrade = true; }
 // we set this field always from false to true, never from true to false
 
-bool Pawn::gettwoStepChance() { return twoStepChance; }
+bool Pawn::gettwoStepChance() const { return twoStepChance; }
 
 void Pawn::settwoStepChance() { twoStepChance = false; }
 // we set this field always from true to false, never from false to true
 
-bool Pawn::getmovedTwoStepsBefore() { return movedTwoStepsBefore; }
+bool Pawn::getmovedTwoStepsBefore() const { return movedTwoStepsBefore; }
 
 void Pawn::setmovedTwoStepsBefore() {
 	if (movedTwoStepsBefore) movedTwoStepsBefore = false;

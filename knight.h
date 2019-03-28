@@ -8,7 +8,6 @@
 #include "board.h"
 
 class Knight : public Piece {
-	string name;
 public:
 	Knight(Color color);
 };

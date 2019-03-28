@@ -3,14 +3,14 @@
 using namespace std;
 
 void King::castle() {
-
+	return;
 }
 
-bool King::getCheck() { return checked; }
+bool King::getCheck() const { return checked; }
 
 void King::setCheck(bool check) { checked = check; }
 
-bool King::getCastle() { return castlingPossible; }
+bool King::getCastle() const { return castlingPossible; }
 
 void King::setCastle() { castlingPossible = false; }
 // always from true to false

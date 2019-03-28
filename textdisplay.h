@@ -6,6 +6,7 @@
 #include <vector>
 #include "color.h"
 #include "cell.h"
+#include "state.h"
 
 class Cell;
 
