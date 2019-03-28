@@ -346,11 +346,9 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			return true;
 		}		
 	} else if (name = "queen") {
-		if (canmove("bishop", int row_0, int col_0, int row_f, int col_f) && canmove("rook", int row_0, int col_0, int row_f, int col_f)) {
-			return true;
-		} else {
-			return false;
-		}
+		if (canmove("bishop", int row_0, int col_0, int row_f, int col_f)
+		 && canmove("rook", int row_0, int col_0, int row_f, int col_f)) return true;
+		else return false;
 	} else { // name == "king"
 
 	}
