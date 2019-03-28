@@ -261,8 +261,9 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 
 	} else if (name = "rook") {
 		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
+		if (col_0 != col_f && row_0 != row_f) return false; // not one the same x or y axis
 		int valid = 0;
-		for (int i = row_0; i > row_f - 1 ; --i) {
+		for (int i = row_0; i > row_f + 1 ; --i) {
 		  if (!(theBoard.at(i - 1).at(col_f).getPiece().getColor() == Color::NoColor)) {
 		  	valid = 0;
 		  	break;
@@ -289,7 +290,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  	valid = 1;
 		  }
 		}
-		for (int l = col_0; l > row_f - 1; --l) {
+		for (int l = col_0; l > col_f + 1; --l) {
 		  if (!(theBoard.at(row_f + 1).at(l - 1).getPiece().getColor() == Color::NoColor)) {
 		  	valid = 0;
 		  	break;
