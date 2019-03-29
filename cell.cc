@@ -64,6 +64,9 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	notifyObservers();
 }
 
-Piece Cell::getPiece() const { return *piece; }
+Piece *Cell::getPiece() const { return piece; }
+void Cel::setPiece(Piece *piece) {
+	this->piece = piece;
+}
 
 Cell::~Cell() { delete piece; }

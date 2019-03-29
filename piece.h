@@ -17,6 +17,7 @@ public:
 	std::string getName() const;
 	bool attacked();
 	bool attacking();
+	virtual Color getColor();
 	virtual bool getCheck();
 	virtual void move() = 0;
 };
