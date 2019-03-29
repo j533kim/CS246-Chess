@@ -2,6 +2,14 @@
 #include <string>
 #include <vector>
 #include "board.h"
+#include "piece.h"
+#include "king.h"
+#include "queen.h"
+#include "rook.h"
+#include "bishop.h"
+#include "knight.h"
+#include "pawn.h"
+#include "nopiece.h"
 
 using namespace std;
 
@@ -47,7 +55,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell(new NoPiece(), i, j));
+			theBoard.at(i).emplace_back(Cell(new NoPiece(Color::NoColor)), i, j));
 		}
 	}
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
@@ -78,9 +86,9 @@ void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook was high when he wrote this
 	/// perfect
-	Piece *temp = theBoard.at(row_0).at(col_0).getPiece();
-	theBoard.at(row_0).at(col_0).piece = theBoard.at(row_f).at(col_f).getPiece();
-	theBoard.at(row_f).at(col_f).piece = temp;
+	Piece *temp = theBoard.at(row_0).at(col_0).getPiece()
+	theBoard.at(row_0).at(col_0),setPiece(theBoard.at(row_f).at(col_f).getPiece());
+	theBoard.at(row_f).at(col_f).setPiece(temp);
 	temp = nullptr;
 	////////////////// not sure about swapPiece() function
 }
@@ -102,8 +110,8 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 	int col_0 = col_return(pos_initial);
 	int row_f = row_return(pos_final);
 	int col_f = col_return(pos_final);
-	Color moving_piece_color = theBoard.at(row_0).at(col_0).piece.getColor();
-	Color destination_color = theBoard.at(row_f).at(col_f).piece.getColor();
+	Color moving_piece_color = theBoard.at(row_0).at(col_0).getPiece()->getColor();
+	Color destination_color = theBoard.at(row_f).at(col_f).getPiece()->getColor();
 	if (moving_piece_color == Color::Black && white_turn) {
 		throw InvalidMove();
 		return;
@@ -116,7 +124,7 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 		throw InvalidMove();
 		return;
 	}
-	if (!canmove(theBoard.at(row_0).at(col_0).piece->name, row_0, col_0, row_f, col_f)) { // the corresponding piece is not movable to the given final position
+	if (!canmove(theBoard.at(row_0).at(col_0).getPiece()->getName(), row_0, col_0, row_f, col_f)) { // the corresponding piece is not movable to the given final position
 		throw InvalidMove();
 		return;
 	}
@@ -144,9 +152,9 @@ bool Board::setup_valid() { // called in the setup mode ONLY //
 	}
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
-			if (theBoard.at(i).at(j).getPiece().getValue() == 10) {
+			if (theBoard.at(i).at(j).getPiece().value == 10) {
 				if (theBoard.at(i).at(j).getPiece().getCheck() == 1) return false; // king is in check
-				if (theBoard.at(i).at(j).getPiece().getColor() == Color::Black) ++black_king;
+				if (theBoard.at(i).at(j).getPiece().color) == Color::Black) ++black_king;
 				else ++white_king;
 			}
 		}
@@ -229,9 +237,9 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
-	Cell *cell_0 = theBoard.at(row_0).at(col_0);  // inital cell
-	Cell *cell_f = theBoard.at(row_f).at(col_f);  // final cell
-	Piece *piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
+	Cell *cell_0 = &(theBoard.at(row_0).at(col_0));  // inital cell
+	Cell *cell_f = &(theBoard.at(row_f).at(col_f));  // final cell
+	Piece *piece_0 = theBoard.at(row_0).at(col_0),getPiece(); // initial piece
 	Piece *piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
