@@ -20,6 +20,9 @@ public:
 	virtual Color getColor() const;
 	virtual bool getCheck() const;
 	virtual void move() = 0;
+	virtual void settwoStepChance() = 0; // pawn's function
+	virtual bool gettwoStepChance() const; // pawn's function
+
 };
 
 #endif

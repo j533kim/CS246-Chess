@@ -55,7 +55,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell(new NoPiece(Color::NoColor)), i, j));
+			theBoard.at(i).emplace_back(Cell(new NoPiece(), i, j));
 		}
 	}
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
@@ -86,8 +86,8 @@ void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook was high when he wrote this
 	/// perfect
-	Piece *temp = theBoard.at(row_0).at(col_0).getPiece()
-	theBoard.at(row_0).at(col_0),setPiece(theBoard.at(row_f).at(col_f).getPiece());
+	Piece *temp = theBoard.at(row_0).at(col_0).getPiece();
+	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece());
 	theBoard.at(row_f).at(col_f).setPiece(temp);
 	temp = nullptr;
 	////////////////// not sure about swapPiece() function
@@ -152,7 +152,7 @@ bool Board::setup_valid() { // called in the setup mode ONLY //
 	}
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
-			if (theBoard.at(i).at(j).getPiece()->getValue() == 10) {
+			if (theBoard.at(i).at(j).getPiece()->getName() == "king") {
 				if (theBoard.at(i).at(j).getPiece()->getCheck() == 1) return false; // king is in check
 				if (theBoard.at(i).at(j).getPiece()->getColor() == Color::Black) ++black_king;
 				else ++white_king;
@@ -239,7 +239,7 @@ ostream &operator<<(ostream &out, const Board &b) {
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	Cell *cell_0 = &(theBoard.at(row_0).at(col_0));  // inital cell
 	Cell *cell_f = &(theBoard.at(row_f).at(col_f));  // final cell
-	Piece *piece_0 = theBoard.at(row_0).at(col_0),getPiece(); // initial piece
+	Piece *piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	Piece *piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
@@ -271,14 +271,14 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			}
 			return false;
 		}
-	} else if (name = "knight") {
+	} else if (name == "knight") {
 		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
 		if (row_0 + 1 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) return true;
 		if (row_0 + 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
 		if (row_0 - 1 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) return true;
 		if (row_0 - 2 == row_f && (col_0 - 1 == col_f || col_0 + 1 == col_f)) return true;
 		return false;
-	} else if (name = "bishop") {
+	} else if (name == "bishop") {
 		if (piece_0->getColor() == piece_f->getColor()) return false;
 		if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
 		if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
@@ -321,7 +321,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			}
 		}
 		return false;
-	} else if (name = "rook") {
+	} else if (name == "rook") {
 		if (piece_f->getColor() == piece_0->getColor()) return false; // if there is an ally on final cell
 		if (col_0 != col_f && row_0 != row_f) return false; // not one the same x or y axis
 		int valid = 0;
@@ -337,7 +337,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  		valid = 1;
 		  	}
 		}
-		for (int j = row_0; j < row_f - 1 && r; ++j) {
+		for (int j = row_0; j < row_f - 1; ++j) {
 		  	if (!(theBoard.at(j + 1).at(col_f).getPiece()->getColor() == Color::NoColor)) {
 		  		valid = 0;
 		  		break;
@@ -366,9 +366,9 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		} else {
 			return true;
 		}		
-	} else if (name = "queen") {
-		if (canmove("bishop", int row_0, int col_0, int row_f, int col_f)
-		 || canmove("rook", int row_0, int col_0, int row_f, int col_f)) return true;
+	} else if (name == "queen") {
+		if (canmove("bishop", row_0, col_0, row_f, col_f)
+		 || canmove("rook", row_0, col_0, row_f, col_f)) return true;
 		else return false;
 	} else { // name == "king"
       if (piece_0->getColor() == piece_f->getColor()) return false;

@@ -6,7 +6,7 @@
 
 class NoPiece : public Piece {
 public:
-	NoPiece(Color color);
+	NoPiece();
 };
 
 #endif
