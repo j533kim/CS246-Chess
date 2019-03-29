@@ -16,7 +16,7 @@ class Cell : public Subject<State>, public Observer<State> {
 	int col;
 	Piece *piece;
 public:
-	Cell(Piece piece, int row, int col); // constructor
+	Cell(Piece *piece, int row, int col); // constructor
 	void notify(Subject<State> &whoFrom) override;
 	void placePiece();
 	void placePiece_setup(std::string piece); // places the piece on the cell
