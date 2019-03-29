@@ -26,8 +26,8 @@ TextDisplay::TextDisplay() {
 void TextDisplay::notify(Subject<State> &whoNotified) {
 	int row = whoNotified.getRow();
 	int col = whoNotified.getCol();
-	string name = whoNotified.getPiece().name;
-	Color color = whoNotified.getPiece().getColor();
+	string name = whoNotified.getPiece()->getName();
+	Color color = whoNotified.getPiece()->getColor();
 	if (color == Color::White) {
 		if (name == "king") theDisplay.at(row).at(col) = 'K';
 		if (name == "queen") theDisplay.at(row).at(col) = 'Q';

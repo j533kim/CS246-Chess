@@ -5,17 +5,21 @@
 #include <string>
 #include <vector>
 #include <memory>
-#include "cell.h"
 #include "textdisplay.h"
 //#include "graphicsdisplay.h"
 #include "color.h"
 #include "main_helper.h"
 #include "piece.h"
+#include "state.h"
+#include "cell.h"
 #include <sstream>
 
 class TextDisplay;
 template <typename StateType> class Observer;
 class InvalidMove {};
+class Cell;
+class Piece;
+
 
 class Board {
   std::vector<std::vector<Cell>> theBoard;
