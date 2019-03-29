@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Cell::Cell(Piece piece, int row, int col): piece{piece}, row{row}, col{col} {}
+Cell::Cell(Piece *piece, int row, int col): piece{piece}, row{row}, col{col} {}
 
 int Cell::getRow() const { return row; }
 
