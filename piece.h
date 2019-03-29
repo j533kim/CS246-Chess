@@ -15,6 +15,7 @@ class Piece {
 public:
 	Piece(Color color, int value, std::string name);
 	std::string getName() const;
+	int getValue() const;
 	bool attacked();
 	bool attacking();
 	Color getColor() const;

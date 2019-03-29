@@ -2,10 +2,11 @@
 #define _SUBJECT_H_
 #include <vector>
 #include "piece.h"
+#include "cell.h"
 #include "observer.h"
 
 // this whole file is from a4q5, so modification needed
-class Piece;
+
 
 template <typename StateType> class Observer;
 
