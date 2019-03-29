@@ -7,6 +7,8 @@
 #include "color.h"
 #include "cell.h"
 #include "state.h"
+#include "observer.h"
+#include "subject.h"
 
 class Cell;
 

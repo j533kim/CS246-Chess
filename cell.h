@@ -10,6 +10,13 @@
 #include "color.h"
 #include "board.h"
 #include "state.h"
+#include "piece.h"
+#include "king.h"
+#include "queen.h"
+#include "rook.h"
+#include "bishop.h"
+#include "knight.h"
+#include "pawn.h"
 
 class Cell : public Subject<State>, public Observer<State> {
 	int row;
