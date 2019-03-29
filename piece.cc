@@ -15,3 +15,5 @@ bool Piece::attacked() {
 bool Piece::attacking() {
 	return true;
 }
+
+Color Piece::getColor() const { return color; }

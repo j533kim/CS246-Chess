@@ -7,6 +7,7 @@
 class NoPiece : public Piece {
 public:
 	NoPiece();
+	Color getColor();
 };
 
 #endif

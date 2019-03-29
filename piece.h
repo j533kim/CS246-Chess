@@ -17,10 +17,10 @@ public:
 	std::string getName() const;
 	bool attacked();
 	bool attacking();
-	virtual Color getColor() const;
+	Color getColor() const;
 	virtual bool getCheck() const;
-	virtual void move() = 0;
-	virtual void settwoStepChance() = 0; // pawn's function
+	//virtual void move() = 0;
+	virtual void settwoStepChance(); // pawn's function
 	virtual bool gettwoStepChance() const; // pawn's function
 
 };

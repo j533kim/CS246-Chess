@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Pawn::Pawn(Color color, bool readyToUpgrade, bool twoStepChance):
+Pawn::Pawn(Color color, bool twoStepChance):
  Piece{color, 1, "pawn"}, readyToUpgrade{false}, twoStepChance{twoStepChance}
  movedTwoStepsBefore{false} {}
 // pawn should not be ready to upgrade when first created
