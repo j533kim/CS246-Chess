@@ -6,6 +6,7 @@
 #include "piece.h"
 #include "color.h"
 #include "board.h"
+#include "piece.h"
 
 class King : public Piece {
 	bool castlingPossible;

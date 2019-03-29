@@ -8,9 +8,7 @@
 #include "observer.h"
 #include "subject.h"
 #include "color.h"
-#include "board.h"
 #include "state.h"
-#include "piece.h"
 #include "king.h"
 #include "queen.h"
 #include "rook.h"
@@ -30,10 +28,10 @@ public:
 	void placePiece_setup(std::string piece); // places the piece on the cell
 	void removePiece(); // simply removes the piece on the cell
 						// and replaces with noPiece
-	Piece *getPiece() const override;
+	Piece *getPiece() const;
 	void setPiece(Piece *piece);
-	int getRow() const override;
-	int getCol() const override;
+	int getRow() const;
+	int getCol() const;
 	~Cell();
 };
 

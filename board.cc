@@ -2,14 +2,6 @@
 #include <string>
 #include <vector>
 #include "board.h"
-#include "piece.h"
-#include "king.h"
-#include "queen.h"
-#include "rook.h"
-#include "bishop.h"
-#include "knight.h"
-#include "pawn.h"
-#include "nopiece.h"
 
 using namespace std;
 
@@ -71,16 +63,6 @@ void Board::init() {
 		}
 	}
 }
-
-/*
-void Board::placePiece(Piece &piece, int row, int col) {
-	try {
-		theBoard.at(row).at(col).placePiece(piece);  // placePiece on a cell
-	} catch (InvalidMove in) {
-		throw InvalidMove();
-	}
-}
-*/
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece(); }
 

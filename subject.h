@@ -2,11 +2,11 @@
 #define _SUBJECT_H_
 #include <vector>
 #include "piece.h"
-#include "cell.h"
 #include "observer.h"
 
 // this whole file is from a4q5, so modification needed
 
+class Piece;
 
 template <typename StateType> class Observer;
 
@@ -18,9 +18,9 @@ template <typename StateType> class Subject {
  public:
   void attach(Observer<StateType> *o);  
   void notifyObservers();
-  virtual int getRow() const;
-  virtual int getCol() const;
-  virtual Piece *getPiece() const;
+  virtual int getRow() const = 0;
+  virtual int getCol() const = 0;
+  virtual Piece *getPiece() const = 0;
  // virtual InfoType getInfo() const = 0;
   StateType getState() const;
 };

@@ -5,14 +5,15 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <sstream>
 #include "textdisplay.h"
-//#include "graphicsdisplay.h"
+#include "observer.h"
+#include "subject.h"
 #include "color.h"
 #include "main_helper.h"
 #include "piece.h"
 #include "state.h"
 #include "cell.h"
-#include <sstream>
 
 class TextDisplay;
 template <typename StateType> class Observer;

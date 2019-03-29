@@ -5,7 +5,6 @@
 #include <string>
 #include "piece.h"
 #include "color.h"
-#include "board.h"
 
 class Bishop : public Piece {
 public:

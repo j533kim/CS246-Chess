@@ -61,6 +61,7 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 }
 
 Piece *Cell::getPiece() const { return piece; }
+
 void Cell::setPiece(Piece *piece) {
 	this->piece = piece;
 }

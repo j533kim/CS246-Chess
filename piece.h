@@ -3,9 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "piece.h"
 #include "color.h"
-#include "board.h"
 
 class Piece {
 	Color color;
