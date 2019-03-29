@@ -12,10 +12,10 @@
 #include "state.h"
 
 class Cell : public Subject<State>, public Observer<State> {
-	Piece *piece;
 	int row;
 	int col;
 public:
+	Piece *piece;
 	Cell(Piece piece, int row, int col); // constructor
 	void notify(Subject<State> &whoFrom) override;
 	void placePiece();
