@@ -5,19 +5,23 @@
 #include <string>
 #include "piece.h"
 #include "color.h"
-#include "board.h"
-#include "piece.h"
 
 class King : public Piece {
 	bool castlingPossible;
 	bool checked;
 public:
 	King(Color color, bool castlingPossible);
-	void castle();
 	bool getCheck() const;
-	void setCheck(bool check);
 	bool getCastle() const;
+	bool gettwoStepChance() const;
+	bool getmovedTwoStepsBefore() const;
+	bool getUpgrade() const;
+	void setUpgrade();
 	void setCastle();
+	void setCheck();
+	void settwoStepChance();
+	void setmovedTwoStepsBefore();
+	void upgrade(Piece *piece);
 };
 
 #endif

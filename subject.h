@@ -1,6 +1,7 @@
 #ifndef _SUBJECT_H_
 #define _SUBJECT_H_
 #include <vector>
+#include <iostream>
 #include "piece.h"
 #include "observer.h"
 

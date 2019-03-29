@@ -2,19 +2,33 @@
 
 using namespace std;
 
-void King::castle() {
-	return;
-}
+King::King(Color color, bool castlingPossible): Piece{color, 10, "king"},
+ castlingPossible{castlingPossible}, checked{false} {}
+ // king should not be checked when first created
+
 
 bool King::getCheck() const { return checked; }
 
-void King::setCheck(bool check) { checked = check; }
-
 bool King::getCastle() const { return castlingPossible; }
+
+bool King::gettwoStepChance() const {}
+	
+bool King::getmovedTwoStepsBefore() const {}
+
+bool King::getUpgrade() const {}
+
+void King::setUpgrade() {}
 
 void King::setCastle() { castlingPossible = false; }
 // always from true to false
 
-King::King(Color color, bool castlingPossible): Piece{color, 10, "king"},
- castlingPossible{castlingPossible}, checked{false} {}
- // king should not be checked when first created
+void King::setCheck() {
+	if (checked) checked = false;
+	else checked = true;
+}
+
+void King::settwoStepChance() {}
+
+void King::setmovedTwoStepsBefore() {}
+
+void King::upgrade(Piece *piece) {}

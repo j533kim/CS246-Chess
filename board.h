@@ -14,6 +14,7 @@
 #include "piece.h"
 #include "state.h"
 #include "cell.h"
+#include "king.h"
 
 class TextDisplay;
 template <typename StateType> class Observer;

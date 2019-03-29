@@ -8,7 +8,18 @@
 
 class Bishop : public Piece {
 public:
-	Bishop(Color color): Piece{color, 3, "bishop"} {}
+	Bishop(Color color);
+	bool getCheck() const;
+	bool getCastle() const;
+	bool gettwoStepChance() const;
+	bool getmovedTwoStepsBefore() const;
+	bool getUpgrade() const;
+	void setUpgrade();
+	void setCastle();
+	void setCheck();
+	void settwoStepChance();
+	void setmovedTwoStepsBefore();
+	void upgrade(Piece *piece);
 };
 
 #endif

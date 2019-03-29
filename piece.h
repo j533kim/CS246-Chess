@@ -14,14 +14,20 @@ public:
 	Piece(Color color, int value, std::string name);
 	std::string getName() const;
 	int getValue() const;
-	bool attacked();
-	bool attacking();
+	bool attacked() const;
+	bool attacking() const;
 	Color getColor() const;
+	virtual void upgrade(Piece *piece);
 	virtual bool getCheck() const;
-	//virtual void move() = 0;
-	virtual void settwoStepChance(); // pawn's function
-	virtual bool gettwoStepChance() const; // pawn's function
-
+	virtual bool getCastle() const;
+	virtual bool gettwoStepChance() const;
+	virtual bool getmovedTwoStepsBefore() const;
+	virtual bool getUpgrade() const ;
+	virtual void setUpgrade();
+	virtual void setCastle();
+	virtual void setCheck();
+	virtual void settwoStepChance();
+	virtual void setmovedTwoStepsBefore();
 };
 
 #endif

@@ -4,11 +4,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "color.h"
 #include "cell.h"
 #include "state.h"
 #include "observer.h"
 #include "subject.h"
+#include "piece.h"
 
 class Cell;
 

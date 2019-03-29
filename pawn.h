@@ -13,13 +13,17 @@ class Pawn : public Piece {
 	bool movedTwoStepsBefore; // for En Passant
 public:
 	Pawn(Color color, bool twoStepChance);
-	void upgrade(Piece piece);
+	bool getCheck() const;
+	bool getCastle() const;
+	bool gettwoStepChance() const;
+	bool getmovedTwoStepsBefore() const;
 	bool getUpgrade() const;
 	void setUpgrade();
-	bool gettwoStepChance() const;
+	void setCastle();
+	void setCheck();
 	void settwoStepChance();
-	bool getmovedTwoStepsBefore() const;
 	void setmovedTwoStepsBefore();
+	void upgrade(Piece *piece);
 };
 
 #endif
