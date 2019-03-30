@@ -75,12 +75,6 @@ void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
 	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece());
-
-
-	if (temp->getColor() == Color::White) cout << "W" <<endl;
-	else if (temp->getColor() == Color::Black) cout << "B" <<endl;
-	else cout << "N" <<endl;
-
 	theBoard.at(row_f).at(col_f).setPiece(temp);
 }
 
@@ -102,6 +96,10 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 	int row_f = row_return(pos_final);
 	int col_f = col_return(pos_final);
 	Color moving_piece_color = theBoard.at(row_0).at(col_0).getPiece()->getColor();
+	if ((moving_piece_color == Color::White && white_turn == 0) || (moving_piece_color == Color::Black && white_turn == 1)) {
+		throw InvalidMove();
+		return;
+	}
 	Color destination_color = theBoard.at(row_f).at(col_f).getPiece()->getColor();
 	if (moving_piece_color == Color::Black && white_turn) {
 		throw InvalidMove();
@@ -121,9 +119,6 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 	}
 	removePiece(row_f, col_f);
 	swapPiece(row_0, col_0, row_f, col_f);
-	if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) cout << "W" <<endl;
-	else if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::Black) cerr << "B" <<endl;
-	else cout << "N" <<endl;
 }
 
 //////////////////////temporary///////////////////
@@ -179,21 +174,21 @@ void Board::game_default_setting() { // initial setup of a gameboard //
 	placePiece_setup("p", "h7");
 
 	placePiece_setup("R", "a1"); // White others
-	placePiece_setup("B", "b1");
-	placePiece_setup("N", "c1");
+	placePiece_setup("N", "b1");
+	placePiece_setup("B", "c1");
 	placePiece_setup("Q", "d1");
 	placePiece_setup("K", "e1");
-	placePiece_setup("N", "f1");
-	placePiece_setup("B", "g1");
+	placePiece_setup("B", "f1");
+	placePiece_setup("N", "g1");
 	placePiece_setup("R", "h1");
 
 	placePiece_setup("r", "a8"); // Black others
-	placePiece_setup("b", "b8");
-	placePiece_setup("n", "c8");
+	placePiece_setup("n", "b8");
+	placePiece_setup("b", "c8");
 	placePiece_setup("q", "d8");
 	placePiece_setup("k", "e8");
-	placePiece_setup("n", "f8");
-	placePiece_setup("b", "g8");
+	placePiece_setup("b", "f8");
+	placePiece_setup("n", "g8");
 	placePiece_setup("r", "h8");
 }
 
@@ -276,7 +271,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
 		if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
 		if (row_f + 1 == row_0 && col_f + 1 == col_0) return true;
-		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // position is south east
+		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // final position is south east
 			if (theBoard.at(i-1).at(j-1).getPiece()->getColor() == Color::NoColor) {
 				if (i-1 == row_0 && j-1 == col_0) {
 					return true;
