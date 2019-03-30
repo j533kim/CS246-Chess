@@ -31,8 +31,10 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	//delete this->piece;
 	// we already checked that the piece is valid type of piece
 	if (piece == "K") {
+		cerr << "we got here fuck you nipun" << endl;
 		if (getRow() == 7 && getCol() == 4) this->piece = make_shared<King>(Color::White, true);
 		else this->piece = make_shared<King>(Color::White, false);
+
 	}
 	if (piece == "k") {
 		if (getRow() == 0 && getCol() == 4) this->piece = make_shared<King>(Color::Black, true);
@@ -67,6 +69,10 @@ shared_ptr<Piece> Cell::getPiece() const { return piece; }////////return pointer
 
 void Cell::setPiece(shared_ptr<Piece> piece) {
 	this->piece = piece;
+	if (this->piece->getColor() == Color::White) cout << "W" <<endl;
+	else if (this->piece->getColor() == Color::Black) cout << "B" <<endl;
+	else cout << "N" <<endl;
+	notifyObservers();
 }
 
 int Cell::getRow() const { return row; }

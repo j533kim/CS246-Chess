@@ -13,7 +13,7 @@ class Piece;
 template <typename StateType> class Observer;
 
 template <typename StateType> class Subject {
-  std::vector<std::shared_ptr<Observer<StateType>>> observers;
+  std::vector<Observer<StateType> *>observers;
   StateType state;
  protected:
   void setState(StateType newS);

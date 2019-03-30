@@ -45,6 +45,7 @@ void Board::init() {
 		delete td;
 		delete ob;
 	}
+	////////////////////
 	td = new TextDisplay(); // new display
 	ob = nullptr;
 	for (int i = 0; i < 8; ++i) {
@@ -54,7 +55,6 @@ void Board::init() {
 			theBoard.at(i).emplace_back(Cell(make_shared<NoPiece>(), i, j));
 		}
 	}
-	cerr << "here" << endl;
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
 		for (int j = 0; j < 8; ++j) {
 			theBoard.at(i).at(j).attach(td); // attaching textdisplay
@@ -67,6 +67,7 @@ void Board::init() {
 			}
 		}
 	}
+	////////////////
 }
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece(); }
@@ -74,6 +75,12 @@ void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
 	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece());
+
+
+	if (temp->getColor() == Color::White) cout << "W" <<endl;
+	else if (temp->getColor() == Color::Black) cout << "B" <<endl;
+	else cout << "N" <<endl;
+
 	theBoard.at(row_f).at(col_f).setPiece(temp);
 }
 
@@ -114,6 +121,9 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 	}
 	removePiece(row_f, col_f);
 	swapPiece(row_0, col_0, row_f, col_f);
+	if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) cout << "W" <<endl;
+	else if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::Black) cerr << "B" <<endl;
+	else cout << "N" <<endl;
 }
 
 //////////////////////temporary///////////////////
