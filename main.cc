@@ -59,7 +59,6 @@ int main(int argc, char *argv[]) {
   						b.placePiece_setup(setup_cmd_1, setup_cmd_2);
   						cout << b;
   					} catch (InvalidMove In) {
-              cout << b;
   						cout << "You cannot place " << setup_cmd_1 << " on ";
   						cout << setup_cmd_2 << ". Try again." << endl;
   						continue;

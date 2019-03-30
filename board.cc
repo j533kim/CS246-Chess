@@ -199,7 +199,7 @@ void Board::placePiece_setup(string piece, string pos) {
 	int col = col_return(pos);
 	try {
 		theBoard.at(row).at(col).placePiece_setup(piece);
-	} catch (InvalidMove in) {
+	} catch (InvalidMove In) {
 		throw InvalidMove();
 	}
 }

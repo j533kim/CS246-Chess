@@ -17,6 +17,8 @@
 #include "pawn.h"
 #include "nopiece.h"
 
+class InvalidMove{};
+
 class Cell : public Subject<State>, public Observer<State> {
 	int row;
 	int col;

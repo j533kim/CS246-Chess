@@ -18,7 +18,6 @@
 
 class TextDisplay;
 template <typename StateType> class Observer;
-class InvalidMove {};
 class Cell;
 class Piece;
 

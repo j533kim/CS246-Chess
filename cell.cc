@@ -25,6 +25,10 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 		throw InvalidMove();
 		return;
 	}
+	if (!(piece == "k" || piece == "K" || piece == "P" || piece == "p" || piece == "R" || piece == "r" || piece == "N" || piece == "n" || piece == "Q" || piece == "q" || piece == "B" || piece == "b")) {
+		throw InvalidMove();
+		return;
+	}
 	delete this->piece;
 	// we already checked that the piece is valid type of piece
 	if (piece == "K") {
