@@ -2,8 +2,7 @@
 
 using namespace std;
 
-King::King(Color color, bool castlingPossible): Piece{color, 10, "king"},
- castlingPossible{castlingPossible}, checked{false} {}
+King::King(Color color, bool castlingPossible): Piece{color, 10, "king"}, castlingPossible{castlingPossible}, checked{false} {}
  // king should not be checked when first created
 
 

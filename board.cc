@@ -38,9 +38,11 @@ Board::~Board() {
 void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
-	theBoard.clear(); // clear the old board
-	delete td;
-	delete ob;
+	if (theBoard.size() > 0) { // clear the old board
+		theBoard.clear();
+		delete td;
+		delete ob;
+	}
 	td = new TextDisplay(); // new display
 	ob = nullptr;
 	for (int i = 0; i < 8; ++i) {

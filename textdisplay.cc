@@ -43,7 +43,7 @@ void TextDisplay::notify(Subject<State> &whoNotified) {
 		if (name == "rook") theDisplay.at(row).at(col) = 'r';
 		else theDisplay.at(row).at(col) = 'p'; // pawn
 	} else {
-		if (row + col % 2 == 0) theDisplay.at(row).at(col) = ' ';
+		if ((row + col) % 2 == 0) theDisplay.at(row).at(col) = ' ';
 		else theDisplay.at(row).at(col) = '_';
 	}
 }

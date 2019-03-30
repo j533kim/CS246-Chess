@@ -19,8 +19,6 @@
 class TextDisplay;
 template <typename StateType> class Observer;
 class Cell;
-class Piece;
-
 
 class Board {
   std::vector<std::vector<Cell>> theBoard;

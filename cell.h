@@ -18,6 +18,7 @@
 #include "nopiece.h"
 
 class InvalidMove{};
+class Piece;
 
 class Cell : public Subject<State>, public Observer<State> {
 	int row;
