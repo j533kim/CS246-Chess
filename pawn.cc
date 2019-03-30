@@ -7,9 +7,9 @@ Pawn::Pawn(Color color, bool twoStepChance):
  movedTwoStepsBefore{false} {}
 // pawn should not be ready to upgrade when first created
 
-bool Pawn::getCheck() const {}
+bool Pawn::getCheck() const { return false; }
 
-bool Pawn::getCastle() const {}
+bool Pawn::getCastle() const { return false; }
 
 bool Pawn::gettwoStepChance() const { return twoStepChance; }
 	

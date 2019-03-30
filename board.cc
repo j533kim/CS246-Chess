@@ -47,9 +47,12 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell(new NoPiece(), i, j));
+			cerr << "j: " << j << endl;
+			theBoard.at(i).emplace_back(Cell(nullptr, i, j));
+			theBoard.at(i).at(j).setPiece(new NoPiece());
 		}
 	}
+	cerr << "here" << endl;
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
 		for (int j = 0; j < 8; ++j) {
 			theBoard.at(i).at(j).attach(td); // attaching textdisplay

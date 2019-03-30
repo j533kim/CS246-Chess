@@ -5,15 +5,15 @@ using namespace std;
 Rook::Rook(Color color, bool castlingPossible): Piece{color, 5, "rook"},
  castlingPossible{castlingPossible} {}
 
-bool Rook::getCheck() const {}
+bool Rook::getCheck() const { return false; }
 
 bool Rook::getCastle() const { return castlingPossible; }
 
-bool Rook::gettwoStepChance() const {}
+bool Rook::gettwoStepChance() const { return false; }
 	
-bool Rook::getmovedTwoStepsBefore() const {}
+bool Rook::getmovedTwoStepsBefore() const { return false; }
 
-bool Rook::getUpgrade() const {}
+bool Rook::getUpgrade() const { return false; }
 
 void Rook::setUpgrade() {}
 

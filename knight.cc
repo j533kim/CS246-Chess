@@ -4,15 +4,15 @@ using namespace std;
 
 Knight::Knight(Color color): Piece{color, 3, "knight"} {}
 
-bool Knight::getCheck() const {}
+bool Knight::getCheck() const { return false; }
 
-bool Knight::getCastle() const {}
+bool Knight::getCastle() const { return false; }
 
-bool Knight::gettwoStepChance() const {}
+bool Knight::gettwoStepChance() const { return false;}
 	
-bool Knight::getmovedTwoStepsBefore() const {}
+bool Knight::getmovedTwoStepsBefore() const { return false; }
 
-bool Knight::getUpgrade() const {}
+bool Knight::getUpgrade() const { return false; }
 
 void Knight::setUpgrade() {}
 

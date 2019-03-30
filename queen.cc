@@ -4,15 +4,15 @@ using namespace std;
 
 Queen::Queen(Color color): Piece{color, 9, "queen"} {}
 
-bool Queen::getCheck() const {}
+bool Queen::getCheck() const { return false; }
 
-bool Queen::getCastle() const {}
+bool Queen::getCastle() const { return false; }
 
-bool Queen::gettwoStepChance() const {}
+bool Queen::gettwoStepChance() const { return false; }
 	
-bool Queen::getmovedTwoStepsBefore() const {}
+bool Queen::getmovedTwoStepsBefore() const { return false; }
 
-bool Queen::getUpgrade() const {}
+bool Queen::getUpgrade() const { return false; }
 
 void Queen::setUpgrade() {}
 

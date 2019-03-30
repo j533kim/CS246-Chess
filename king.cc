@@ -11,11 +11,11 @@ bool King::getCheck() const { return checked; }
 
 bool King::getCastle() const { return castlingPossible; }
 
-bool King::gettwoStepChance() const {}
+bool King::gettwoStepChance() const { return false; }
 	
-bool King::getmovedTwoStepsBefore() const {}
+bool King::getmovedTwoStepsBefore() const { return false; }
 
-bool King::getUpgrade() const {}
+bool King::getUpgrade() const { return false; }
 
 void King::setUpgrade() {}
 

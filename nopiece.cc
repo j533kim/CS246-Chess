@@ -4,15 +4,15 @@ using namespace std;
 
 NoPiece::NoPiece(): Piece{Color::NoColor, 0, "nopiece"} {}
 
-bool NoPiece::getCheck() const {}
+bool NoPiece::getCheck() const { return false; }
 
-bool NoPiece::getCastle() const {}
+bool NoPiece::getCastle() const { return false; }
 
-bool NoPiece::gettwoStepChance() const {}
+bool NoPiece::gettwoStepChance() const { return false; }
 	
-bool NoPiece::getmovedTwoStepsBefore() const {}
+bool NoPiece::getmovedTwoStepsBefore() const { return false; }
 
-bool NoPiece::getUpgrade() const {}
+bool NoPiece::getUpgrade() const { return false; }
 
 void NoPiece::setUpgrade() {}
 

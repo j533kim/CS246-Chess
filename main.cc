@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
   	while (true) {
   		cin >> cmd;
   		b.init(); // makes a new empty board and deletes previous pieces if necessary
+      cerr << "after init()" << endl;
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
   			string setup_cmd, setup_cmd_1, setup_cmd_2;
