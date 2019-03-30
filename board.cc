@@ -51,7 +51,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			theBoard.at(i).emplace_back(Cell(make_shared<NoPiece>(NoPiece()), i, j));
+			theBoard.at(i).emplace_back(Cell(make_shared<NoPiece>(), i, j));
 		}
 	}
 	cerr << "here" << endl;
