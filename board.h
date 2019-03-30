@@ -23,13 +23,13 @@ class Cell;
 class Board {
   std::vector<std::vector<Cell>> theBoard;
   // I'm not so sure about using these smartpointers (verification needed)
-  shared_ptr<TextDisplay> td = nullptr;
-  shared_ptr<Observer<State>> ob = nullptr;
+  TextDisplay *td = nullptr;
+  Observer<State> *ob = nullptr;
   bool checkmate = false;
   bool stalemate = false;
 public:
   ~Board(); // destructor
-  void setObserver(shared_ptr<Observer<State>> ob); // sets the observers for each
+  void setObserver(Observer<State> *ob); // sets the observers for each
   void init(); // sets up 8x8 board and responsible for observer pattern
                // clears the old board, if necessary
   void move(std::string pos_initial, std::string pos_final, bool white_turn); // move a piece

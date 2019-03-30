@@ -31,12 +31,13 @@ int row_return(string pos) { return 8 - stoi(pos.substr(1, 2)); }
 // a,b,c,d,e,f,g,h --> 0,1,2,3,4,5,6,7 (differrent from ours)
 int col_return(string pos) { return pos[0] - 'a'; }
 
+
 Board::~Board() {
 	delete td;
 	delete ob;
 }
 
-void Board::setObserver(shared_ptr<Observer<State>> ob) { this->ob = ob; }
+void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
 
 void Board::init() {
 	if (theBoard.size() > 0) { // clear the old board

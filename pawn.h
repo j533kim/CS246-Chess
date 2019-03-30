@@ -24,7 +24,7 @@ public:
 	void setCheck();
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
-	void upgrade(shared_ptr<Piece> piece);
+	void upgrade(std::shared_ptr<Piece> piece);
 };
 
 #endif

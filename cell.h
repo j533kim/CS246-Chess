@@ -23,16 +23,16 @@ class Piece;
 class Cell : public Subject<State>, public Observer<State> {
 	int row;
 	int col;
-	shared_ptr<Piece> piece;
+	std::shared_ptr<Piece> piece;
 public:
-	Cell(shared_ptr<Piece> piece, int row, int col); // constructor
+	Cell(std::shared_ptr<Piece> piece, int row, int col); // constructor
 	void notify(Subject<State> &whoFrom) override;
 	void placePiece(std::shared_ptr<Piece> piece);
 	void placePiece_setup(std::string piece); // places the piece on the cell
 	void removePiece(); // simply removes the piece on the cell
 						// and replaces with noPiece
-	shared_ptr<Piece> getPiece() const override;
-	void setPiece(shared_ptr<Piece> piece);
+	std::shared_ptr<Piece> getPiece() const override;
+	void setPiece(std::shared_ptr<Piece> piece);
 	int getRow() const override;
 	int getCol() const override;
 	//~Cell();

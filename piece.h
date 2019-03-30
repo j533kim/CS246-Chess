@@ -18,7 +18,7 @@ public:
 	bool attacked() const;
 	bool attacking() const;
 	Color getColor() const;
-	virtual void upgrade(shared_ptr<Piece> piece);
+	virtual void upgrade(std::shared_ptr<Piece> piece);
 	virtual bool getCheck() const;
 	virtual bool getCastle() const;
 	virtual bool gettwoStepChance() const;

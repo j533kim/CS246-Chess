@@ -13,22 +13,22 @@ class Piece;
 template <typename StateType> class Observer;
 
 template <typename StateType> class Subject {
-  std::vector<shared_ptr<Observer<StateType>>> observers;
+  std::vector<std::shared_ptr<Observer<StateType>>> observers;
   StateType state;
  protected:
   void setState(StateType newS);
  public:
-  void attach(shared_ptr<Observer<StateType>> o);  
+  void attach(Observer<StateType> *o);  
   void notifyObservers();
   virtual int getRow() const = 0;
   virtual int getCol() const = 0;
-  virtual Piece *getPiece() const = 0;
+  virtual std::shared_ptr<Piece> getPiece() const = 0;
  // virtual InfoType getInfo() const = 0;
   StateType getState() const;
 };
 
 template <typename StateType>
-void Subject<StateType>::attach(shared_ptr<Observer<StateType>> o) {
+void Subject<StateType>::attach(Observer<StateType> *o) {
   observers.emplace_back(o);
 }
 
