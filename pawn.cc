@@ -32,6 +32,6 @@ void Pawn::setmovedTwoStepsBefore() {
 	else movedTwoStepsBefore = true;
 }
 
-void Pawn::upgrade(Piece *piece) {
+void Pawn::upgrade(shared_ptr<Piece> piece) {
 
 }

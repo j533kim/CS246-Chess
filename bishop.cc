@@ -24,4 +24,4 @@ void Bishop::settwoStepChance() {}
 
 void Bishop::setmovedTwoStepsBefore() {}
 
-void Bishop::upgrade(Piece *piece) {}
+void Bishop::upgrade(shared_ptr<Piece> piece) {}

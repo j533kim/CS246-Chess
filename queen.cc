@@ -24,4 +24,4 @@ void Queen::settwoStepChance() {}
 
 void Queen::setmovedTwoStepsBefore() {}
 
-void Queen::upgrade(Piece *piece) {}
+void Queen::upgrade(shared_ptr<Piece> piece) {}

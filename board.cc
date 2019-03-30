@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "board.h"
 
 using namespace std;
@@ -35,7 +36,7 @@ Board::~Board() {
 	delete ob;
 }
 
-void Board::setObserver(Observer<State> *ob) { this->ob = ob; }
+void Board::setObserver(shared_ptr<Observer<State>> ob) { this->ob = ob; }
 
 void Board::init() {
 	if (theBoard.size() > 0) { // clear the old board
@@ -49,11 +50,7 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			cerr << "j1: " << j << endl;
-			theBoard.at(i).emplace_back(Cell(nullptr, i, j));
-			cerr << "j2: " << j << endl;
-			theBoard.at(i).at(j).setPiece(new NoPiece());
-			cerr << "j3: " << j << endl;
+			theBoard.at(i).emplace_back(Cell(make_shared<NoPiece>(NoPiece()), i, j));
 		}
 	}
 	cerr << "here" << endl;
@@ -73,13 +70,10 @@ void Board::init() {
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece(); }
 
-void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) { // jiwook was high when he wrote this
-	/// perfect
-	Piece *temp = theBoard.at(row_0).at(col_0).getPiece();
+void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
+	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
 	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece());
 	theBoard.at(row_f).at(col_f).setPiece(temp);
-	temp = nullptr;
-	////////////////// not sure about swapPiece() function
 }
 
 void Board::move(string pos_initial, string pos_final, bool white_turn) { // 
@@ -226,10 +220,8 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
-	Cell *cell_0 = &(theBoard.at(row_0).at(col_0));  // inital cell
-	Cell *cell_f = &(theBoard.at(row_f).at(col_f));  // final cell
-	Piece *piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
-	Piece *piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
+	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
+	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
 			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f + 1).at(col_f).getPiece()->getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
@@ -371,8 +363,4 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  if (row_0 == row_f && col_0 + 1 == col_f && (theBoard.at(row_f).at(col_f).getPiece()->getCheck() == false)) return true;
 	  return false;
 	}
-	cell_0 = nullptr;
-	cell_f = nullptr;
-	piece_0 = nullptr;
-	piece_f = nullptr;
 }

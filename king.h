@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "piece.h"
 #include "color.h"
 
@@ -21,7 +22,7 @@ public:
 	void setCheck();
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
-	void upgrade(Piece *piece);
+	void upgrade(shared_ptr<Piece> piece);
 };
 
 #endif

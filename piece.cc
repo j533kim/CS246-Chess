@@ -23,7 +23,7 @@ bool Piece::attacking() const {
 
 Color Piece::getColor() const { return color; }
 
-void Piece::upgrade(Piece *piece) {}
+void Piece::upgrade(shared_ptr<Piece> piece) {}
 
 bool Piece::getCheck() const {}
 

@@ -24,4 +24,4 @@ void Knight::settwoStepChance() {}
 
 void Knight::setmovedTwoStepsBefore() {}
 
-void Knight::upgrade(Piece *piece) {}
+void Knight::upgrade(shared_ptr<Piece> piece) {}

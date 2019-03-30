@@ -30,4 +30,4 @@ void King::settwoStepChance() {}
 
 void King::setmovedTwoStepsBefore() {}
 
-void King::upgrade(Piece *piece) {}
+void King::upgrade(shared_ptr<Piece> piece) {}

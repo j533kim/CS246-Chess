@@ -2,6 +2,7 @@
 #define _SUBJECT_H_
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "piece.h"
 #include "observer.h"
 
@@ -12,12 +13,12 @@ class Piece;
 template <typename StateType> class Observer;
 
 template <typename StateType> class Subject {
-  std::vector<Observer<StateType>*> observers;
+  std::vector<shared_ptr<Observer<StateType>>> observers;
   StateType state;
  protected:
   void setState(StateType newS);
  public:
-  void attach(Observer<StateType> *o);  
+  void attach(shared_ptr<Observer<StateType>> o);  
   void notifyObservers();
   virtual int getRow() const = 0;
   virtual int getCol() const = 0;
@@ -27,7 +28,7 @@ template <typename StateType> class Subject {
 };
 
 template <typename StateType>
-void Subject<StateType>::attach(Observer<StateType> *o) {
+void Subject<StateType>::attach(shared_ptr<Observer<StateType>> o) {
   observers.emplace_back(o);
 }
 

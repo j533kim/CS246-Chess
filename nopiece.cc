@@ -24,4 +24,4 @@ void NoPiece::settwoStepChance() {}
 
 void NoPiece::setmovedTwoStepsBefore() {}
 
-void NoPiece::upgrade(Piece *piece) {}
+void NoPiece::upgrade(shared_ptr<Piece> piece) {}

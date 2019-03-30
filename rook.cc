@@ -25,4 +25,4 @@ void Rook::settwoStepChance() {}
 
 void Rook::setmovedTwoStepsBefore() {}
 
-void Rook::upgrade(Piece *piece) {}
+void Rook::upgrade(shared_ptr<Piece> piece) {}
