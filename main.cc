@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
   try {
   	while (true) {
   		cin >> cmd;
+      if (!(cmd == "setup" || cmd == "game")) continue;
   		b.init(); // makes a new empty board and deletes previous pieces if necessary
       cerr << "after init()" << endl;
   		if (cmd == "setup") { // enters the setup mode

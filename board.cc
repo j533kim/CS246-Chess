@@ -47,9 +47,11 @@ void Board::init() {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
 		for (int j = 0; j < 8; ++j) {
-			cerr << "j: " << j << endl;
+			cerr << "j1: " << j << endl;
 			theBoard.at(i).emplace_back(Cell(nullptr, i, j));
+			cerr << "j2: " << j << endl;
 			theBoard.at(i).at(j).setPiece(new NoPiece());
+			cerr << "j3: " << j << endl;
 		}
 	}
 	cerr << "here" << endl;
