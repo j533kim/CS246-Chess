@@ -273,7 +273,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_f + 1 == row_0 && col_f + 1 == col_0) return true;
 		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // final position is south east
 			if (theBoard.at(i-1).at(j-1).getPiece()->getColor() == Color::NoColor) {
-				if (i-1 == row_0 && j-1 == col_0) {
+				if (i-2 == row_0 && j-2 == col_0) {
 					return true;
 				}
 			} else {
@@ -282,7 +282,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		}
 		for (int i = row_f, j = col_f; i > row_0 && j < col_0;i--,j++) { // position is south west
 			if (theBoard.at(i-1).at(j+1).getPiece()->getColor() == Color::NoColor) {
-				if (i-1 == row_0 && j+1 == col_0) {
+				if (i-2 == row_0 && j+2 == col_0) {
 					return true;
 				}
 			} else {
@@ -291,7 +291,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		}
 		for (int i = row_f, j = col_f; i < row_0 && j > col_0;i++,j--) { // position is north east 
 			if (theBoard.at(i+1).at(j-1).getPiece()->getColor() == Color::NoColor) {
-				if (i+1 == row_0 && j-1 == col_0) {
+				if (i+2 == row_0 && j-2 == col_0) {
 					return true;
 				}
 			} else {
@@ -300,7 +300,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		}
 		for (int i = row_f, j = col_f; i < row_0 && j < col_0;i++,j++) { // position is north west 
 			if (theBoard.at(i+1).at(j+1).getPiece()->getColor() == Color::NoColor) {
-				if (i+1 == row_0 && j+1 == col_0) {
+				if (i+2 == row_0 && j+2 == col_0) {
 					return true;
 				}
 			} else {
