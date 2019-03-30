@@ -33,7 +33,6 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	if (piece == "K") {
 		if (getRow() == 7 && getCol() == 4) this->piece = make_shared<King>(Color::White, true);
 		else this->piece = make_shared<King>(Color::White, false);
-
 	}
 	if (piece == "k") {
 		if (getRow() == 0 && getCol() == 4) this->piece = make_shared<King>(Color::Black, true);

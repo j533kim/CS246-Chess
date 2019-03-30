@@ -30,10 +30,10 @@ int main(int argc, char *argv[]) {
   bool white_turn = 1; // it's white's turn if true, and black's otherwise
   bool game_manually_set = false;
   try {
+    b.init(); // makes a new empty board and deletes previous pieces if necessary
   	while (true) {
   		cin >> cmd;
       if (!(cmd == "setup" || cmd == "game")) continue;
-  		b.init(); // makes a new empty board and deletes previous pieces if necessary
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
   			string setup_cmd, setup_cmd_1, setup_cmd_2;
