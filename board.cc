@@ -45,7 +45,6 @@ void Board::init() {
 		delete td;
 		delete ob;
 	}
-	////////////////////
 	td = new TextDisplay(); // new display
 	ob = nullptr;
 	for (int i = 0; i < 8; ++i) {
@@ -68,7 +67,6 @@ void Board::init() {
 			}
 		}
 	}
-	////////////////
 }
 
 void Board::removePiece(int row, int col) { theBoard.at(row).at(col).removePiece(); }
