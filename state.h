@@ -4,8 +4,8 @@
 enum class Danger {Yes, No};
 
 struct State {
-  Danger W;  // See above
-  Danger B;
+  Danger W; // White's perspective
+  Danger B; // Black's perspective
 };
 
 #endif

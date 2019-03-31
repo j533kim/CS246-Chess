@@ -358,7 +358,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (canmove("bishop", row_0, col_0, row_f, col_f)
 		 || canmove("rook", row_0, col_0, row_f, col_f)) return true;
 		else return false;
-	} else { // name == "king"
+	} else if (name == "king") {
       if (piece_0->getColor() == piece_f->getColor()) return false;
 	  if (row_f - 1 == row_0 && col_f - 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece()->getCheck() == false)) return true;
 	  if (row_f - 1 == row_0 && col_f + 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece()->getCheck() == false)) return true;
@@ -370,4 +370,5 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  if (row_0 == row_f && col_0 + 1 == col_f && (theBoard.at(row_f).at(col_f).getPiece()->getCheck() == false)) return true;
 	  return false;
 	}
+	return false; // if a piece is nopiece
 }
