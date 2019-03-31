@@ -53,6 +53,7 @@ void Board::init() {
 		for (int j = 0; j < 8; ++j) {
 			theBoard.at(i).emplace_back(Cell(make_shared<NoPiece>(), i, j));
 			theBoard.at(i).at(j).setState({Danger::No, Danger::No});
+			theBoard.at(i).at(j).settheBoard(this);
 		}
 	}
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects

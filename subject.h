@@ -5,10 +5,12 @@
 #include <memory>
 #include "piece.h"
 #include "observer.h"
+#include "board.h"
 
 // this whole file is from a4q5, so modification needed
 
 class Piece;
+class Board;
 
 template <typename StateType> class Observer;
 
@@ -20,9 +22,12 @@ template <typename StateType> class Subject {
   void notifyObservers();
   virtual int getRow() const = 0;
   virtual int getCol() const = 0;
+  virtual void settheBoard(Board *theBoard) = 0;
+  virtual Board *gettheBoard() = 0;
   virtual std::shared_ptr<Piece> getPiece() const = 0;
  // virtual InfoType getInfo() const = 0;
   StateType getState() const;
+
   void setState(StateType newS);
 };
 
