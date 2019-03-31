@@ -6,12 +6,12 @@ Cell::Cell(shared_ptr<Piece> piece, int row, int col): piece{piece}, row{row}, c
 
 void Cell::notify(Subject<State> &whoFrom) {
 	if (whoFrom.getPiece()->getColor() == Color::White) {
-		if (canmove(whoFrom.getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});
 			else setState({Danger::Yes,Danger::Yes});
 		}
 	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
-		if (canmove(whoFrom.getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().B == Danger::No) setState({Danger::Yes, Danger::No});
 			else setState({Danger::Yes,Danger::Yes});
 		}
@@ -21,8 +21,8 @@ void Cell::notify(Subject<State> &whoFrom) {
 		if (original == {Danger::No, Danger::No}) return;
 		else if (original.W == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
-				string name_ = observers.at(i).getPiece().getName();
-				Color color_ = observers.at(i).getPiece().getColor();
+				string name_ = observers.at(i).getPiece()->getName();
+				Color color_ = observers.at(i).getPiece()->getColor();
 				int row_ = observers.at(i).getRow();
 				int col_ = observers.at(i).getCol();
 				if (canmove(name_, row_, col_, row, col) && color_ == Color::Black) return;
@@ -30,8 +30,8 @@ void Cell::notify(Subject<State> &whoFrom) {
 			setState({Danger::No, Danger::No});
 		} else if (original.B == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
-				string name_ = observers.at(i).getPiece().getName();
-				Color color_ = observers.at(i).getPiece().getColor();
+				string name_ = observers.at(i).getPiece()->getName();
+				Color color_ = observers.at(i).getPiece()->getColor();
 				int row_ = observers.at(i).getRow();
 				int col_ = observers.at(i).getCol();
 				if (canmove(name_, row_, col_, row, col) && color_ == Color::White) return;
@@ -95,7 +95,7 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	notifyObservers();
 }
 
-shared_ptr<Piece> Cell::getPiece() const { return piece; }////////return pointer?
+shared_ptr<Piece> Cell::getPiece() const { return piece; }
 
 void Cell::setPiece(shared_ptr<Piece> piece) {
 	this->piece = piece;
@@ -105,5 +105,3 @@ void Cell::setPiece(shared_ptr<Piece> piece) {
 int Cell::getRow() const { return row; }
 
 int Cell::getCol() const { return col; }
-
-//Cell::~Cell() { delete piece; }

@@ -15,8 +15,6 @@ template <typename StateType> class Observer;
 template <typename StateType> class Subject {
   std::vector<Observer<StateType> *>observers;
   StateType state;
- protected:
-  void setState(StateType newS);
  public:
   void attach(Observer<StateType> *o);  
   void notifyObservers();
@@ -25,6 +23,7 @@ template <typename StateType> class Subject {
   virtual std::shared_ptr<Piece> getPiece() const = 0;
  // virtual InfoType getInfo() const = 0;
   StateType getState() const;
+  void setState(StateType newS);
 };
 
 template <typename StateType>
