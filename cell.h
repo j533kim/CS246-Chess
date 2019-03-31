@@ -16,13 +16,16 @@
 #include "knight.h"
 #include "pawn.h"
 #include "nopiece.h"
+#include "board.h"
 
 class InvalidMove{};
 class Piece;
+class Board;
 
 class Cell : public Subject<State>, public Observer<State> {
 	int row;
 	int col;
+	Board *theBoard;
 	std::shared_ptr<Piece> piece;
 public:
 	Cell(std::shared_ptr<Piece> piece, int row, int col); // constructor
@@ -35,6 +38,9 @@ public:
 	void setPiece(std::shared_ptr<Piece> piece);
 	int getRow() const override;
 	int getCol() const override;
+	void settheBoard(Board *theBoard) override;
+	Board *gettheBoard() override;
+
 	//~Cell();
 };
 

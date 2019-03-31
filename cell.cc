@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Cell::Cell(shared_ptr<Piece> piece, int row, int col): piece{piece}, row{row}, col{col} {}
+Cell::Cell(Board *theBoard, shared_ptr<Piece> piece, int row, int col): theBoard{theBoard}, piece{piece}, row{row}, col{col} {}
 
 void Cell::notify(Subject<State> &whoFrom) {
 	if (whoFrom.getPiece()->getColor() == Color::White) {
@@ -105,3 +105,9 @@ void Cell::setPiece(shared_ptr<Piece> piece) {
 int Cell::getRow() const { return row; }
 
 int Cell::getCol() const { return col; }
+
+void Cell::settheBoard(Board *theBoard)  { this->theBoard = theBoard; }
+
+Board *Cell::gettheBoard()  { return theBoard; }
+
+
