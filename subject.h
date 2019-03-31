@@ -20,14 +20,14 @@ template <typename StateType> class Subject {
  public:
   void attach(Observer<StateType> *o);  
   void notifyObservers();
-  virtual int getRow() const = 0;
-  virtual int getCol() const = 0;
+  virtual int getRow() const;
+  virtual int getCol() const;
   virtual void settheBoard(Board *theBoard) = 0;
   virtual Board *gettheBoard() = 0;
   virtual std::shared_ptr<Piece> getPiece() const = 0;
  // virtual InfoType getInfo() const = 0;
   StateType getState() const;
-
+  std::vector<Observer<StateType> *> getObservers() { return observers; }
   void setState(StateType newS);
 };
 

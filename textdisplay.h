@@ -14,6 +14,7 @@
 #include "piece.h"
 
 class Cell;
+template <typename StateType> class Subject;
 
 class TextDisplay: public Observer<State> {
   std::vector<std::vector<char>> theDisplay;

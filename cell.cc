@@ -6,35 +6,35 @@ Cell::Cell(Board *theBoard, shared_ptr<Piece> piece, int row, int col): theBoard
 
 void Cell::notify(Subject<State> &whoFrom) {
 	if (whoFrom.getPiece()->getColor() == Color::White) {
-		if (canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});
 			else setState({Danger::Yes,Danger::Yes});
 		}
 	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
-		if (canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().B == Danger::No) setState({Danger::Yes, Danger::No});
 			else setState({Danger::Yes,Danger::Yes});
 		}
 	} else { // Color::NoColor
 		State original = getState();
-		int n = observers.size();
-		if (original == {Danger::No, Danger::No}) return;
+		int n = getObservers().size();
+		if (original.W == Danger::No && original.B == Danger::No) return;
 		else if (original.W == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
-				string name_ = observers.at(i).getPiece()->getName();
-				Color color_ = observers.at(i).getPiece()->getColor();
-				int row_ = observers.at(i).getRow();
-				int col_ = observers.at(i).getCol();
-				if (canmove(name_, row_, col_, row, col) && color_ == Color::Black) return;
+				string name_ = getObservers().at(i)->getPiece()->getName();
+				Color color_ = getObservers().at(i)->getPiece()->getColor();
+				int row_ = getObservers().at(i)->getRow();
+				int col_ = getObservers().at(i)->getCol();
+				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::Black) return;
 			}
 			setState({Danger::No, Danger::No});
 		} else if (original.B == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
-				string name_ = observers.at(i).getPiece()->getName();
-				Color color_ = observers.at(i).getPiece()->getColor();
-				int row_ = observers.at(i).getRow();
-				int col_ = observers.at(i).getCol();
-				if (canmove(name_, row_, col_, row, col) && color_ == Color::White) return;
+				string name_ = getObservers().at(i)->getPiece()->getName();
+				Color color_ = getObservers().at(i)->getPiece()->getColor();
+				int row_ = getObservers().at(i)->getRow();
+				int col_ = getObservers().at(i)->getCol();
+				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::White) return;
 			}
 			setState({Danger::No, Danger::No});
 		}
