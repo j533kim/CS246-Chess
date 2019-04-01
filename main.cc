@@ -29,9 +29,10 @@ int main(int argc, char *argv[]) {
   float black_score = 0; // if black wins, +1
   bool white_turn = 1; // it's white's turn if true, and black's otherwise
   bool game_manually_set = false;
+  bool setuped = false;
   try {
-    b.init(); // makes a new empty board and deletes previous pieces if necessary
   	while (true) {
+      if (!setuped) b.init(); // makes a new empty board and deletes previous pieces if necessary
   		cin >> cmd;
       if (!(cmd == "setup" || cmd == "game")) continue;
   		if (cmd == "setup") { // enters the setup mode
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]) {
   						game_manually_set = true; // tells the game is manually set
   						cout << "setup complete!" << endl;
   						cout << "exiting setup mode" << endl;
+              setuped = true;
   						break; // exiting setup mode
   					} else { // setup is invalid, the user cannot exit setup mode
   						cout << "Hmmm... Your board setup seems inappropriate." << endl;
@@ -79,6 +81,7 @@ int main(int argc, char *argv[]) {
   				}
   			}
   		} else if (cmd == "game") { // game start
+        setuped = false;
   			string game_cmd, game_cmd_1, game_cmd_2;
   			cin >> game_cmd_1 >> game_cmd_2; // cin >> whiteplayer >> blackplayer
   			int player1_level, player2_level;

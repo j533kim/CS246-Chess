@@ -22,9 +22,9 @@ class TextDisplay: public Observer<State> {
  public:
   TextDisplay();
   void notify(Subject<State> &whoNotified) override;
-  int getRow() const override {}
-  int getCol() const override {}
-  std::shared_ptr<Piece> getPiece() const override {}
+  int getRow() const override;
+  int getCol() const override;
+  std::shared_ptr<Piece> getPiece() const override;
   friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
 };
 

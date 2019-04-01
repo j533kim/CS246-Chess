@@ -10,17 +10,6 @@ string Piece::getName() const { return name; }
 
 int Piece::getValue() const { return value; }
 
-
-// temp ////////////////////////////////
-bool Piece::attacked() const {
-	return true;
-}
-
-bool Piece::attacking() const {
-	return true;
-}
-///////////////////////////////
-
 Color Piece::getColor() const { return color; }
 
 void Piece::upgrade(shared_ptr<Piece> piece) {}

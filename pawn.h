@@ -16,7 +16,7 @@ public:
 	Pawn(Color color, bool twoStepChance);
 	bool getCheck() const;
 	bool getCastle() const;
-	bool gettwoStepChance() const;
+	bool gettwoStepChance() const override;
 	bool getmovedTwoStepsBefore() const;
 	bool getUpgrade() const;
 	void setUpgrade();
