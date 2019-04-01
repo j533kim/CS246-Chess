@@ -292,6 +292,7 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
+
 	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
@@ -389,7 +390,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_0 + 1 == row_f && col_0 == col_f) return true;
 		if (row_0 == row_f && col_0 - 1 == col_f) return true;
 		if (row_0 == row_f && col_0 + 1 == col_f) return true;
-		for (int i = row_0; i > row_f + 1 ; --i) {
+		for (int i = row_0; i > row_f + 1 ; --i) {  // moving upwards
 			if (!(theBoard.at(i - 1).at(col_f).getPiece()->getColor() == Color::NoColor)) {
 		  		valid = 0;
 		  		break;
@@ -397,7 +398,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  		valid = 1;
 		  	}
 		}
-		for (int j = row_0; j < row_f - 1; ++j) {
+		for (int j = row_0; j < row_f - 1; ++j) { // moving downwards
 		  	if (!(theBoard.at(j + 1).at(col_f).getPiece()->getColor() == Color::NoColor)) {
 		  		valid = 0;
 		  		break;
@@ -405,7 +406,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  		valid = 1;
 		  	}
 		}
-		for (int k = col_0; k < col_f - 1; ++k) {
+		for (int k = col_0; k < col_f - 1; ++k) {  // moving rightwards
 		  	if (!(theBoard.at(row_f).at(k + 1).getPiece()->getColor() == Color::NoColor)) {
 		  		valid = 0;
 		  		break;
@@ -413,8 +414,8 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  		valid = 1;
 		  	}
 		}
-		for (int l = col_0; l > col_f + 1; --l) {
-		  	if (!(theBoard.at(row_f + 1).at(l - 1).getPiece()->getColor() == Color::NoColor)) {
+		for (int l = col_0; l > col_f + 1; --l) { // moving leftwards
+		  	if (!(theBoard.at(row_f).at(l - 1).getPiece()->getColor() == Color::NoColor)) {
 		  		valid = 0;
 		  		break;
 		  	} else {
