@@ -170,9 +170,9 @@ return;
 }
 
 void computer_3(Board &b, Color color) {
-return;
+	return;
 }
 
 void computer_4(Board &b, Color color) {
-return;
+	return;
 }

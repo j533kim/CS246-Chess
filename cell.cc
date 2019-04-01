@@ -41,11 +41,6 @@ void Cell::notify(Subject<State> &whoFrom) {
 	}
 }
 
-void Cell::placePiece(shared_ptr<Piece> piece) {
-	this->piece = piece;
-	notifyObservers();
-}
-
 void Cell::removePiece() {
 	piece = make_shared<NoPiece>();
 	notifyObservers();
