@@ -28,17 +28,13 @@ string ourpos_to_user(int row, int col) {
 }
 
 void computer_1(Board &b, Color color) {
-return;
 }
 
 void computer_2(Board &b, Color color) {
-return;
 }
 
 void computer_3(Board &b, Color color) {
-return;
 }
 
 void computer_4(Board &b, Color color) {
-return;
 }
