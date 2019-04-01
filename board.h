@@ -25,8 +25,11 @@ class Board {
   // I'm not so sure about using these smartpointers (verification needed)
   TextDisplay *td = nullptr;
   Observer<State> *ob = nullptr;
-  bool checkmate = false;
+  bool white_checkmate = false;
+  bool black_checkmate = false;
   bool stalemate = false;
+  bool white_check;
+  bool black_check;
 public:
   ~Board(); // destructor
   void setObserver(Observer<State> *ob); // sets the observers for each
@@ -43,6 +46,16 @@ public:
   void placePiece(Piece &piece, int row, int col);
   void swapPiece(int row_0, int col_0, int row_f, int col_f);
   bool canmove(std::string name, int row_0, int col_0, int row_f, int col_f);
+  bool getwhite_checkmate() const;
+  bool getblack_checkmate() const;
+  bool getStalemate() const;
+  bool getwhite_check() const;
+  bool getblack_check() const;
+  void setwhite_checkmate();
+  void setblack_checkmate();
+  void setStalemate();
+  void setwhite_check(bool check);
+  void setblack_check(bool check);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);

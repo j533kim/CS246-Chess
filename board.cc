@@ -117,19 +117,52 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 		throw InvalidMove();
 		return;
 	}
+
+/*
+	bool en_passant = 0;
+	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
+		if (row_0 + 1 == row_f && theBoard.at(row_0).at(col_0).getPiece()->getColor == Color::Black) {
+			if (col_0 - 1 == col_f) {
+
+			} else if (col_0 + 1 == col_f) {
+
+			}
+		} else if (row_0 - 1 == row_f && theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::White) {
+			if (col_0 - 1 == col_f) {
+
+			} else if (col_0 + 1 == col_f) {
+
+			}
+		}
+	}*/
+
 	removePiece(row_f, col_f);
 	swapPiece(row_0, col_0, row_f, col_f);
+
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			if (theBoard.at(i).at(j).getPiece()->getmovedTwoStepsBefore()) {
+				theBoard.at(i).at(j).getPiece()->setmovedTwoStepsBefore();
+			}
+		}
+	}
+	
+	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
+		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+		if (row_0 - 2 == row_f || row_0 + 2 == row_f) theBoard.at(row_f).at(col_f).getPiece()->setmovedTwoStepsBefore();
+	}
 }
 
-//////////////////////temporary///////////////////
 Color Board::winner() {
-	return Color::White;
+	if (white_checkmate) return Color::Black;
+	else if (black_checkmate) return Color::White;
+	else return Color::NoColor;
 }
 
 bool Board::gameEnd() {
+	if (white_checkmate || black_checkmate || stalemate) return true;
 	return false;
 }
-//////////////////////////////////////////////////
 
 bool Board::setup_valid() { // called in the setup mode ONLY // 
 	// perfect
@@ -216,6 +249,25 @@ void Board::removePiece_setup(string pos) {
 	theBoard.at(row).at(col).removePiece();
 }
 
+bool Board::getwhite_checkmate() const { return white_checkmate; }
+
+bool Board::getblack_checkmate() const { return black_checkmate; }
+
+bool Board::getStalemate() const { return stalemate; }
+
+bool Board::getwhite_check() const { return white_check; }
+
+bool Board::getblack_check() const { return black_check; }
+
+void Board::setwhite_checkmate() { white_checkmate = true; }
+
+void Board::setblack_checkmate() { black_checkmate = true; }
+
+void Board::setStalemate() { stalemate = true; }
+
+void Board::setwhite_check(bool check) { white_check = check; }
+
+void Board::setblack_check(bool check) { black_check = check; }
 
 ostream &operator<<(ostream &out, const Board &b) {
 	out << *(b.td);
@@ -231,30 +283,32 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
 			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f + 1).at(col_f).getPiece()->getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
-				piece_0->settwoStepChance(); // the pawn cannot move two steps anymore // changes to false
+				
 				return true;
 			} else if (row_f + 1 == row_0 && col_0 == col_f && piece_f->getColor() == Color::NoColor) {
-				piece_0->settwoStepChance();
+				
 				return true;
 			} else if (row_f + 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::Black) {
-				piece_0->settwoStepChance();
+				
 				return true;
-			} /*else if (row_i == 3 && theBoard.at(3).at(col_i - 1).getPiece()->getName() == "pawn" &&
-					   theBoard.at(3).at(col_i - 1).getPiece()->getColor() == Color::Black
-			 		   && col_f == col_i - 1 && theBoard.at(3).at(col_i - 1).getPiece()->getmovedTwoStepsBefore()) { // en passant
-				return true;
-			}*/
+			} else if (row_0 == 3 && row_f == 2 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
+				if (col_f == col_0 - 1 && theBoard.at(3).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				else if (col_f == col_0 + 1 && theBoard.at(3).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
+			}
 			return false;
 		} else { // color is black
 			if (row_f - 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f - 1).at(col_f).getPiece()->getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
-				piece_0->settwoStepChance(); // the pawn cannot move two steps anymore
+				
 				return true;
 			} else if (row_f - 1 == row_0 && col_0 == col_f && piece_f->getColor() == Color::NoColor) {
-				piece_0->settwoStepChance();
+				
 				return true;
 			} else if (row_f - 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::White) {
-				piece_0->settwoStepChance();
+				
 				return true;
+			} else if (row_0 == 4 && row_f == 5 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
+				if (col_f == col_0 - 1 && theBoard.at(4).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				else if (col_f == col_0 + 1 && theBoard.at(4).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
 			}
 			return false;
 		}
@@ -271,6 +325,11 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
 		if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
 		if (row_f + 1 == row_0 && col_f + 1 == col_0) return true;
+		float delta_y = row_f - row_0;
+		float delta_x = col_f - col_0;
+		float allowed_1 = -1;
+		float allowed_2 = 1;
+		if ((delta_x * allowed_1 != delta_y) && (delta_x * allowed_2 != delta_y)) return false;
 		for (int i = row_f, j = col_f; i > row_0 && j > col_0;i--,j--) {  // final position is south east
 			if (theBoard.at(i-1).at(j-1).getPiece()->getColor() == Color::NoColor) {
 				if (i-2 == row_0 && j-2 == col_0) {
@@ -338,7 +397,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		  		break;
 		  	} else {
 		  		valid = 1;
-		  }
+		  	}
 		}
 		for (int l = col_0; l > col_f + 1; --l) {
 		  	if (!(theBoard.at(row_f + 1).at(l - 1).getPiece()->getColor() == Color::NoColor)) {
@@ -352,11 +411,11 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			return false;
 		} else {
 			return true;
-		}		
+		}
 	} else if (name == "queen") {
-		if (canmove("bishop", row_0, col_0, row_f, col_f)
-		 || canmove("rook", row_0, col_0, row_f, col_f)) return true;
-		else return false;
+		if (canmove("rook", row_0, col_0, row_f, col_f)
+		 || canmove("bishop", row_0, col_0, row_f, col_f)) return true;
+		return false;
 	} else if (name == "king") {
       if (piece_0->getColor() == piece_f->getColor()) return false;
 	  if (row_f - 1 == row_0 && col_f - 1 == col_0 && (theBoard.at(row_f).at(col_f).getPiece()->getCheck() == false)) return true;
