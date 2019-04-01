@@ -118,26 +118,49 @@ void Board::move(string pos_initial, string pos_final, bool white_turn) { //
 		return;
 	}
 
-/*
 	bool en_passant = 0;
 	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
-		if (row_0 + 1 == row_f && theBoard.at(row_0).at(col_0).getPiece()->getColor == Color::Black) {
+		if (row_0 + 1 == row_f && theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::Black) {
 			if (col_0 - 1 == col_f) {
-
+				if (theBoard.at(row_0).at(col_f).getPiece()->getColor() == Color::White) {
+					if (theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore()) {
+						en_passant = 1;
+					}
+				}
 			} else if (col_0 + 1 == col_f) {
-
+				if (theBoard.at(row_0).at(col_f).getPiece()->getColor() == Color::White) {
+					if (theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore()) {
+						en_passant = 1;
+					}
+				}
 			}
 		} else if (row_0 - 1 == row_f && theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::White) {
 			if (col_0 - 1 == col_f) {
-
+				if (theBoard.at(row_0).at(col_f).getPiece()->getColor() == Color::Black) {
+					if (theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore()) {
+						en_passant = 1;
+					}
+				}
 			} else if (col_0 + 1 == col_f) {
-
+				if (theBoard.at(row_0).at(col_f).getPiece()->getColor() == Color::Black) {
+					if (theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore()) {
+						en_passant = 1;
+					}
+				}
 			}
 		}
-	}*/
+	}
 
 	removePiece(row_f, col_f);
 	swapPiece(row_0, col_0, row_f, col_f);
+
+	if (en_passant) {
+		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
+			removePiece(row_f + 1, col_f);
+		} else { // black killing white
+			removePiece(row_f - 1, col_f);
+		}
+	}
 
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
