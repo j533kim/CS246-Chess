@@ -109,5 +109,3 @@ int Cell::getCol() const { return col; }
 void Cell::settheBoard(Board *theBoard)  { this->theBoard = theBoard; }
 
 Board *Cell::gettheBoard()  { return theBoard; }
-
-

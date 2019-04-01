@@ -15,8 +15,6 @@ public:
 	Piece(Color color, int value, std::string name);
 	std::string getName() const;
 	int getValue() const;
-	bool attacked() const;
-	bool attacking() const;
 	Color getColor() const;
 	virtual void upgrade(std::shared_ptr<Piece> piece);
 	virtual bool getCheck() const;

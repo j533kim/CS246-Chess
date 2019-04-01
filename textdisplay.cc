@@ -4,6 +4,11 @@
 #include "textdisplay.h"
 
 using namespace std;
+int TextDisplay::getRow() const { return 0; }
+ 
+int TextDisplay::getCol() const { return 0; }
+
+shared_ptr<Piece> TextDisplay::getPiece() const { return nullptr; }
 
 TextDisplay::TextDisplay() {
 	vector<char> vect_odd; // white colored cell first (just space)
