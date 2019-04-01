@@ -165,6 +165,18 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
 		if (row_0 - 2 == row_f || row_0 + 2 == row_f) theBoard.at(row_f).at(col_f).getPiece()->setmovedTwoStepsBefore();
 	}
+
+	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
+		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
+			if (row_f == 0) {
+				theBoard.at(row_f).at(col_f).placePiece(make_shared<Queen>(Color::White));
+			}
+		} else {
+			if (row_f == 7) {
+				theBoard.at(row_f).at(col_f).placePiece(make_shared<Queen>(Color::Black));
+			}
+		}
+	}
 }
 
 Color Board::winner() {
