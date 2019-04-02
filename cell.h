@@ -39,8 +39,6 @@ public:
 	int getCol() const override;
 	void settheBoard(Board *theBoard) override;
 	Board *gettheBoard() override;
-
-	//~Cell();
 };
 
 #endif
