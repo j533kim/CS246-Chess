@@ -7,7 +7,15 @@
 struct row_col{
 	int row;
 	int col;
+	bool operator==(row_col other) {
+		if (row == other.row && col == other.col) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 };
+
 
 class Move {
 	row_col start;
