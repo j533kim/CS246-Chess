@@ -39,6 +39,7 @@ int main(int argc, char *argv[]) {
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
   			string setup_cmd, setup_cmd_1, setup_cmd_2;
+        cout << endl;
         cout << b;
         cout << endl;
   			while (true) {
@@ -53,6 +54,7 @@ int main(int argc, char *argv[]) {
   					} else { // setup is invalid, the user cannot exit setup mode
   						cout << "Hmmm... Your board setup seems inappropriate." << endl;
   						cout << "You are not allowed to leave, make some changes:" << endl;
+              cout << endl;
               cout << b;
               cout << endl;
   						continue;
@@ -61,7 +63,8 @@ int main(int argc, char *argv[]) {
   					cin >> setup_cmd_1 >> setup_cmd_2;
   					try {
   						b.placePiece_setup(setup_cmd_1, setup_cmd_2);
-  						cout << b;
+  						cout << endl;
+              cout << b;
               cout << endl;
   					} catch (InvalidMove In) {
   						cout << "You cannot place " << setup_cmd_1 << " on ";
@@ -71,7 +74,8 @@ int main(int argc, char *argv[]) {
   				} else if (setup_cmd == "-") { // removing a piece in setup
   					cin >> setup_cmd_1;
   					b.removePiece_setup(setup_cmd_1); // does nothing if piece is not there
-  					cout << b;
+  					cout << endl;
+            cout << b;
             cout << endl;
   				} else if (setup_cmd == "=") { // color
   					cin >> setup_cmd_1;
@@ -96,9 +100,10 @@ int main(int argc, char *argv[]) {
   			} else {
   				cout << "Setup Game Start" << endl;
   			}
-        ++ronud_num;
+        ++round_num;
         cout << "  ROUND " << round_num << endl;
   			cout << game_cmd_1 << "(W) vs " << game_cmd_2 << "(B)" << endl;
+        cout << endl;
         cout << b;
         cout << endl;
   			// human if level=0; if 1,2,3,4, it's a computer with that level
@@ -122,6 +127,7 @@ int main(int argc, char *argv[]) {
   						cin >> game_cmd_1 >> game_cmd_2;
   						try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   							b.move(game_cmd_1, game_cmd_2, white_turn);
+                cout << endl;
                 cout << b;
                 cout << endl;
   						} catch (InvalidMove In) { // when the move is invalid
@@ -162,6 +168,7 @@ int main(int argc, char *argv[]) {
   								cin >> game_cmd_1 >> game_cmd_2;
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
+                    cout << endl;
                     cout << b;
                     cout << endl;
   								} catch (InvalidMove In) { // when the move is invalid
@@ -180,6 +187,7 @@ int main(int argc, char *argv[]) {
   							} else { // computer level 4
   								computer_4(b, Color::Black);
   							}
+                cout << endl;
                 cout << b;
                 cout << endl;
   							white_turn = 1; // making it human's turn again
@@ -212,6 +220,7 @@ int main(int argc, char *argv[]) {
   							} else { // computer level 4
   								computer_4(b, Color::White);
   							}
+                cout << endl;
                 cout << b;
                 cout << endl;
   							white_turn = 0; // making it human's turn again
@@ -227,6 +236,7 @@ int main(int argc, char *argv[]) {
   								cin >> game_cmd_1 >> game_cmd_2;
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
+                    cout << endl;
                     cout << b;
                     cout << endl;
   								} catch (InvalidMove In) { // when the move is invalid
@@ -265,6 +275,7 @@ int main(int argc, char *argv[]) {
   						} else { // computer level 4
   							computer_4(b, Color::White);
   						}
+              cout << endl;
               cout << b;
               cout << endl;
   						white_turn = 0; // making it human's turn again
@@ -278,6 +289,7 @@ int main(int argc, char *argv[]) {
   						} else { // computer level 4
   							computer_4(b, Color::Black);
   						}
+              cout << endl;
               cout << b;
               cout << endl;
   						white_turn = 1; // making it human's turn again
