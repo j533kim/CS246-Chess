@@ -15,6 +15,7 @@
 #include "state.h"
 #include "cell.h"
 #include "king.h"
+#include "move.h"
 
 class TextDisplay;
 template <typename StateType> class Observer;
@@ -24,7 +25,7 @@ class Board {
   std::vector<std::vector<Cell>> theBoard;
   // I'm not so sure about using these smartpointers (verification needed)
   TextDisplay *td = nullptr;
-  //std::vector<std:
+  std::vector<Move> pastMoves;
   Observer<State> *ob = nullptr;
   bool white_checkmate = false;
   bool black_checkmate = false;
@@ -38,7 +39,7 @@ public:
                // clears the old board, if necessary
   void move(std::string pos_initial, std::string pos_final, bool white_turn); // move a piece
   void removePiece_setup(std::string pos); // removes a piece, if nothing, nothing happens
-  void removePiece(int row, int col);
+  void removePiece(int row, int col, Move currMove);
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
   bool gameEnd(); // true if gameover or false otherwise 
   bool setup_valid(); // determines if the current setup mode is valid
