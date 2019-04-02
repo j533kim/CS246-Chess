@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include "board.h"
-
+#include <cstdlib>
 
 using namespace std;
 
@@ -78,9 +78,10 @@ void Board::init() {
 	}
 }
 
-void Board::removePiece(int row, int col, Move currMove) { 
-	currMove.setLostPiece(theBoard.at(row).at(col).getPiece());
-	theBoard.at(row).at(col).removePiece(); }
+void Board::removePiece(int row, int col, shared_ptr<Move> currMove) { 
+	currMove->setLostPiece(theBoard.at(row).at(col).getPiece());
+	theBoard.at(row).at(col).removePiece(); 
+}
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
@@ -97,7 +98,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	int col_0 = col_return(pos_in);
 	int row_f = row_return(pos_fi);
 	int col_f = col_return(pos_fi);
-	Move currMove{{row_0,col_0}, {row_f, col_f}, nullptr, nullptr, true}; // currMove for initial to final
+	shared_ptr<Move> currMove = make_shared<Move>(row_col{row_0,col_0}, row_col{row_f, col_f}, nullptr, nullptr, true); // main move // START //
 	Color moving_color = theBoard.at(row_0).at(col_0).getPiece()->getColor();
 	if ((moving_color == Color::White && white_turn == 0) 
 	|| (moving_color == Color::Black && white_turn == 1)) {
@@ -164,65 +165,62 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (!castle) {    // en_passant and rest of the moves comes under this. // 
 		removePiece(row_f, col_f,currMove);
 		swapPiece(row_0, col_0, row_f, col_f);
-		pastMoves.push_back(currMove);
+		pastMoves.push_back(currMove);        // MAIN MOVE // END //
 	}
 
 	// castling movement //////
 	if (castle) {
-		Move nextCurrMove;
+		shared_ptr<Move> nextCurrMove = make_shared<Move>();
 		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
-			nextCurrMove.setStart({7,0});
+			nextCurrMove->setStart({7,0});
 			removePiece(7, 0,nextCurrMove); // rook removed
 			removePiece(row_0, col_0,currMove);  // king being removed
 			theBoard.at(7).at(2).setPiece(make_shared<King>(Color::White, false));
 			theBoard.at(7).at(3).setPiece(make_shared<Rook>(Color::White, false));
-			nextCurrMove.setEnd({7,3});
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setEnd({7,3});
 		} else if (row_0 == 7 && col_0 == 4 && col_f == 6) { // white king to the right
-			nextCurrMove.setStart({7,7});
+			nextCurrMove->setStart({7,7});
 			removePiece(7, 7,nextCurrMove);
 			removePiece(row_0, col_0,nextCurrMove);
 			theBoard.at(7).at(6).setPiece(make_shared<King>(Color::White, false));
 			theBoard.at(7).at(5).setPiece(make_shared<Rook>(Color::White, false));
-			nextCurrMove.setEnd({7,5});
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setEnd({7,5});
 		} else if (row_0 == 0 && col_0 == 4 && col_f == 2) { // black king to the left
-			nextCurrMove.setStart({0,0});
+			nextCurrMove->setStart({0,0});
 			removePiece(0, 0,nextCurrMove);
 			removePiece(row_0, col_0,currMove);
 			theBoard.at(0).at(2).setPiece(make_shared<King>(Color::Black, false));
 			theBoard.at(0).at(3).setPiece(make_shared<Rook>(Color::Black, false));
-			nextCurrMove.setEnd({0,3});
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setEnd({0,3});
 		} else {											// black king to the right 
-			nextCurrMove.setStart({0,7});
+			nextCurrMove->setStart({0,7});
 			removePiece(0, 7, nextCurrMove);
 			removePiece(row_0, col_0,currMove);
 			theBoard.at(0).at(6).setPiece(make_shared<King>(Color::Black, false));
 			theBoard.at(0).at(5).setPiece(make_shared<Rook>(Color::Black, false));
-			nextCurrMove.setEnd({0,5});
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setEnd({0,5});
 		}
+		pastMoves.push_back(currMove);
+		pastMoves.push_back(nextCurrMove);
 	}
 	////////////////////////////////////////
 
 	// movement for en_passant /////////
 	if (en_passant) {
-		Move nextCurrMove;
+		shared_ptr<Move> nextCurrMove = make_shared<Move>();
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
-			nextCurrMove.setStart({row_f + 1, col_f});
-			nextCurrMove.setEnd({row_f+1, col_f});
+			nextCurrMove->setStart({row_f + 1, col_f});
+			nextCurrMove->setEnd({row_f+1, col_f});
 			removePiece(row_f + 1, col_f,nextCurrMove);   // ??
-			nextCurrMove.setOfficialMove(false);
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setOfficialMove(false);
 		} else { // black killing white
-			nextCurrMove.setStart({row_f - 1, col_f});
-			nextCurrMove.setEnd({row_f - 1, col_f});
+			nextCurrMove->setStart({row_f - 1, col_f});
+			nextCurrMove->setEnd({row_f - 1, col_f});
 			removePiece(row_f - 1, col_f,nextCurrMove);   // ??
-			nextCurrMove.setOfficialMove(false);
-			pastMoves.push_back(nextCurrMove);
+			nextCurrMove->setOfficialMove(false);
 
 		}
+		pastMoves.push_back(nextCurrMove);
 	}
 	///////////////////////////////////
 
@@ -247,24 +245,27 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	// upgrading pawns if necessary
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();
-		Move nextCurrMove{{row_f,col_f},{row_f,col_f},pawn,nullptr,false};   // make sure that this line is placed at the right position //
+		shared_ptr<Move> nextCurrMove = make_shared<Move>(row_col{row_f,col_f},row_col{row_f,col_f},pawn,nullptr,false);   // make sure that this line is placed at the right position //
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
 			if (row_f == 0) {
 				shared_ptr<Piece> queen = make_shared<Queen>(Color::White);
 				theBoard.at(row_f).at(col_f).setPiece(queen); 
 				theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
-				nextCurrMove.setAddedPiece(queen);
+				nextCurrMove->setAddedPiece(queen);
+				pastMoves.push_back(nextCurrMove);
 			}
 		} else {
 			if (row_f == 7) {
 				shared_ptr<Piece> queen = make_shared<Queen>(Color::Black);
 				theBoard.at(row_f).at(col_f).setPiece(queen);
 				theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
-				nextCurrMove.setAddedPiece(queen);
+				nextCurrMove->setAddedPiece(queen);
+				pastMoves.push_back(nextCurrMove);
 			}
 		}
-		pastMoves.push_back(nextCurrMove);
 	}
+
+
 	////////////////////////////
 
 	// checking for stalemate /////////////
@@ -342,6 +343,26 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		return;
 	}
 	////////////////////////
+}
+
+void Board::undo() {
+	shared_ptr<Move> currMove = pastMoves.back();
+	int row_0 = currMove->getEnd().row;
+	int col_0 = currMove->getEnd().col;
+	int row_f = currMove->getStart().row;
+	int col_f = currMove->getStart().col;
+	pastMoves.pop_back();
+	if (currMove->getStart() == currMove->getEnd()) {    // add just the piece that was stored // not official move
+		cout << "not here" << endl;
+	} else {
+		if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_f-row_0) == 2 && (col_f == col_0))) {
+			theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+		}
+		swapPiece(row_f,col_f,row_0,col_0);  // moves from final to initial // the opposite //
+		if (currMove->getLostPiece() != nullptr) {
+			theBoard.at(row_0).at(col_0).setPiece(currMove->getLostPiece());
+		}
+	}
 }
 
 Color Board::winner() {

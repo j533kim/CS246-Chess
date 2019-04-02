@@ -132,7 +132,16 @@ int main(int argc, char *argv[]) {
   						}
   						if (white_turn == 1) white_turn = 0; // turn changes
   						else white_turn = 1;
-  					}
+  					} else if (game_cmd == "undo") {
+              try {
+                b.undo();
+                cout << b;
+              } catch (InvalidMove in) {
+                cout << "you have reached the beginning of the game" << endl;
+              }
+              if (white_turn == 1) white_turn = 0; // turn changes
+              else white_turn = 1;
+            }
   					if (b.gameEnd()) { // always check if the game is over
   						if (b.winner() == Color::Black) {
   							black_score+=1; // black earns a point
