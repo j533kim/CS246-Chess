@@ -307,6 +307,8 @@ void Board::removePiece_setup(string pos) {
 	theBoard.at(row).at(col).removePiece();
 }
 
+std::vector<std::vector<Cell>> &Board::get_theBoard() { return theBoard; }
+
 bool Board::getwhite_checkmate() const { return white_checkmate; }
 
 bool Board::getblack_checkmate() const { return black_checkmate; }
