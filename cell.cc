@@ -97,7 +97,7 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 	}
 	if (piece == "R") {
 		if (getRow() == 7 && (getCol() == 0 || getCol() == 7)) this->piece = make_shared<Rook>(Color::White, true);
-		else this->piece = make_shared<Rook>(Color::Black, false);
+		else this->piece = make_shared<Rook>(Color::White, false);
 	}
 	if (piece == "r") {
 		if (getRow() == 0 && (getCol() == 0 || getCol() == 7)) this->piece = make_shared<Rook>(Color::Black, true);

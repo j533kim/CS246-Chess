@@ -8,6 +8,14 @@ using namespace std;
 
 ////////////helper functions/////////////////
 
+bool check_pos(int row_0, int col_0, int row_f, int col_f) {
+	if (row_0 < 0 || row_0 > 7) return false;
+	if (col_0 < 0 || col_0 > 7) return false;
+	if (row_f < 0 || row_f > 7) return false;
+	if (col_f < 0 || col_f > 7) return false;
+	return true;
+}
+
 bool valid_piece(string piece) { // returns true if such piece exists in Chess
 	if (lowercase(piece) == "k") return true;
 	if (lowercase(piece) == "q") return true;
@@ -153,6 +161,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		swapPiece(row_0, col_0, row_f, col_f);
 	}
 
+	// castling movement //////
 	if (castle) {
 		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
 			removePiece(7, 0);
@@ -176,7 +185,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			theBoard.at(0).at(5).setPiece(make_shared<Rook>(Color::Black, false));
 		}
 	}
+	////////////////////////////////////////
 
+	// movement for en_passant /////////
 	if (en_passant) {
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
 			removePiece(row_f + 1, col_f);
@@ -184,20 +195,27 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			removePiece(row_f - 1, col_f);
 		}
 	}
+	///////////////////////////////////
 
+	// cancelling all the getmoved for other pieces
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
-			if (theBoard.at(i).at(j).getPiece()->getmovedTwoStepsBefore()) {
-				theBoard.at(i).at(j).getPiece()->setmovedTwoStepsBefore();
+			shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+			if (curr->getmovedTwoStepsBefore()) {
+				curr->setmovedTwoStepsBefore();
 			}
 		}
 	}
-	
+	/////////////////////////
+
+	// and setting the most recent pawn twice move
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
 		if (row_0 - 2 == row_f || row_0 + 2 == row_f) theBoard.at(row_f).at(col_f).getPiece()->setmovedTwoStepsBefore();
 	}
+	/////////////////////////
 
+	// upgrading pawns if necessary
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
 			if (row_f == 0) {
@@ -209,16 +227,93 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			}
 		}
 	}
+	////////////////////////////
+
+	// checking for stalemate /////////////
+	int w_bishop = 0; // stalemate if not enough pieces for checkmate
+	int b_bishop = 0;
+	int w_knight = 0;
+	int b_knight = 0;
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+			if (curr->getName() == "queen") return;
+			if (curr->getName() == "rook") return;
+			if (curr->getName() == "pawn") return;
+			if (curr->getName() == "bishop") {
+				if (curr->getColor() == Color::White) ++w_bishop;
+				else ++b_bishop;
+			}
+			if (curr->getName() == "knight") {
+				if (curr->getColor() == Color::White) ++w_knight;
+				else ++b_knight;
+			}
+		}
+	}
+	if (w_bishop + w_knight > 1 || b_bishop + b_knight > 1) return;
+
+	int row_w_king = 0;
+	int col_w_king = 0;
+	int row_b_king = 0;
+	int col_b_king = 0;
+	int other_pieces_w = 0;
+	int other_pieces_b = 0;
+	if (!getwhite_check()) {
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+				if (!(curr->getName() == "king" || curr->getName() == "nopiece")) {
+					if (curr->getColor() == Color::White) ++other_pieces_w;
+				} else if (curr->getName() == "king") {
+					row_w_king = i;
+					col_w_king = j;
+				}
+			}
+		}
+		if (canmove("king", row_w_king, col_w_king, row_w_king + 1, col_w_king + 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king, col_w_king + 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king - 1, col_w_king + 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king + 1, col_w_king - 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king, col_w_king - 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king - 1, col_w_king - 1)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king + 1, col_w_king)) return;
+		if (canmove("king", row_w_king, col_w_king, row_w_king - 1, col_w_king)) return;
+		setStalemate();
+		return;
+	} else if (!getblack_check()) {
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+				if (!(curr->getName() == "king" || curr->getName() == "nopiece")) {
+					if (curr->getColor() == Color::Black) ++other_pieces_b;
+				} else if (curr->getName() == "king") {
+					row_b_king = i;
+					col_b_king = j;
+				}
+			}
+		}
+		if (canmove("king", row_b_king, col_b_king, row_b_king + 1, col_b_king + 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king, col_b_king + 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king - 1, col_b_king + 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king + 1, col_b_king - 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king, col_b_king - 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king - 1, col_b_king - 1)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king + 1, col_b_king)) return;
+		if (canmove("king", row_b_king, col_b_king, row_b_king - 1, col_b_king)) return;
+		setStalemate();
+		return;
+	}
+	////////////////////////
 }
 
 Color Board::winner() {
-	if (white_checkmate) return Color::Black;
-	else if (black_checkmate) return Color::White;
+	if (getwhite_checkmate()) return Color::Black;
+	else if (getblack_checkmate()) return Color::White;
 	else return Color::NoColor;
 }
 
 bool Board::gameEnd() {
-	if (white_checkmate || black_checkmate || stalemate) return true;
+	if (getwhite_checkmate() || getblack_checkmate() || getStalemate()) return true;
 	return false;
 }
 
@@ -232,10 +327,11 @@ bool Board::setup_valid() { // called in the setup mode ONLY //
 	}
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
-			if (theBoard.at(i).at(j).getPiece()->getName() == "king") {
-				if (theBoard.at(i).at(j).getPiece()->getCheck() == 1) return false; // king is in check
-				if (theBoard.at(i).at(j).getPiece()->getColor() == Color::Black) ++black_king;
-				else ++white_king;
+			shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+			if (curr->getName() == "king") {
+				if (curr->getCheck() == true) return false; // king is in check
+				if (curr->getColor() == Color::Black) ++black_king;
+				if (curr->getColor() == Color::White) ++white_king;
 			}
 		}
 	}
@@ -338,7 +434,7 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
-
+	if (!check_pos(row_0, col_0, row_f, col_f)) return false;
 	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
@@ -464,6 +560,12 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		return false;
 	} else if (name == "king") {
       if (piece_0->getColor() == piece_f->getColor()) return false;
+      if (piece_0->getColor() == Color::White) {
+      	if (theBoard.at(row_f).at(col_f).getState().W == Danger::Yes) return false;
+      }
+      if (piece_0->getColor() == Color::Black) {
+      	if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) return false;
+      }
       bool checked_ = theBoard.at(row_f).at(col_f).getPiece()->getCheck();
       if (checked_ == true) return false;
 	  if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
