@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
   							if (game_cmd == "resign") {
   								++black_score; // black earns a point
                   cout << "You resigned!" << endl;
-                  cout << "computer" << player1_level << "(B) wins! Gets 1 point!" << endl;
+                  cout << "computer" << player2_level << "(B) wins! Gets 1 point!" << endl;
   								white_turn = 1; // resetting so white can start in new game
   								break;
   							} else if (game_cmd == "move") {
@@ -173,11 +173,11 @@ int main(int argc, char *argv[]) {
   								white_turn = 0; // turn changes
   							}
   						} else { // computer's turn
-  							if (player1_level == 1) {
+  							if (player2_level == 1) {
   								computer_1(b, Color::Black); // computer's move
-  							} else if (player1_level == 2) {
+  							} else if (player2_level == 2) {
   								computer_2(b, Color::Black);
-  							} else if (player1_level == 3) {
+  							} else if (player2_level == 3) {
   								computer_3(b, Color::Black);
   							} else { // computer level 4
   								computer_4(b, Color::Black);
@@ -271,11 +271,11 @@ int main(int argc, char *argv[]) {
               cout << b << endl;
   						white_turn = 0; // making it human's turn again
   					} else { // computer's turn
-  						if (player1_level == 1) {
+  						if (player2_level == 1) {
   							computer_1(b, Color::Black); // computer's move
-  						} else if (player1_level == 2) {
+  						} else if (player2_level == 2) {
   							computer_2(b, Color::Black);
-  						} else if (player1_level == 3) {
+  						} else if (player2_level == 3) {
   							computer_3(b, Color::Black);
   						} else { // computer level 4
   							computer_4(b, Color::Black);
