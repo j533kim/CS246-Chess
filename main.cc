@@ -112,12 +112,12 @@ int main(int argc, char *argv[]) {
   					if (game_cmd == "resign") {
   						if (white_turn) { // white resigns --> black wins
   							black_score+=1; // black earns a point
-                cout << "white_player resigned!" << endl;
-  							cout << "black_player wins! Gets 1 point!" << endl;
+                cout << endl << "white_player resigned!" << endl;
+  							cout << endl << "black_player wins! Gets 1 point!" << endl;
   						} else { // black resigns --> white wins
   							white_score+=1; // white earns a point
-                cout << "black_player resigned!" << endl;
-  							cout << "white_player wins! Gets 1 point!" << endl;
+                cout << endl << "black_player resigned!" << endl;
+  							cout << endl << "white_player wins! Gets 1 point!" << endl;
   						}
   						break;
   					} else if (game_cmd == "move") {
@@ -136,10 +136,10 @@ int main(int argc, char *argv[]) {
   					if (b.gameEnd()) { // always check if the game is over
   						if (b.winner() == Color::Black) {
   							black_score+=1; // black earns a point
-  							cout << "black_player wins! Gets 1 point!" << endl;
+  							cout << endl << "black_player wins! Gets 1 point!" << endl;
   						} else if (b.winner() == Color::White) {
   							white_score+=1; // white earns a point
-  							cout << "white_player wins! Gets 1 point!" << endl;
+  							cout << endl << "white_player wins! Gets 1 point!" << endl;
   						} else { // Stalemate or simply draw
   							white_score+=0.5;
   							black_score+=0.5;
@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
   						if (white_turn) { // human's turn
   							cin >> game_cmd;
   							if (game_cmd == "resign") {
-  								black_score+=1; // black earns a point
+  								++black_score; // black earns a point
                   cout << "You resigned!" << endl;
                   cout << "computer" << player1_level << "(B) wins! Gets 1 point!" << endl;
   								white_turn = 1; // resetting so white can start in new game
@@ -189,19 +189,19 @@ int main(int argc, char *argv[]) {
   						if (b.gameEnd()) { // always check if the game is over
   							if (b.winner() == Color::Black) {
   								black_score+=1; // black earns a point
-  								cout << "black_player wins! Gets 1 point!" << endl;
+  								cout << endl << "black_player wins! Gets 1 point!" << endl;
   							} else if (b.winner() == Color::White) {
   								white_score+=1; // white earns a point
-  								cout << "white_player wins! Gets 1 point!" << endl;
+  								cout << endl << "white_player wins! Gets 1 point!" << endl;
   							} else { // Stalemate or simply draw
 	  							white_score+=0.5;
   								black_score+=0.5;
   								cout << "it's a draw! Players get 0.5 point each." << endl;
   							}
+                white_turn = 1; // resetting so white can start in new game
   							break;
   						}
   					}
-  					white_turn = 1; // resetting so white can start in new game
   				} else { // computer is white, computer starts first
   					while (true) {
   						if (white_turn) { // computer's turn
@@ -241,19 +241,19 @@ int main(int argc, char *argv[]) {
   						if (b.gameEnd()) { // always check if the game is over
   							if (b.winner() == Color::Black) {
   								++black_score; // black earns a point
-  								cout << "black_player wins! Gets 1 point!" << endl;
+  								cout << endl << "black_player wins! Gets 1 point!" << endl;
   							} else if (b.winner() == Color::White) {
   								white_score+=1; // white earns a point
-  								cout << "white_player wins! Gets 1 point!" << endl;
+  								cout << endl << "white_player wins! Gets 1 point!" << endl;
   							} else { // Stalemate or simply draw
 	  							white_score+=0.5;
   								black_score+=0.5;
   								cout << "it's a draw! Players get 0.5 point each." << endl;
   							}
+                white_turn = 1; // resetting so white can start in new game
   							break;
   						}  				
   					}
-  					white_turn = 1; // resetting so white can start in new game
   				}
   			} else { // 2 computers
   				while (true) {
@@ -287,19 +287,19 @@ int main(int argc, char *argv[]) {
   					if (b.gameEnd()) { // always check if the game is over
   						if (b.winner() == Color::Black) {
   							++black_score; // black earns a point
-  							cout << "black_player wins! Gets 1 point!" << endl;
+  							cout << endl << "black_player wins! Gets 1 point!" << endl;
   						} else if (b.winner() == Color::White) {
   							++white_score; // white earns a point
-  							cout << "white_player wins! Gets 1 point!" << endl;
+  							cout << endl << "white_player wins! Gets 1 point!" << endl;
   						} else { // Stalemate or simply draw
   							white_score+=0.5;
   							black_score+=0.5;
   							cout << "it's a draw! Players get 0.5 point each." << endl;
   						}
+              white_turn = 1; // resetting so white can start in new game
   						break;
   					}
   				}
-  				white_turn = 1; // resetting so white can start in new game
   			}
   		}
   	}
