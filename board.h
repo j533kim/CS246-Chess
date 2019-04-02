@@ -23,7 +23,6 @@ class Cell;
 
 class Board {
   std::vector<std::vector<Cell>> theBoard;
-  // I'm not so sure about using these smartpointers (verification needed)
   TextDisplay *td = nullptr;
   std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
@@ -49,6 +48,7 @@ public:
   void placePiece(Piece &piece, int row, int col);
   void swapPiece(int row_0, int col_0, int row_f, int col_f);
   bool canmove(std::string name, int row_0, int col_0, int row_f, int col_f);
+  bool game_draw_pieces() const; // when there are not enough pieces to end
   std::vector<std::vector<Cell>> &get_theBoard();
   bool getwhite_checkmate() const;
   bool getblack_checkmate() const;
