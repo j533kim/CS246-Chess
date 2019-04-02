@@ -93,12 +93,12 @@ void computer_1(Board &b, Color color) {
 void computer_2(Board &b, Color color) {
 	std::vector<shared_ptr<Piece>> MyPieces;
 	std::vector<shared_ptr<Piece>> OpPieces;              // stores the opposition pieces
-	std::vector<std::vector<Int>> Row_Col_MyPieces;    // stores the row and col index for the my pieces array
-	std::vector<std::vector<Int>> Row_Col_OpPieces;    // stores the row and col index for the opposition pieces array
+	std::vector<std::vector<int>> Row_Col_MyPieces;    // stores the row and col index for the my pieces array
+	std::vector<std::vector<int>> Row_Col_OpPieces;    // stores the row and col index for the opposition pieces array
 	int my_totalpieces = 0;                     // total no. of pieces in MyPieces array
 	int op_totalpieces = 0;                     // total no. of pieces in OpPieces array
 	bool w_turn = 0;                         // equals 1 when it's whites's turn
-	if (Color::color == Color::White) {
+	if (color == Color::White) {
     	w_turn = 1;
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
