@@ -187,6 +187,7 @@ void computer_2(Board &b, Color color) {
 		index_maxcapture = 0;
 	}
 	// subsequent code tries to check the king
+
 	// To get the index of king
 	int king_index = 0;
 	for (int p = 0; p < op_totalpieces; ++p) {
@@ -199,9 +200,30 @@ void computer_2(Board &b, Color color) {
 	for (int r = 0; r < my_totalpieces; ++r) {
 		if (MyPieces.at(r)->getName() == "pawn") {
 			if (w_turn == 1) {
-
-			}
-
+				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col + 1)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + 1, king_col + 1);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 1)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + 1, king_col - 1);
+    				b.move(initial, final, w_turn); 
+    				return;
+    			}
+    		} else {
+    			if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col + 1)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - 1, king_col + 1);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col - 1)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - 1, king_col - 1);
+    				b.move(initial, final, w_turn); 
+    				return;
+    			}
+    		}
 		}
 		if (MyPieces.at(r)->getName() == "knight") {
 			if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 2, king_col + 1)) {
@@ -227,7 +249,7 @@ void computer_2(Board &b, Color color) {
     		}
     	}	
 		if (MyPieces.at(r)->getName() == "bishop") {
-			for (int a = 0; a < 8; ++a) {
+			for (int a = 7; a >= 0; --a) {
 				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col + a);
@@ -252,7 +274,7 @@ void computer_2(Board &b, Color color) {
 			} 	
 		}
 		if (MyPieces.at(r)->getName() == "rook") {
-			for (int a = 0; a < 8; ++a) {
+			for (int a = 7; a >= 0; --a) {
 				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col);
@@ -277,7 +299,7 @@ void computer_2(Board &b, Color color) {
 			} 
 		}
 		if (MyPieces.at(r)->getName() == "queen") {
-			for (int a = 0; a < 8; ++a) {
+			for (int a = 7; a >= 0; --a) {
 				if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col + a);
@@ -323,10 +345,14 @@ void computer_2(Board &b, Color color) {
 			} 	
 		}
 		if (MyPieces.at(r)->getName() == "king") {
-			
+			continue;
 		}
 	}
-return;
+	if (w_turn == 1) {
+		computer_1(b, Color::White);
+	} else {
+		computer_1(b, Color::Black);
+	}
 }
 
 void computer_3(Board &b, Color color) {
