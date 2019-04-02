@@ -182,6 +182,7 @@ int main(int argc, char *argv[]) {
   								white_turn = 0; // turn changes
   							}
   						} else { // computer's turn
+
   							if (player1_level == 1) {
   								computer_1(b, Color::Black); // computer's move
   							} else if (player1_level == 2) {

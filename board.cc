@@ -3,7 +3,7 @@
 #include <vector>
 #include <memory>
 #include "board.h"
-
+#include <cstdlib>
 
 using namespace std;
 
@@ -264,23 +264,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			}
 		}
 	}
-}
 
-void Board::undo() {
-	shared_ptr<Move> currMove = pastMoves.back();
-	int row_0 = currMove->getEnd().row;
-	int col_0 = currMove->getEnd().col;
-	int row_f = currMove->getStart().row;
-	int col_f = currMove->getStart().col;
-	pastMoves.pop_back();
-	if (currMove->getStart() == currMove->getEnd()) {    // add just the piece that was stored // not official move
-		cout << "not here" << endl;
-	} else {
-		swapPiece(row_f,col_f,row_0,col_0);
-		if (currMove->getLostPiece() != nullptr) {
-			theBoard.at(row_0).at(col_0).setPiece(currMove->getLostPiece());
-		}
-	}
+
 	////////////////////////////
 
 	// checking for stalemate /////////////
@@ -358,6 +343,26 @@ void Board::undo() {
 		return;
 	}
 	////////////////////////
+}
+
+void Board::undo() {
+	shared_ptr<Move> currMove = pastMoves.back();
+	int row_0 = currMove->getEnd().row;
+	int col_0 = currMove->getEnd().col;
+	int row_f = currMove->getStart().row;
+	int col_f = currMove->getStart().col;
+	pastMoves.pop_back();
+	if (currMove->getStart() == currMove->getEnd()) {    // add just the piece that was stored // not official move
+		cout << "not here" << endl;
+	} else {
+		if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_f-row_0) == 2 && (col_f == col_0))) {
+			theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+		}
+		swapPiece(row_f,col_f,row_0,col_0);  // moves from final to initial // the opposite //
+		if (currMove->getLostPiece() != nullptr) {
+			theBoard.at(row_0).at(col_0).setPiece(currMove->getLostPiece());
+		}
+	}
 }
 
 Color Board::winner() {
