@@ -8,6 +8,7 @@
 #include "color.h"
 
 class Queen : public Piece {
+	bool pawnPromotion;
 public:
 	Queen(Color color);
 	bool getCheck() const;
@@ -18,6 +19,8 @@ public:
 	void setUpgrade();
 	void setCastle();
 	void setCheck();
+	bool getpawnPromotion() const;
+	bool setpawnPromotion(bool value);
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
 	void upgrade(std::shared_ptr<Piece> piece);
