@@ -19,7 +19,7 @@ public:
 	bool getUpgrade() const;
 	void setUpgrade();
 	void setCastle();
-	void setCheck();
+	void setCheck(bool check);
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
 	void upgrade(std::shared_ptr<Piece> piece);

@@ -7,19 +7,32 @@ Cell::Cell(shared_ptr<Piece> piece, int row, int col): piece{piece}, row{row}, c
 void Cell::notify(Subject<State> &whoFrom) {
 	if (whoFrom.getPiece()->getColor() == Color::White) {
 		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
-			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});
+			if (getState().W == Danger::No) {
+				setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger //
+			}
 			else setState({Danger::Yes,Danger::Yes});
+			if (this->getPiece()->getName() == "king" && getPiece()->getColor() == Color::Black) {
+				this->getPiece()->setCheck(true);
+				theBoard->setblack_check(true);
+			}
 		}
 	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
 		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
-			if (getState().B == Danger::No) setState({Danger::Yes, Danger::No});
+			if (getState().B == Danger::No) {
+				setState({Danger::Yes, Danger::No}); // cell's white_state get set to danger //
+			}
 			else setState({Danger::Yes,Danger::Yes});
+			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
+				this->getPiece()->setCheck(true);
+				theBoard->setwhite_check(true);
+				// when should board's value of check be updated ???
+			}
 		}
 	} else { // Color::NoColor
 		State original = getState();
 		int n = getObservers().size();
 		if (original.W == Danger::No && original.B == Danger::No) return;
-		else if (original.W == Danger::Yes) {
+		else if (original.W == Danger::Yes) {  
 			for (int i = n - 63; i < n; ++i) {
 				string name_ = getObservers().at(i)->getPiece()->getName();
 				Color color_ = getObservers().at(i)->getPiece()->getColor();
@@ -28,6 +41,11 @@ void Cell::notify(Subject<State> &whoFrom) {
 				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::Black) return;
 			}
 			setState({Danger::No, Danger::No});
+			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
+				this->getPiece()->setCheck(false);
+				theBoard->setwhite_check(false);
+			}
+
 		} else if (original.B == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
 				string name_ = getObservers().at(i)->getPiece()->getName();
@@ -37,6 +55,10 @@ void Cell::notify(Subject<State> &whoFrom) {
 				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::White) return;
 			}
 			setState({Danger::No, Danger::No});
+			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::Black) {
+				this->getPiece()->setCheck(false);
+				theBoard->setblack_check(false);
+			}
 		}
 	}
 }
@@ -96,11 +118,6 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 }
 
 shared_ptr<Piece> Cell::getPiece() const { return piece; }
-
-void Cell::setPiece(shared_ptr<Piece> piece) {
-	this->piece = piece;
-	notifyObservers();
-}
 
 int Cell::getRow() const { return row; }
 
