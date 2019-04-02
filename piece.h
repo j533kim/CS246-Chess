@@ -24,7 +24,7 @@ public:
 	virtual bool getUpgrade() const ;
 	virtual void setUpgrade();
 	virtual void setCastle();
-	virtual void setCheck();
+	virtual void setCheck(bool check);
 	virtual void settwoStepChance();
 	virtual void setmovedTwoStepsBefore();
 };
