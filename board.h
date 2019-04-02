@@ -24,6 +24,7 @@ class Board {
   std::vector<std::vector<Cell>> theBoard;
   // I'm not so sure about using these smartpointers (verification needed)
   TextDisplay *td = nullptr;
+  //std::vector<std:
   Observer<State> *ob = nullptr;
   bool white_checkmate = false;
   bool black_checkmate = false;

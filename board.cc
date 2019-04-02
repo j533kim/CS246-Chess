@@ -526,3 +526,5 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	}
 	return false; // if a piece is nopiece
 }
+
+

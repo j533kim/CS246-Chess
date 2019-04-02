@@ -25,6 +25,8 @@ public:
 	virtual void setUpgrade();
 	virtual void setCastle();
 	virtual void setCheck(bool check);
+	virtual bool getpawnPromotion() const {}
+	virtual bool setpawnPromotion(bool value) {}
 	virtual void settwoStepChance();
 	virtual void setmovedTwoStepsBefore();
 };
