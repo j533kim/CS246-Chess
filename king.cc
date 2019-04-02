@@ -21,9 +21,10 @@ void King::setUpgrade() {}
 void King::setCastle() { castlingPossible = false; }
 // always from true to false
 
-void King::setCheck() {
-	if (checked) checked = false;
-	else checked = true;
+void King::setCheck(bool check) {
+	//if (checked) checked = false;
+	//else checked = true;
+	checked = check;
 }
 
 void King::settwoStepChance() {}

@@ -28,7 +28,7 @@ void Piece::setUpgrade() {}
 
 void Piece::setCastle() {}
 	
-void Piece::setCheck() {}
+void Piece::setCheck(bool check) {}
 
 void Piece::settwoStepChance() {}
 

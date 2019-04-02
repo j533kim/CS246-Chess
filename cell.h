@@ -34,7 +34,6 @@ public:
 	void removePiece(); // simply removes the piece on the cell
 						// and replaces with noPiece
 	std::shared_ptr<Piece> getPiece() const override;
-	void setPiece(std::shared_ptr<Piece> piece);
 	int getRow() const override;
 	int getCol() const override;
 	void settheBoard(Board *theBoard) override;
