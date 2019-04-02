@@ -118,6 +118,11 @@ int Cell::getRow() const { return row; }
 
 int Cell::getCol() const { return col; }
 
+void Cell::setPiece(shared_ptr<Piece> piece) {
+	this->piece = piece;
+	notifyObservers();
+}
+
 void Cell::settheBoard(Board *theBoard)  { this->theBoard = theBoard; }
 
 Board *Cell::gettheBoard()  { return theBoard; }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Queen::Queen(Color color): Piece{color, 9, "queen"} {}
+Queen::Queen(Color color): Piece{color, 9, "queen"}, pawnPromotion{false} {}
 
 bool Queen::getCheck() const { return false; }
 
@@ -19,6 +19,14 @@ void Queen::setUpgrade() {}
 void Queen::setCastle() {}
 
 void Queen::setCheck() {}
+
+bool Queen::getpawnPromotion() const {
+	return pawnPromotion;
+}
+
+bool Queen::setpawnPromotion(bool value) {
+	pawnPromotion = value;
+}
 
 void Queen::settwoStepChance() {}
 
