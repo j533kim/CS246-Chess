@@ -30,7 +30,7 @@ string ourpos_to_user(int row, int col) {
 
 void computer_1(Board &b, Color color) {
 	vector<shared_ptr<Piece>> MyPieces;               // confirm whether store piece or piece ptr
-	vector<std::vector<int>> Row_Col;    // stores the row and col index for the my pieces array
+	vector<vector<int>> Row_Col;    // stores the row and col index for the my pieces array
 	int totalpieces = 0;                     // total no. of pieces in MyPieces array
 	bool w_turn = 0;                         // equals 1 when it's whites's turn
 	if (color == Color::White) {
@@ -50,6 +50,7 @@ void computer_1(Board &b, Color color) {
 			}
 		}
 	} else {
+		w_turn = 0;
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
@@ -58,7 +59,7 @@ void computer_1(Board &b, Color color) {
 					vc.push_back(i);
 					vc.push_back(j);
 					Row_Col.push_back(vc);
-					totalpieces +=1 ;
+					totalpieces += 1;
 				}
 			}
 		}
@@ -100,10 +101,10 @@ void computer_1(Board &b, Color color) {
 }
 
 void computer_2(Board &b, Color color) {
-	std::vector<shared_ptr<Piece>> MyPieces;
-	std::vector<shared_ptr<Piece>> OpPieces;              // stores the opposition pieces
-	std::vector<std::vector<int>> Row_Col_MyPieces;    // stores the row and col index for the my pieces array
-	std::vector<std::vector<int>> Row_Col_OpPieces;    // stores the row and col index for the opposition pieces array
+	vector<shared_ptr<Piece>> MyPieces;
+	vector<shared_ptr<Piece>> OpPieces;              // stores the opposition pieces
+	vector<vector<int>> Row_Col_MyPieces;    // stores the row and col index for the my pieces array
+	vector<vector<int>> Row_Col_OpPieces;    // stores the row and col index for the opposition pieces array
 	int my_totalpieces = 0;                     // total no. of pieces in MyPieces array
 	int op_totalpieces = 0;                     // total no. of pieces in OpPieces array
 	bool w_turn = 0;                         // equals 1 when it's whites's turn
@@ -134,6 +135,7 @@ void computer_2(Board &b, Color color) {
 			}
 		}
 	} else {
+		w_turn = 0;
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
@@ -167,7 +169,7 @@ void computer_2(Board &b, Color color) {
 	int max = 0;
 	for (int l = 0; l < op_totalpieces; ++l) {
 		for (int k = 0; k < op_totalpieces; ++k) {
-			if (index_capture[k] == 0) {
+			if (index_capture.at(k) == 0) {
 				if (OpPieces.at(k)->getValue() > max) {
 					max = OpPieces.at(k)->getValue();
 					index_maxcapture = k;
@@ -244,6 +246,26 @@ void computer_2(Board &b, Color color) {
     		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 2, king_col - 1)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row - 2, king_col - 1);
+    			b.move(initial, final, w_turn); 
+    			return;
+    		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 2)) {
+				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    			string final = ourpos_to_user(king_row + 1, king_col - 2);
+    			b.move(initial, final, w_turn); 
+    			return;
+			} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 2)) {
+				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    			string final = ourpos_to_user(king_row + 1, king_col - 2);
+    			b.move(initial, final, w_turn); 
+    			return;
+    		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col + 2)) {
+				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    			string final = ourpos_to_user(king_row - 1, king_col + 2);
+    			b.move(initial, final, w_turn); 
+    			return;
+    		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col - 2)) {
+				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    			string final = ourpos_to_user(king_row - 1, king_col - 2);
     			b.move(initial, final, w_turn); 
     			return;
     		}
@@ -356,8 +378,612 @@ void computer_2(Board &b, Color color) {
 }
 
 void computer_3(Board &b, Color color) {
-	return;
-}
+	vector<shared_ptr<Piece>> Pieces;            
+	vector<vector<int>> Row_Col;    // stores the row and col index for the pieces vector
+	int totalpieces = 0;                     // total no. of pieces in Pieces array
+	bool w_turn = 0;                         // equals 1 when it's whites's turn
+	if (color == Color::White) {
+    	w_turn = 1;
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				vector<int> vc; 
+				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::White) {
+					if (b.get_theBoard().at(i).at(j).getState().W == Danger::Yes) {
+						Pieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
+						vc.push_back(i);
+						vc.push_back(j);
+						Row_Col.push_back(vc);
+						totalpieces += 1;
+					}
+				}
+			}
+		}
+	} else {
+		w_turn = 0;
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				vector<int> vc; 
+				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::Black) {
+					if (b.get_theBoard().at(i).at(j).getState().B == Danger::Yes) {
+						Pieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
+						vc.push_back(i);
+						vc.push_back(j);
+						Row_Col.push_back(vc);
+						totalpieces +=1 ;
+					}
+				}
+			}
+		}
+	}
+	vector<int> index_avoidcapture; // stores if the Piece at a specific index of Pieces vector has been tried. 0 for no and 1 for yes
+	for (int a = 0; a < totalpieces; ++a) {
+		index_avoidcapture.push_back(0);
+	}
+	int index_avoidfirst = 0;
+	int max = 0;
+	for (int l = 0; l < totalpieces; ++l) {
+		for (int k = 0; k < totalpieces; ++k) {
+			if (index_avoidcapture.at(k) == 0) {
+				if (Pieces.at(k)->getValue() > max) {
+					max = Pieces.at(k)->getValue();
+					index_avoidfirst = k;
+				}
+			}
+		}
+		int r = index_avoidfirst;
+		if (Pieces.at(r)->getName() == "king") {
+			if (w_turn == 1) {
+				int row_1 = Row_Col.at(r).at(0) + 1;
+				int row_s1 = Row_Col.at(r).at(0) - 1;
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row = Row_Col.at(r).at(0);
+				int col = Row_Col.at(r).at(1);
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_1) && 
+					(b.get_theBoard().at(row).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_s1) && 
+					(b.get_theBoard().at(row).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_1) && 
+					(b.get_theBoard().at(row_1).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_s1) && 
+					(b.get_theBoard().at(row_1).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col) && 
+					(b.get_theBoard().at(row_1).at(col).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col) && 
+					(b.get_theBoard().at(row_s1).at(col).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_1) && 
+					(b.get_theBoard().at(row_s1).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_s1) && 
+					(b.get_theBoard().at(row_s1).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}
+			} else {
+				int row_1 = Row_Col.at(r).at(0) + 1;
+				int row_s1 = Row_Col.at(r).at(0) - 1;
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row = Row_Col.at(r).at(0);
+				int col = Row_Col.at(r).at(1);
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_1) && 
+					(b.get_theBoard().at(row).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_s1) && 
+					(b.get_theBoard().at(row).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_1) && 
+					(b.get_theBoard().at(row_1).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_s1) && 
+					(b.get_theBoard().at(row_1).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col) && 
+					(b.get_theBoard().at(row_1).at(col).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col) && 
+					(b.get_theBoard().at(row_s1).at(col).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_1) && 
+					(b.get_theBoard().at(row_s1).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_s1) && 
+					(b.get_theBoard().at(row_s1).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}
+			}	
+		} 
+		if (Pieces.at(r)->getName() == "queen") {
+			if (w_turn == 1) {
+				for (int a = 1; a < 8; ++a) {
+					int row = Row_Col.at(r).at(0);
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col = Row_Col.at(r).at(1);
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col) && 
+						(b.get_theBoard().at(row_a).at(col).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col) && 
+						(b.get_theBoard().at(row_sa).at(col).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_a) && 
+						(b.get_theBoard().at(row).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_sa) && 
+						(b.get_theBoard().at(row).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_a) && 
+						(b.get_theBoard().at(row_a).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_sa) && 
+						(b.get_theBoard().at(row_a).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_a) && 
+						(b.get_theBoard().at(row_sa).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_sa) && 
+						(b.get_theBoard().at(row_sa).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				}
+			} else {
+				for (int a = 1; a < 8; ++a) {
+					int row = Row_Col.at(r).at(0);
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col = Row_Col.at(r).at(1);
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col) && 
+						(b.get_theBoard().at(row_a).at(col).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col) && 
+						(b.get_theBoard().at(row_sa).at(col).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_a) && 
+						(b.get_theBoard().at(row).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("rook", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_sa) && 
+						(b.get_theBoard().at(row).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_a) && 
+						(b.get_theBoard().at(row_a).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_sa) && 
+						(b.get_theBoard().at(row_a).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_a) && 
+						(b.get_theBoard().at(row_sa).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove("bishop", Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_sa) && 
+						(b.get_theBoard().at(row_sa).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				}
+			}		
+		}
+		if (Pieces.at(r)->getName() == "rook") {
+			if (w_turn == 1) {
+				for (int a = 1; a < 8; ++a) {
+					int row = Row_Col.at(r).at(0);
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col = Row_Col.at(r).at(1);
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col) && 
+						(b.get_theBoard().at(row_a).at(col).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col) && 
+						(b.get_theBoard().at(row_sa).at(col).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_a) && 
+						(b.get_theBoard().at(row).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_sa) && 
+						(b.get_theBoard().at(row).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				} 
+			} else {
+				for (int a = 1; a < 8; ++a) {
+					int row = Row_Col.at(r).at(0);
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col = Row_Col.at(r).at(1);
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col) && 
+						(b.get_theBoard().at(row_a).at(col).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col) && 
+						(b.get_theBoard().at(row_sa).at(col).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_a) && 
+						(b.get_theBoard().at(row).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row, col_sa) && 
+						(b.get_theBoard().at(row).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				}
+			}
+			
+		}
+		if (Pieces.at(r)->getName() == "bishop") {
+			if (w_turn == 1) {
+				for (int a = 1; a < 8; ++a) {
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_a) && 
+						(b.get_theBoard().at(row_a).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_sa) && 
+						(b.get_theBoard().at(row_a).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_a) && 
+						(b.get_theBoard().at(row_sa).at(col_a).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_sa) && 
+						(b.get_theBoard().at(row_sa).at(col_sa).getState().W == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				} 
+			} else {
+				for (int a = 1; a < 8; ++a) {
+					int row_a = Row_Col.at(r).at(0) + a;
+					int row_sa = Row_Col.at(r).at(0) - a;
+					int col_a = Row_Col.at(r).at(1) + a;
+					int col_sa = Row_Col.at(r).at(1) - a;
+					if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_a) && 
+						(b.get_theBoard().at(row_a).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_a, col_sa) && 
+						(b.get_theBoard().at(row_a).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_a, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_a) && 
+						(b.get_theBoard().at(row_sa).at(col_a).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_a);
+   						b.move(initial, final, w_turn); 
+   						return;
+					} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_sa, col_sa) && 
+						(b.get_theBoard().at(row_sa).at(col_sa).getState().B == Danger::No)) {
+						string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   						string final = ourpos_to_user(row_sa, col_sa);
+   						b.move(initial, final, w_turn); 
+   						return;
+					}
+				} 
+			}	
+		}
+		if (Pieces.at(r)->getName() == "knight") {
+			if (w_turn == 1) {
+				int row_2 = Row_Col.at(r).at(0) + 2;
+				int row_s2 = Row_Col.at(r).at(0) - 2;
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row_1 = Row_Col.at(r).at(0) + 1;
+				int row_s1 = Row_Col.at(r).at(0) - 1;
+				int col_2 = Row_Col.at(r).at(1) + 2;
+				int col_s2 = Row_Col.at(r).at(1) - 2;
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_2, col_s1) && 
+					(b.get_theBoard().at(row_2).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_2, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_2, col_1) && 
+					(b.get_theBoard().at(row_2).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_2, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s2, col_1) && 
+					(b.get_theBoard().at(row_s2).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s2, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s2, col_s1) && 
+					(b.get_theBoard().at(row_s2).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s2, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_2) && 
+					(b.get_theBoard().at(row_1).at(col_2).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_s2) && 
+					(b.get_theBoard().at(row_1).at(col_s2).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_s2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_2) && 
+					(b.get_theBoard().at(row_s1).at(col_2).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_s2) && 
+					(b.get_theBoard().at(row_s1).at(col_s2).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_s2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}
+			} else {
+				int row_2 = Row_Col.at(r).at(0) + 2;
+				int row_s2 = Row_Col.at(r).at(0) - 2;
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row_1 = Row_Col.at(r).at(0) + 1;
+				int row_s1 = Row_Col.at(r).at(0) - 1;
+				int col_2 = Row_Col.at(r).at(1) + 2;
+				int col_s2 = Row_Col.at(r).at(1) - 2;
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_2, col_s1) && 
+					(b.get_theBoard().at(row_2).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_2, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_2, col_1) && 
+					(b.get_theBoard().at(row_2).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_2, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s2, col_1) && 
+					(b.get_theBoard().at(row_s2).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s2, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s2, col_s1) && 
+					(b.get_theBoard().at(row_s2).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s2, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_2) && 
+					(b.get_theBoard().at(row_1).at(col_2).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_s2) && 
+					(b.get_theBoard().at(row_1).at(col_s2).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_s2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_2) && 
+					(b.get_theBoard().at(row_s1).at(col_2).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_s2) && 
+					(b.get_theBoard().at(row_s1).at(col_s2).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_s2);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}
+			}	
+		}
+		if (Pieces.at(r)->getName() == "pawn") {
+			if (w_turn == 1) {
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row_s1 = Row_Col.at(r).at(0) - 1;
+				int col = Row_Col.at(r).at(1);
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_s1) && 
+					(b.get_theBoard().at(row_s1).at(col_s1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col_1) && 
+					(b.get_theBoard().at(row_s1).at(col_1).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_s1, col) && 
+					(b.get_theBoard().at(row_s1).at(col).getState().W == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_s1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}	
+			} else {
+				int col_1 = Row_Col.at(r).at(1) + 1;
+				int col_s1 = Row_Col.at(r).at(1) - 1;
+				int row_1 = Row_Col.at(r).at(0) + 1;
+				int col = Row_Col.at(r).at(1);
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_s1) && 
+					(b.get_theBoard().at(row_1).at(col_s1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_s1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col_1) && 
+					(b.get_theBoard().at(row_1).at(col_1).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col_1);
+   					b.move(initial, final, w_turn); 
+   					return;
+				} else if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), row_1, col) && 
+					(b.get_theBoard().at(row_1).at(col).getState().B == Danger::No)) {
+					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
+   					string final = ourpos_to_user(row_1, col);
+   					b.move(initial, final, w_turn); 
+   					return;
+				}
+			}
+		}
+		index_avoidcapture.at(index_avoidfirst) = 1;
+		max = 0;
+		index_avoidfirst = 0;
+	}  
+	if (w_turn == 1) {
+		computer_2(b, Color::White);
+	} else {
+		computer_2(b, Color::Black);
+	}	 	
+} 
 
 void computer_4(Board &b, Color color) {
 	return;
