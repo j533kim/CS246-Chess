@@ -25,7 +25,7 @@ class Board {
   std::vector<std::vector<Cell>> theBoard;
   // I'm not so sure about using these smartpointers (verification needed)
   TextDisplay *td = nullptr;
-  std::vector<Move> pastMoves;
+  std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
   bool white_checkmate = false;
   bool black_checkmate = false;
@@ -38,8 +38,9 @@ public:
   void init(); // sets up 8x8 board and responsible for observer pattern
                // clears the old board, if necessary
   void move(std::string pos_initial, std::string pos_final, bool white_turn); // move a piece
+  void undo();
   void removePiece_setup(std::string pos); // removes a piece, if nothing, nothing happens
-  void removePiece(int row, int col, Move currMove);
+  void removePiece(int row, int col, std::shared_ptr<Move> currMove);
   Color winner(); // white wins -> White, black wins -> Black, draw -> NoColor
   bool gameEnd(); // true if gameover or false otherwise 
   bool setup_valid(); // determines if the current setup mode is valid
