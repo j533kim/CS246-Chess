@@ -7,8 +7,6 @@
 #include "observer.h"
 #include "board.h"
 
-// this whole file is from a4q5, so modification needed
-
 class Piece;
 class Board;
 
@@ -25,7 +23,6 @@ template <typename StateType> class Subject {
   virtual void settheBoard(Board *theBoard) = 0;
   virtual Board *gettheBoard() = 0;
   virtual std::shared_ptr<Piece> getPiece() const = 0;
- // virtual InfoType getInfo() const = 0;
   StateType getState() const;
   std::vector<Observer<StateType> *> getObservers() { return observers; }
   void setState(StateType newS);

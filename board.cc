@@ -142,8 +142,40 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 
-	removePiece(row_f, col_f);
-	swapPiece(row_0, col_0, row_f, col_f);
+	bool castle = false;
+	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "king") {
+		if (row_0 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) castle = true;
+	}
+
+
+	if (!castle) {
+		removePiece(row_f, col_f);
+		swapPiece(row_0, col_0, row_f, col_f);
+	}
+
+	if (castle) {
+		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
+			removePiece(7, 0);
+			removePiece(row_0, col_0);
+			theBoard.at(7).at(2).setPiece(make_shared<King>(Color::White, false));
+			theBoard.at(7).at(3).setPiece(make_shared<Rook>(Color::White, false));
+		} else if (row_0 == 7 && col_0 == 4 && col_f == 6) { // white king to the right
+			removePiece(7, 7);
+			removePiece(row_0, col_0);
+			theBoard.at(7).at(6).setPiece(make_shared<King>(Color::White, false));
+			theBoard.at(7).at(5).setPiece(make_shared<Rook>(Color::White, false));
+		} else if (row_0 == 0 && col_0 == 4 && col_f == 2) { // black king to the left
+			removePiece(0, 0);
+			removePiece(row_0, col_0);
+			theBoard.at(0).at(2).setPiece(make_shared<King>(Color::Black, false));
+			theBoard.at(0).at(3).setPiece(make_shared<Rook>(Color::Black, false));
+		} else {
+			removePiece(0, 0);
+			removePiece(row_0, col_0);
+			theBoard.at(0).at(6).setPiece(make_shared<King>(Color::Black, false));
+			theBoard.at(0).at(5).setPiece(make_shared<Rook>(Color::Black, false));
+		}
+	}
 
 	if (en_passant) {
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
@@ -457,6 +489,59 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  if (row_0 + 1 == row_f && col_0 == col_f) return true;
 	  if (row_0 == row_f && col_0 - 1 == col_f) return true;
 	  if (row_0 == row_f && col_0 + 1 == col_f) return true;
+	  if (row_0 == row_f && (col_0 == col_f - 2 || col_0 == col_f + 2)) { //castling
+	  	int col_m = (col_f + col_0) / 2;
+	  	if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
+	  		if (theBoard.at(row_0).at(col_m).getState().W == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_0).getState().W == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_f).getState().W == Danger::Yes) return false;
+	  		for (int i = 0; i < 3; ++i) {
+	  			if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") {
+	  				return false;
+	  			}
+	  		}
+	  		if (theBoard.at(7).at(0).getPiece()->getName() != "rook") return false;
+	  		if (!(theBoard.at(row_0).at(col_0).getPiece()->getCastle())) return false;
+	  		if (!(theBoard.at(7).at(0).getPiece()->getCastle())) return false;
+	  	} else if (row_0 == 7 && col_0 == 4 && col_f == 6) { // white king to the right
+	  		if (theBoard.at(row_0).at(col_m).getState().W == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_0).getState().W == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_f).getState().W == Danger::Yes) return false;
+	  		for (int i = 0; i < 2; ++i) {
+	  			if (theBoard.at(row_0).at(5 + i).getPiece()->getName() != "nopiece") {
+	  				return false;
+	  			}
+	  		}
+	  		if (theBoard.at(7).at(7).getPiece()->getName() != "rook") return false;
+	  		if (!(theBoard.at(row_0).at(col_0).getPiece()->getCastle())) return false;
+	  		if (!(theBoard.at(7).at(7).getPiece()->getCastle())) return false;
+	  	} else if (row_0 == 0 && col_0 == 4 && col_f == 2) { // black king to the left
+	  		if (theBoard.at(row_0).at(col_m).getState().B == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_0).getState().B == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_f).getState().B == Danger::Yes) return false;
+	  		for (int i = 0; i < 3; ++i) {
+	  			if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") {
+	  				return false;
+	  			}
+	  		}
+	  		if (theBoard.at(0).at(0).getPiece()->getName() != "rook") return false;
+	  		if (!(theBoard.at(row_0).at(col_0).getPiece()->getCastle())) return false;
+	  		if (!(theBoard.at(0).at(0).getPiece()->getCastle())) return false;
+	  	} else if (row_0 == 0 && col_0 == 4 && col_f == 6) { // black king to the right
+	  		if (theBoard.at(row_0).at(col_m).getState().B == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_0).getState().B == Danger::Yes) return false;
+	  		if (theBoard.at(row_0).at(col_f).getState().B == Danger::Yes) return false;
+	  		for (int i = 0; i < 2; ++i) {
+	  			if (theBoard.at(row_0).at(5 + i).getPiece()->getName() != "nopiece") {
+	  				return false;
+	  			}
+	  		}
+	  		if (theBoard.at(0).at(7).getPiece()->getName() != "rook") return false;
+	  		if (!(theBoard.at(row_0).at(col_0).getPiece()->getCastle())) return false;
+	  		if (!(theBoard.at(0).at(7).getPiece()->getCastle())) return false;
+	  	}
+	  	return true;
+	  }
 	  return false;
 	}
 	return false; // if a piece is nopiece

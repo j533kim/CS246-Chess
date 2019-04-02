@@ -12,7 +12,7 @@ class Piece {
 	// value of the piece [pawn=1, knight,bishop=3, rook=5, queen=9, king=10]
 	std::string name;
 public:
-	Piece(Color color, int value, std::string name);
+	Piece(Color color, int value, std::string name); // constructor
 	std::string getName() const;
 	int getValue() const;
 	Color getColor() const;
