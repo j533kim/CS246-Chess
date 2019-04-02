@@ -227,7 +227,29 @@ void computer_2(Board &b, Color color) {
     		}
     	}	
 		if (MyPieces.at(r)->getName() == "bishop") {
-			
+			for (int a = 0; a < 8; ++a) {
+				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + a, king_col + a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col - a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + a, king_col - a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col + a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - a, king_col + a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col - a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - a, king_col - a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				}
+			} 	
 		}
 		if (MyPieces.at(r)->getName() == "rook") {
 			for (int a = 0; a < 8; ++a) {
@@ -255,7 +277,50 @@ void computer_2(Board &b, Color color) {
 			} 
 		}
 		if (MyPieces.at(r)->getName() == "queen") {
-			
+			for (int a = 0; a < 8; ++a) {
+				if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + a, king_col + a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col - a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + a, king_col - a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col + a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - a, king_col + a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col - a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - a, king_col - a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				}
+				if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row + a, king_col);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row - a, king_col);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col + a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row, king_col + a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col - a)) {
+					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
+    				string final = ourpos_to_user(king_row, king_col - a);
+    				b.move(initial, final, w_turn); 
+    				return;
+				}
+			} 	
 		}
 		if (MyPieces.at(r)->getName() == "king") {
 			
