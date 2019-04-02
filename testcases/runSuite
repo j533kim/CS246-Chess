@@ -1,0 +1,59 @@
+#!/bin/bash
+
+usage () {
+ >&2 echo "Wrong number of arguments. Expected 2 arguments, ${#} arguments encountered"
+ exit 1
+}
+
+outputerror () {
+  echo "missing or unreadable ${outfile}" >&2
+  exit 1
+}
+
+if [ ${#} -ne 2 ]; then
+ usage
+fi
+
+for file in $(cat $1); do
+ arguments=${file}.args
+ outfile=${file}.out
+ infile=${file}.in
+ TEMP=$(mktemp /tmp/${file}.XXXXXX)
+
+ if [ -f ${arguments} -a -f ${infile} ]; then
+  $2 $(cat ${arguments}) < ${infile} > $TEMP
+ elif [ -f ${arguments} ]; then
+  $2 $(cat ${arguments}) > $TEMP
+ elif [ -f ${infile} ]; then
+  $2 < ${infile} > $TEMP
+ else
+  $2 > $TEMP
+ fi
+ 
+ if [ -f ${outfile} -a -r ${outfile} ]; then
+  expected=$(cat ${outfile})
+  diff --brief ${outfile} ${TEMP} > /dev/null
+  diffval=$?
+ else
+  outputerror
+ fi
+
+ if [ $diffval -eq 1 ]; then
+  echo "Test failed: ${file}"
+  echo "Args:"
+  if [ -f ${arguments} ]; then
+   cat ${arguments}
+  fi
+  echo "Input:"
+  if [ -f ${infile} ]; then
+   cat ${infile}
+  fi
+  echo "Expected:"
+  cat ${outfile}
+  echo "Actual:"
+  cat ${TEMP}
+ fi
+
+ rm ${TEMP}
+
+done
