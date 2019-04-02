@@ -29,13 +29,8 @@ string ourpos_to_user(int row, int col) {
 }
 
 void computer_1(Board &b, Color color) {
-<<<<<<< HEAD
 	vector<shared_ptr<Piece>> MyPieces;               // confirm whether store piece or piece ptr
 	vector<std::vector<int>> Row_Col;    // stores the row and col index for the my pieces array
-=======
-	std::vector<shared_ptr<Piece>> MyPieces;               // confirm whether store piece or piece ptr
-	std::vector<std::vector<int>> Row_Col;    // stores the row and col index for the my pieces array
->>>>>>> cb604eae1a11c6eb541b149de86eddae1f981ddb
 	int totalpieces = 0;                     // total no. of pieces in MyPieces array
 	bool w_turn = 0;                         // equals 1 when it's whites's turn
 	if (color == Color::White) {
@@ -265,8 +260,7 @@ void computer_2(Board &b, Color color) {
 		if (MyPieces.at(r)->getName() == "king") {
 			
 		}
-	
-
+	}
 return;
 }
 
