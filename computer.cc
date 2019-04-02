@@ -43,8 +43,6 @@ void computer_1(Board &b, Color color) {
 					vc.push_back(i);
 					vc.push_back(j);
 					Row_Col.push_back(vc);
-					//Row_Col.at(totalpieces).at(0) = i;
-					//Row_Col.at(totalpieces).at(1) = j;
 					totalpieces += 1;
 				}
 			}
