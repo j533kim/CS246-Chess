@@ -24,8 +24,11 @@ void Pawn::setCastle() {}
 
 void Pawn::setCheck() {}
 
-void Pawn::settwoStepChance() { twoStepChance = false; }
-// we set this field always from true to false, never from false to true
+void Pawn::settwoStepChance() { 
+	if (twoStepChance) twoStepChance = false;
+	else twoStepChance = true;
+}
+// we set this field always from true to false
 
 void Pawn::setmovedTwoStepsBefore() {
 	if (movedTwoStepsBefore) movedTwoStepsBefore = false;

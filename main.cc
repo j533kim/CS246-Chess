@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
   	while (true) {
       if (!setuped) b.init(); // makes a new empty board and deletes previous pieces if necessary
   		cin >> cmd;
+      if (cin.eof() || cin.fail()) throw std::iostream::failure("");
       if (!(cmd == "setup" || cmd == "game")) continue;
   		if (cmd == "setup") { // enters the setup mode
   			cout << "Now you are in setup mode..." << endl;
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
         cout << b << endl;
   			while (true) {
   				cin >> setup_cmd;
+          
   				if (setup_cmd == "done") { // trying to finish setup mode
   					if (b.setup_valid()) { // checks if setup is valid
   						game_manually_set = true; // tells the game is manually set
@@ -59,6 +61,7 @@ int main(int argc, char *argv[]) {
   					}
   				} else if (setup_cmd == "+") { // adding a piece in setup
   					cin >> setup_cmd_1 >> setup_cmd_2;
+            
   					try {
   						b.placePiece_setup(setup_cmd_1, setup_cmd_2);
   						cout << endl;
@@ -70,11 +73,13 @@ int main(int argc, char *argv[]) {
   					}
   				} else if (setup_cmd == "-") { // removing a piece in setup
   					cin >> setup_cmd_1;
+            
   					b.removePiece_setup(setup_cmd_1); // does nothing if piece is not there
   					cout << endl;
             cout << b << endl;
   				} else if (setup_cmd == "=") { // color
   					cin >> setup_cmd_1;
+            
   					if ("black" == lowercase(setup_cmd_1)) {
   						cout << "Now black-player starts first!" << endl;
   						white_turn = 0; // now black starts first
@@ -89,6 +94,7 @@ int main(int argc, char *argv[]) {
         setuped = false;
   			string game_cmd, game_cmd_1, game_cmd_2;
   			cin >> game_cmd_1 >> game_cmd_2; // cin >> whiteplayer >> blackplayer
+        
   			int player1_level, player2_level;
         cout << endl;
   			if (!game_manually_set) { // if the game is not set by user (default game)
@@ -109,6 +115,7 @@ int main(int argc, char *argv[]) {
   			if ((player1_level == 0) && (player2_level == 0)) { // 2 humans
   				while (true) {
   					cin >> game_cmd;
+            
   					if (game_cmd == "resign") {
   						if (white_turn) { // white resigns --> black wins
   							black_score+=1; // black earns a point
@@ -122,6 +129,7 @@ int main(int argc, char *argv[]) {
   						break;
   					} else if (game_cmd == "move") {
   						cin >> game_cmd_1 >> game_cmd_2;
+              
   						try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   							b.move(game_cmd_1, game_cmd_2, white_turn);
                 cout << endl;
@@ -154,6 +162,7 @@ int main(int argc, char *argv[]) {
   					while (true) {
   						if (white_turn) { // human's turn
   							cin >> game_cmd;
+                
   							if (game_cmd == "resign") {
   								++black_score; // black earns a point
                   cout << "You resigned!" << endl;
@@ -162,6 +171,7 @@ int main(int argc, char *argv[]) {
   								break;
   							} else if (game_cmd == "move") {
   								cin >> game_cmd_1 >> game_cmd_2;
+                  
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << endl;
@@ -219,6 +229,7 @@ int main(int argc, char *argv[]) {
   							white_turn = 0; // making it human's turn again
   						} else { // human's turn
   							cin >> game_cmd;
+                
   							if (game_cmd == "resign") {
   								++white_score; // white earns a point
                   cout << "You resigned!" << endl;
@@ -227,6 +238,7 @@ int main(int argc, char *argv[]) {
   								break;
                 } else if (game_cmd == "move") {
   								cin >> game_cmd_1 >> game_cmd_2;
+                  
   								try { // game_cmd1 = initial pos, game_cmd2 = final pos, white_turn = whether white or black's turn
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << endl;
@@ -303,7 +315,7 @@ int main(int argc, char *argv[]) {
   			}
   		}
   	}
-  } catch (ios::failure &) { // Any I/O failure quits
+  } catch (ios::failure &e) { // Any I/O failure quits
     score_print(white_score, black_score); // prints the scoreboard
 	}
   return 0; // program ends
