@@ -24,10 +24,7 @@ class Cell;
 class Board {
   std::vector<std::vector<Cell>> theBoard;
   TextDisplay *td = nullptr;
-<<<<<<< HEAD
-=======
   std::vector<Move> pastMoves;
->>>>>>> 461c86bb58d9c9c123fb283acba0cdb9f95fa180
   Observer<State> *ob = nullptr;
   bool white_checkmate = false;
   bool black_checkmate = false;

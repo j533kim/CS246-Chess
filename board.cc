@@ -101,6 +101,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	Color moving_color = theBoard.at(row_0).at(col_0).getPiece()->getColor();
 	if ((moving_color == Color::White && white_turn == 0) 
 	|| (moving_color == Color::Black && white_turn == 1)) {
+		cout << "It's not your turn!" << endl;
 		throw InvalidMove();
 		return;
 	}
@@ -358,22 +359,50 @@ bool Board::setup_valid() { // called in the setup mode ONLY //
 	// perfect
 	int white_king = 0;
 	int black_king = 0;
+	int white_other_pieces = 0; //
+	int black_other_pieces = 0;
+	int white_bishop_knight = 0;
+	int black_bishop_knight = 0;
 	for (int i = 0; i < 8; ++i) { // checks if pawn exists in first/last row
-		if (theBoard.at(0).at(i).getPiece()->getName() == "pawn") return false;
-		if (theBoard.at(7).at(i).getPiece()->getName() == "pawn") return false;
+		if (theBoard.at(0).at(i).getPiece()->getName() == "pawn" ||
+			theBoard.at(7).at(i).getPiece()->getName() == "pawn") {
+			cout << "A pawn cannot be at the end of first/last row" << endl;
+			return false;
+		}
 	}
 	for (int i = 0; i < 8; ++i) {
 		for (int j = 0; j < 8; ++j) {
 			shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
 			if (curr->getName() == "king") {
-				if (curr->getCheck() == true) return false; // king is in check
+				if (curr->getCheck() == true) { // king is in check
+					cout << "A King cannot be in check!" << endl;
+					return false;
+				}
 				if (curr->getColor() == Color::Black) ++black_king;
 				if (curr->getColor() == Color::White) ++white_king;
+			} else if (curr->getName() == "bishop" || curr->getName() == "knight") {
+				if (curr->getColor() == Color::White) ++white_bishop_knight;
+				else ++black_bishop_knight;
+			} else if (curr->getName() != "nopiece") {
+				if (curr->getColor() == Color::White) ++white_other_pieces;
+				else ++black_other_pieces;
 			}
 		}
 	}
-	if (white_king != 1) return false;
-	if (black_king != 1) return false;
+	if (white_other_pieces == 0 && black_other_pieces == 0) {
+		if (white_bishop_knight < 2 && black_bishop_knight < 2) {
+			cout << "Put some more pieces, this game will automatically be a draw" << endl;
+			return false;
+		}
+	}
+	if (white_king != 1) {
+		cout << "Exactly one white king needed..." << endl;
+		return false;
+	}
+	if (black_king != 1) {
+		cout << "Exactly one black king needed..." << endl;
+		return false;
+	}
 	return true;
 }
 
