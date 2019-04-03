@@ -8,7 +8,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 	if (whoFrom.getPiece()->getColor() == Color::White) {
 		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().W == Danger::No) {
-				setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger //
+				setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger
 			}
 			else setState({Danger::Yes,Danger::Yes});
 			if (this->getPiece()->getName() == "king" && getPiece()->getColor() == Color::Black) {

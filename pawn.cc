@@ -20,9 +20,9 @@ bool Pawn::getUpgrade() const { return readyToUpgrade; }
 void Pawn::setUpgrade() { readyToUpgrade = true; }
 // we set this field always from false to true, never from true to false
 
-void Pawn::setCastle() {}
+void Pawn::setCastle() { return; }
 
-void Pawn::setCheck() {}
+void Pawn::setCheck() { return; }
 
 void Pawn::settwoStepChance() { 
 	if (twoStepChance) twoStepChance = false;
@@ -35,6 +35,4 @@ void Pawn::setmovedTwoStepsBefore() {
 	else movedTwoStepsBefore = true;
 }
 
-void Pawn::upgrade(shared_ptr<Piece> piece) {
-
-}
+void Pawn::upgrade(shared_ptr<Piece> piece) { return; }

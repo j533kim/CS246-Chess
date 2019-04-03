@@ -29,8 +29,8 @@ class Board {
   bool white_checkmate = false;
   bool black_checkmate = false;
   bool stalemate = false;
-  bool white_check;
-  bool black_check;
+  bool white_check = false;
+  bool black_check = false;
 public:
   ~Board(); // destructor
   void setObserver(Observer<State> *ob); // sets the observers for each

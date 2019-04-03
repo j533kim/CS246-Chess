@@ -107,10 +107,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		return;
 	}
 	Color dest_color = theBoard.at(row_f).at(col_f).getPiece()->getColor();
-	if (moving_color == Color::Black && white_turn) {
-		throw InvalidMove();
-		return;
-	}
 	if ((moving_color == Color::NoColor) || (moving_color == dest_color)) {
 		throw InvalidMove();
 		return;
@@ -264,11 +260,67 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			}
 		}
 	}
-
-
 	////////////////////////////
 
 	// checking for stalemate /////////////
+	vector<shared_ptr<Piece>> Pieces;
+	vector<vector<int>> Row_Col_Pieces;    // stores the row and col index for the pieces array    
+	int totalpieces = 0;                     
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			vector<int> vc; 
+			if (theBoard.at(i).at(j).getPiece()->getColor() != Color::NoColor) {
+				Pieces.push_back(theBoard.at(i).at(j).getPiece()); 
+				vc.push_back(i);
+				vc.push_back(j);
+				Row_Col_Pieces.push_back(vc);
+				totalpieces += 1;	
+			}			
+		}
+	} 
+	vector<int> index_v;
+	int king_index1;
+	int king_index2;
+	int total_kings = 0;
+	for (int i = 0; i < totalpieces; ++i) {
+		index_v.push_back(0);
+	}
+	for (int j = 0; j < totalpieces; ++j) {
+		if (Pieces.at(j)->getValue() == 10) {
+			if (total_kings < 1) {
+				king_index1 = j;
+				total_kings += 1;
+			} else {
+				king_index2 = j;
+				total_kings += 1;
+			}
+		}
+		if (total_kings == 2) {
+			break;
+		}
+	}
+	int king1_row = Row_Col_Pieces.at(king_index1).at(0);
+	int king1_col = Row_Col_Pieces.at(king_index1).at(1);
+	int king2_row = Row_Col_Pieces.at(king_index2).at(0);
+	int king2_col = Row_Col_Pieces.at(king_index2).at(1);
+	if (theBoard.at(king1_row).at(king1_col).getPiece()->getCheck() == true) return;
+	if (theBoard.at(king2_row).at(king2_col).getPiece()->getCheck() == true) return;
+
+	for (int k = 0; k < totalpieces; ++k) {
+		for (int l = 0; l < 8; ++l) {
+			for (int m = 0; m < 8; ++m) {
+				if (white_turn) {
+					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && (Row_Col_Pieces.at(k).at(0) != l) && (Row_Col_Pieces.at(k).at(1) != m) && Pieces.at(k)->getColor() == Color::White) return;
+				} else {
+					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && (Row_Col_Pieces.at(k).at(0) != l) && (Row_Col_Pieces.at(k).at(1) != m) && Pieces.at(k)->getColor() == Color::Black) return;
+				}
+			}
+		}
+	}
+	setStalemate();
+}
+
+	/*
 	int w_bishop = 0; // stalemate if not enough pieces for checkmate
 	int b_bishop = 0;
 	int w_knight = 0;
@@ -344,6 +396,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	////////////////////////
 }
+	*/
+
 
 void Board::undo() {
 	shared_ptr<Move> currMove = pastMoves.back();
@@ -526,27 +580,34 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
-			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f + 1).at(col_f).getPiece()->getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
-				return true;
+			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && piece_f->getColor() == Color::NoColor) {
+				if (theBoard.at(row_f + 1).at(col_f).getPiece()->getColor() == Color::NoColor) return true;
 			} else if (row_f + 1 == row_0 && col_0 == col_f && piece_f->getColor() == Color::NoColor) {
 				return true;
 			} else if (row_f + 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::Black) {
 				return true;
 			} else if (row_0 == 3 && row_f == 2 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
-				if (col_f == col_0 - 1 && theBoard.at(3).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
-				else if (col_f == col_0 + 1 && theBoard.at(3).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				if (col_f == col_0 - 1) {
+					if (theBoard.at(3).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				}
+				else if (col_f == col_0 + 1) {
+					if (theBoard.at(3).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(3).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				}
 			}
 			return false;
-		} else { // color is black
-			if (row_f - 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && theBoard.at(row_f - 1).at(col_f).getPiece()->getColor() == Color::NoColor && piece_f->getColor() == Color::NoColor) {
-				return true;
+		} else if (piece_0->getColor() == Color::Black) { // color is black
+			if (row_f - 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && piece_f->getColor() == Color::NoColor) {
+				if (theBoard.at(row_f - 1).at(col_f).getPiece()->getColor() == Color::NoColor) return true;
 			} else if (row_f - 1 == row_0 && col_0 == col_f && piece_f->getColor() == Color::NoColor) {
 				return true;
 			} else if (row_f - 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::White) {
 				return true;
 			} else if (row_0 == 4 && row_f == 5 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
-				if (col_f == col_0 - 1 && theBoard.at(4).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
-				else if (col_f == col_0 + 1 && theBoard.at(4).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				if (col_f == col_0 - 1) {
+					if (theBoard.at(4).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				} else if (col_f == col_0 + 1) {
+					if (theBoard.at(4).at(col_0 + 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 + 1).getPiece()->getmovedTwoStepsBefore()) return true;
+				}
 			}
 			return false;
 		}
@@ -646,16 +707,17 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		 || canmove("bishop", row_0, col_0, row_f, col_f)) return true;
 		return false;
 	} else if (name == "king") {
+		Danger y = Danger::Yes;
       if (piece_0->getColor() == piece_f->getColor()) return false;
       if (piece_0->getColor() == Color::White) {
-      	if (theBoard.at(row_f).at(col_f).getState().W == Danger::Yes) return false;
+      	if (theBoard.at(row_f).at(col_f).getState().W == y) return false;
       }
       if (piece_0->getColor() == Color::Black) {
-      	if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) return false;
+      	if (theBoard.at(row_f).at(col_f).getState().B == y) return false;
       }
       State danger_ = theBoard.at(row_f).at(col_f).getState();
-      if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes) return false;
-      if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes) return false;
+      if (piece_0->getColor() == Color::White && danger_.W == y) return false;
+      if (piece_0->getColor() == Color::Black && danger_.B == y) return false;
 	  if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
 	  if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
 	  if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
@@ -669,7 +731,6 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  	State mid_state = theBoard.at(row_0).at(col_m).getState();
 	  	State ini_state = theBoard.at(row_0).at(col_0).getState();
 	  	State fin_state = theBoard.at(row_0).at(col_f).getState();
-	  	Danger y = Danger::Yes;
 	  	if (mid_state.W == y) return false;
 	  	if (ini_state.W == y) return false;
 	  	if (fin_state.W == y) return false;
@@ -716,5 +777,3 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	}
 	return false; // if a piece is nopiece
 }
-
-

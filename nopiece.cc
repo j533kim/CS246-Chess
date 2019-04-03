@@ -14,14 +14,14 @@ bool NoPiece::getmovedTwoStepsBefore() const { return false; }
 
 bool NoPiece::getUpgrade() const { return false; }
 
-void NoPiece::setUpgrade() {}
+void NoPiece::setUpgrade() { return; }
 
-void NoPiece::setCastle() {}
+void NoPiece::setCastle() { return; }
 
-void NoPiece::setCheck() {}
+void NoPiece::setCheck() { return; }
 
-void NoPiece::settwoStepChance() {}
+void NoPiece::settwoStepChance() { return; }
 
-void NoPiece::setmovedTwoStepsBefore() {}
+void NoPiece::setmovedTwoStepsBefore() { return; }
 
-void NoPiece::upgrade(shared_ptr<Piece> piece) {}
+void NoPiece::upgrade(shared_ptr<Piece> piece) { return; }

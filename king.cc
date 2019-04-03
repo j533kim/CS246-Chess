@@ -16,19 +16,15 @@ bool King::getmovedTwoStepsBefore() const { return false; }
 
 bool King::getUpgrade() const { return false; }
 
-void King::setUpgrade() {}
+void King::setUpgrade() { return; }
 
 void King::setCastle() { castlingPossible = false; }
 // always from true to false
 
-void King::setCheck(bool check) {
-	//if (checked) checked = false;
-	//else checked = true;
-	checked = check;
-}
+void King::setCheck(bool check) { checked = check; }
 
-void King::settwoStepChance() {}
+void King::settwoStepChance() { return; }
 
-void King::setmovedTwoStepsBefore() {}
+void King::setmovedTwoStepsBefore() { return; }
 
-void King::upgrade(shared_ptr<Piece> piece) {}
+void King::upgrade(shared_ptr<Piece> piece) { return; }
