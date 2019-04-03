@@ -55,8 +55,12 @@ void TextDisplay::notify(Subject<State> &whoNotified) {
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
 	for (int i = 0; i < 8; ++i) {
+		out << 8 - i << " ";
 		for (int j = 0; j < 8; ++j) out << td.theDisplay.at(i).at(j);
 		out << endl;
 	}
+	out << endl << "  ";
+	for (char i = 'a'; i < ('h' + 1); ++i) out << i;
+	out << endl;
 	return out;
 }

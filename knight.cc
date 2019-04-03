@@ -14,14 +14,14 @@ bool Knight::getmovedTwoStepsBefore() const { return false; }
 
 bool Knight::getUpgrade() const { return false; }
 
-void Knight::setUpgrade() {}
+void Knight::setUpgrade() { return; }
 
-void Knight::setCastle() {}
+void Knight::setCastle() { return; }
 
-void Knight::setCheck() {}
+void Knight::setCheck() { return; }
 
-void Knight::settwoStepChance() {}
+void Knight::settwoStepChance() { return; }
 
-void Knight::setmovedTwoStepsBefore() {}
+void Knight::setmovedTwoStepsBefore() { return; }
 
-void Knight::upgrade(shared_ptr<Piece> piece) {}
+void Knight::upgrade(shared_ptr<Piece> piece) { return; }

@@ -14,14 +14,14 @@ bool Bishop::getmovedTwoStepsBefore() const { return false; }
 
 bool Bishop::getUpgrade() const { return false; }
 
-void Bishop::setUpgrade() {}
+void Bishop::setUpgrade() { return; }
 
-void Bishop::setCastle() {}
+void Bishop::setCastle() { return; }
 
-void Bishop::setCheck() {}
+void Bishop::setCheck() { return; }
 
-void Bishop::settwoStepChance() {}
+void Bishop::settwoStepChance() { return; }
 
-void Bishop::setmovedTwoStepsBefore() {}
+void Bishop::setmovedTwoStepsBefore() { return; }
 
-void Bishop::upgrade(shared_ptr<Piece> piece) {}
+void Bishop::upgrade(shared_ptr<Piece> piece) { return; }
