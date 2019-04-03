@@ -541,7 +541,9 @@ void Board::removePiece_setup(string pos) {
 	}
 	int row = row_return(pos);
 	int col = col_return(pos);
-	theBoard.at(row).at(col).removePiece();
+	if (theBoard.at(row).at(col).getPiece()) {
+		theBoard.at(row).at(col).removePiece();	
+	}
 }
 
 std::vector<std::vector<Cell>> &Board::get_theBoard() { return theBoard; }
@@ -709,12 +711,6 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	} else if (name == "king") {
 		Danger y = Danger::Yes;
       if (piece_0->getColor() == piece_f->getColor()) return false;
-      if (piece_0->getColor() == Color::White) {
-      	if (theBoard.at(row_f).at(col_f).getState().W == y) return false;
-      }
-      if (piece_0->getColor() == Color::Black) {
-      	if (theBoard.at(row_f).at(col_f).getState().B == y) return false;
-      }
       State danger_ = theBoard.at(row_f).at(col_f).getState();
       if (piece_0->getColor() == Color::White && danger_.W == y) return false;
       if (piece_0->getColor() == Color::Black && danger_.B == y) return false;
