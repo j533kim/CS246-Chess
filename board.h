@@ -30,6 +30,7 @@ class Board {
   bool black_checkmate = false;
   bool stalemate = false;
   bool white_check = false;
+  bool test = false;
   bool black_check = false;
 public:
   ~Board(); // destructor
@@ -54,6 +55,8 @@ public:
   bool getblack_checkmate() const;
   bool getStalemate() const;
   bool getwhite_check() const;
+  void setTest(bool test) {this->test = test;}
+  bool getTest(){return test;}
   bool getblack_check() const;
   void setwhite_checkmate();
   void setblack_checkmate();
