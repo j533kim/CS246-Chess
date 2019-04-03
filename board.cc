@@ -725,15 +725,6 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		return false;
 	} else if (name == "king") {
       if (piece_0->getColor() == piece_f->getColor()) return false;
-    //  cout << "inside kign" << endl;
-      if (piece_0->getColor() == Color::White) {
-      	if (theBoard.at(row_f).at(col_f).getState().W == Danger::Yes) return false;  // can king move to that place ??
-      }
-     // cout << "inside kign" << endl;
-      if (piece_0->getColor() == Color::Black) {
-      	if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) return false;  // can king move to that place ??
-      }
-    //  cout << "inside kign" << endl;
       State danger_ = theBoard.at(row_f).at(col_f).getState();
       if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes)  return false;
       if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes)  return false;
