@@ -39,10 +39,10 @@ void computer_1(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::White) {
-					MyPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col.push_back(vc);
+					MyPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col.emplace_back(vc);
 					totalpieces += 1;
 				}
 			}
@@ -53,10 +53,10 @@ void computer_1(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::Black) {
-					MyPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col.push_back(vc);
+					MyPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col.emplace_back(vc);
 					totalpieces += 1;
 				}
 			}
@@ -64,7 +64,7 @@ void computer_1(Board &b, Color color) {
 	}
 	vector<int> index_array; // stores if the Piece at a specific index of MyPieces has been tried. 0 for no and 1 for yes
 	for (int a = 0; a < totalpieces; ++a) {
-		index_array.push_back(0);
+		index_array.emplace_back(0);
 	}              
     for (int k = 0; k < totalpieces; ++k) {
     	int piece_index = rand() % totalpieces;
@@ -128,10 +128,10 @@ void computer_2(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::White) {
-					MyPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col_MyPieces.push_back(vc);
+					MyPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col_MyPieces.emplace_back(vc);
 					my_totalpieces += 1;
 				}
 			}
@@ -140,10 +140,10 @@ void computer_2(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::Black) {
-					OpPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col_OpPieces.push_back(vc);
+					OpPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col_OpPieces.emplace_back(vc);
 					op_totalpieces += 1;
 				}
 			}
@@ -154,10 +154,10 @@ void computer_2(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::Black) {
-					MyPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col_MyPieces.push_back(vc);
+					MyPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col_MyPieces.emplace_back(vc);
 					my_totalpieces += 1;
 				}
 			}
@@ -166,10 +166,10 @@ void computer_2(Board &b, Color color) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::White) {
-					OpPieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-					vc.push_back(i);
-					vc.push_back(j);
-					Row_Col_OpPieces.push_back(vc);
+					OpPieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+					vc.emplace_back(i);
+					vc.emplace_back(j);
+					Row_Col_OpPieces.emplace_back(vc);
 					op_totalpieces += 1;
 				}
 			}
@@ -177,7 +177,7 @@ void computer_2(Board &b, Color color) {
 	}
 	vector<int> index_capture;
 	for (int a = 0; a < op_totalpieces; ++a) {
-		index_capture.push_back(0);
+		index_capture.emplace_back(0);
 	} 
 	int index_maxcapture = 0;
 	int max = 0;
@@ -635,10 +635,10 @@ void computer_3(Board &b, Color color) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::White) {
 					if (b.get_theBoard().at(i).at(j).getState().W == Danger::Yes) {
-						Pieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-						vc.push_back(i);
-						vc.push_back(j);
-						Row_Col.push_back(vc);
+						Pieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+						vc.emplace_back(i);
+						vc.emplace_back(j);
+						Row_Col.emplace_back(vc);
 						totalpieces += 1;
 					}
 				}
@@ -651,10 +651,10 @@ void computer_3(Board &b, Color color) {
 				vector<int> vc; 
 				if (b.get_theBoard().at(i).at(j).getPiece()->getColor() == Color::Black) {
 					if (b.get_theBoard().at(i).at(j).getState().B == Danger::Yes) {
-						Pieces.push_back(b.get_theBoard().at(i).at(j).getPiece()); 
-						vc.push_back(i);
-						vc.push_back(j);
-						Row_Col.push_back(vc);
+						Pieces.emplace_back(b.get_theBoard().at(i).at(j).getPiece()); 
+						vc.emplace_back(i);
+						vc.emplace_back(j);
+						Row_Col.emplace_back(vc);
 						totalpieces +=1 ;
 					}
 				}
@@ -663,7 +663,7 @@ void computer_3(Board &b, Color color) {
 	}
 	vector<int> index_avoidcapture; // stores if the Piece at a specific index of Pieces vector has been tried. 0 for no and 1 for yes
 	for (int a = 0; a < totalpieces; ++a) {
-		index_avoidcapture.push_back(0);
+		index_avoidcapture.emplace_back(0);
 	}
 	int index_avoidfirst = 0;
 	int max = 0;
