@@ -120,13 +120,11 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	string name_ = theBoard.at(row_0).at(col_0).getPiece()->getName();
 	if (getwhite_check() && getTest() == false) {  // white check 
-		cout << "white check" << endl;
 		setTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
 		} catch (InvalidMove in) {
 			setTest(false);
-			cout << getwhite_check() << endl;
 			throw InvalidMove();
 		}
 		if (getwhite_check() == false){
@@ -134,8 +132,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			return;
 		} else {
 			this->undo();
-			if (white_turn == 1) white_turn = 0; // turn changes
-            else white_turn = 1;
 			setTest(false);
 			throw InvalidMove();
 			return;
@@ -149,28 +145,24 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			move(pos_in, pos_fi, white_turn); // error //
 		} catch (InvalidMove in) {
 			setTest(false);
-			cout << getblack_check() << endl;
+			throw InvalidMove();
 		} 
-		if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) {
-			cout << "final cell is in danger" << endl;
-		} else {
-			cout << "final cell is not in danger" << endl;
-		}
+		//cout << theBoard.at(row_f).at(col_f).getPiece()->getCheck() << endl;
+		//cout << getblack_check() << endl;
 		if (getblack_check() == false){
 			setTest(false);
 			return;
 		} else {
-			throw InvalidMove();
 			this->undo();
-			//if (white_turn == 1) white_turn = 0; // turn changes
-            //else white_turn = 1;
 			setTest(false);
+			throw InvalidMove();
 			return;
 		}
 	}
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
 	// the corresponding piece is not movable to the given final position
 		cout << name_ << endl;
+		cout << row_0 << "," << col_0 << "     " << row_f << "," << col_f << endl;
 		cout << "canmove function doesnt allow the movement of the pieces" << endl;
 		throw InvalidMove();
 		return;
@@ -320,6 +312,35 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 
 
+/// check code
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			Cell cell = theBoard.at(i).at(j);
+			shared_ptr<Piece> piece = cell.getPiece();
+			if (piece->getName() == "king" && piece->getColor() == Color::Black) {
+				if (cell.getState().B == Danger::No) {
+					piece->setCheck(false);
+					setblack_check(false);
+				} else {
+					piece->setCheck(true);
+					setblack_check(true);
+				}
+			} else if (piece->getName() == "king" && piece->getColor() == Color::White) {
+				if (cell.getState().W == Danger::No) {
+					piece->setCheck(false);
+					setwhite_check(false);
+				} else {
+					piece->setCheck(true);
+					setwhite_check(true);
+				}
+			}
+		}
+	}
+
+
+//// check code //
+
+
 	////////////////////////////
 
 	// checking for stalemate /////////////
@@ -396,6 +417,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setStalemate();
 		return;
 	}
+
+
 	////////////////////////
 }
 
@@ -575,6 +598,7 @@ ostream &operator<<(ostream &out, const Board &b) {
 // an ally's piece at the destination has been covered in move function)
 // but still need to verify whether a piece (any piece) is on its way (blocking)
 bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
+	//cout << "inside canmove" << endl;
 	if (!check_pos(row_0, col_0, row_f, col_f)) return false;
 	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
@@ -701,15 +725,19 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		return false;
 	} else if (name == "king") {
       if (piece_0->getColor() == piece_f->getColor()) return false;
+    //  cout << "inside kign" << endl;
       if (piece_0->getColor() == Color::White) {
-      	if (theBoard.at(row_f).at(col_f).getState().W == Danger::Yes) cout << "no1" << endl; return false;  // can king move to that place ??
+      	if (theBoard.at(row_f).at(col_f).getState().W == Danger::Yes) return false;  // can king move to that place ??
       }
+     // cout << "inside kign" << endl;
       if (piece_0->getColor() == Color::Black) {
-      	if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) cout << "no2" << endl; return false;  // can king move to that place ??
+      	if (theBoard.at(row_f).at(col_f).getState().B == Danger::Yes) return false;  // can king move to that place ??
       }
+    //  cout << "inside kign" << endl;
       State danger_ = theBoard.at(row_f).at(col_f).getState();
-      if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes) cout << "no3" << endl; return false;
-      if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes) cout << "no4" << endl; return false;
+      if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes)  return false;
+      if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes)  return false;
+    //  cout << "inside kign" << endl;
 	  if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
 	  if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
 	  if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
@@ -724,9 +752,9 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  	State ini_state = theBoard.at(row_0).at(col_0).getState();
 	  	State fin_state = theBoard.at(row_0).at(col_f).getState();
 	  	Danger y = Danger::Yes;
-	  	if (mid_state.W == y) cout << "no5" << endl; return false;
-	  	if (ini_state.W == y) cout << "no6" << endl; return false;
-	  	if (fin_state.W == y) cout << "no7" << endl; return false;
+	  	if (mid_state.W == y) return false;
+	  	if (ini_state.W == y) return false;
+	  	if (fin_state.W == y) return false;
 	  	if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
 	  		for (int i = 0; i < 3; ++i) {
 	  			if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") {
@@ -766,9 +794,11 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  	}
 	  	return true;
 	  }
-	  cout << "no8" << endl; return false;
+	 // cout << "inside kign" << endl;
+	  return false;
 	}
-	cout << "no9" << endl; return false; // if a piece is nopiece
+	//cout << "inside kign" << endl;
+	return false; // if a piece is nopiece
 }
 
 

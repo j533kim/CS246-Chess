@@ -11,10 +11,10 @@ void Cell::notify(Subject<State> &whoFrom) {
 				setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger //
 			}
 			else setState({Danger::Yes,Danger::Yes});
-			if (this->getPiece()->getName() == "king" && getPiece()->getColor() == Color::Black) {
-				this->getPiece()->setCheck(true);
-				theBoard->setblack_check(true);
-			}
+			//if (this->getPiece()->getName() == "king" && getPiece()->getColor() == Color::Black) {
+			//	this->getPiece()->setCheck(true);
+			//	theBoard->setblack_check(true);
+			//}
 		}
 	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
 		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
@@ -22,17 +22,26 @@ void Cell::notify(Subject<State> &whoFrom) {
 				setState({Danger::Yes, Danger::No}); // cell's white_state get set to danger //
 			}
 			else setState({Danger::Yes,Danger::Yes});
-			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
-				this->getPiece()->setCheck(true);
-				theBoard->setwhite_check(true);
+			//if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
+			//	this->getPiece()->setCheck(true);
+			//	theBoard->setwhite_check(true);
 				// when should board's value of check be updated ???
-			}
+			//}
 		}
 	} else { // Color::NoColor
 		State original = getState();
 		int n = getObservers().size();
-		if (original.W == Danger::No && original.B == Danger::No) return;
-		else if (original.W == Danger::Yes) {  
+		if (original.W == Danger::No && original.B == Danger::No) {
+			//if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
+			//	this->getPiece()->setCheck(false);
+			//	theBoard->setwhite_check(false);
+			//} else if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::Black) {
+			//	this->getPiece()->setCheck(false);
+			//	theBoard->setblack_check(false);
+			//}
+			return;
+		}
+		if (original.W == Danger::Yes) {  
 			for (int i = n - 63; i < n; ++i) {
 				string name_ = getObservers().at(i)->getPiece()->getName();
 				Color color_ = getObservers().at(i)->getPiece()->getColor();
@@ -40,13 +49,15 @@ void Cell::notify(Subject<State> &whoFrom) {
 				int col_ = getObservers().at(i)->getCol();
 				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::Black) return;
 			}
-			setState({Danger::No, Danger::No});
-			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
-				this->getPiece()->setCheck(false);
-				theBoard->setwhite_check(false);
-			}
+			Danger black_ = getState().B;
+			setState({Danger::No, black_});
+			//if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::White) {
+			//	this->getPiece()->setCheck(false);
+			//	theBoard->setwhite_check(false);
+			//}
 
-		} else if (original.B == Danger::Yes) {
+		}
+		if (original.B == Danger::Yes) {
 			for (int i = n - 63; i < n; ++i) {
 				string name_ = getObservers().at(i)->getPiece()->getName();
 				Color color_ = getObservers().at(i)->getPiece()->getColor();
@@ -54,11 +65,12 @@ void Cell::notify(Subject<State> &whoFrom) {
 				int col_ = getObservers().at(i)->getCol();
 				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::White) return;
 			}
-			setState({Danger::No, Danger::No});
-			if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::Black) {
-				this->getPiece()->setCheck(false);
-				theBoard->setblack_check(false);
-			}
+			Danger white_ = getState().W;
+			setState({white_, Danger::No});
+			//if (this->getPiece()->getName() == "king" && this->getPiece()->getColor() == Color::Black) {
+			//	this->getPiece()->setCheck(false);
+			//	theBoard->setblack_check(false);
+			//}
 		}
 	}
 }
