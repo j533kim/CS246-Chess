@@ -7,6 +7,9 @@ DEPENDS = ${OBJECTS:.o=.d}
 ${EXEC}: ${OBJECTS}
 	${CXX} ${CXXFLAGS} ${OBJECTS} -o ${EXEC}
 
+state.o: state.h 
+	${CXX} ${CXXFLAGS} state.h
+
 -include ${DEPENDS}
 
 clean:

@@ -30,7 +30,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 					setState({Danger::Yes, black_});
 					break;
 				} else {
-					setState({Danger::No, black_});
+					setState({Danger::No, black_});   // 
 				}
 			}
 		}

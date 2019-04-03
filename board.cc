@@ -98,9 +98,10 @@ void Board::removePiece(int row, int col, shared_ptr<Move> currMove) {
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
-	shared_ptr<Piece> temp2 = theBoard.at(row_f).at(col_f).getPiece();
-	theBoard.at(row_f).at(col_f).setPiece(temp);
-	theBoard.at(row_0).at(col_0).setPiece(temp2);
+	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece()); 
+	theBoard.at(row_f).at(col_f).setPiece(temp);   // piece is put first on final position
+
+
 }
 
 
@@ -140,7 +141,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		try {
 			move(pos_in, pos_fi, white_turn);
 		} catch (InvalidMove in) {
-			this->undo();
 			setTest(false);
 			throw InvalidMove();
 		}
@@ -160,13 +160,13 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
-			cout << "try is successful" << endl;
+			//cout << "try is successful" << endl;
 		} catch (InvalidMove in) {  
 			setTest(false);
-			cout << "throw's an invalid move in black check" << endl;
+			//cout << "throw's an invalid move in black check" << endl;
 			throw InvalidMove();
 		} 
-		cout << getblack_check() << endl;
+		//cout << getblack_check() << endl;
 		if (getblack_check() == false){
 			setTest(false);
 			return;
@@ -334,6 +334,19 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		for (int j = 0; j < 8; j++) {
 			shared_ptr<Piece> piece = theBoard.at(i).at(j).getPiece();
 			if (piece->getName() == "king" && piece->getColor() == Color::Black) {
+			/*	cout << "Black King Row: " << i << "  " << "Col: " << j << "Cell_State ";
+				State other = theBoard.at(i).at(j).getState();
+				if (other.W == Danger::Yes) {
+  					cout<< "W : Yes";
+  				} else {
+  					cout << "W : No"; 
+  				}
+  					cout<< "   ";
+  				if (other.B == Danger::Yes) {
+  					cout << "B : Yes";
+  				} else {
+  					cout << "B : No";
+  				} */
 				if (theBoard.at(i).at(j).getState().B == Danger::No) {
 					piece->setCheck(false);
 					setblack_check(false);
@@ -345,6 +358,19 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				}
 			} else if (piece->getName() == "king" && piece->getColor() == Color::White) {
 				//setCheckedKing(cell);
+				/*cout << "White King Row: " << i << "  " << "Col: " << j << "Cell_State ";
+				State other = theBoard.at(i).at(j).getState();
+				if (other.W == Danger::Yes) {
+  					cout<< "W : Yes";
+  				} else {
+  					cout << "W : No"; 
+  				}
+  					cout<< "   ";
+  				if (other.B == Danger::Yes) {
+  					cout << "B : Yes";
+  				} else {
+  					cout << "B : No";
+  				} */
 				if (theBoard.at(i).at(j).getState().W == Danger::No) {
 					piece->setCheck(false);
 					setwhite_check(false);

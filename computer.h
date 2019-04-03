@@ -7,6 +7,7 @@
 #include <memory>
 #include "board.h"
 #include "color.h"
+#include "state.h"
 
 std::string ourpos_to_user(int row, int col);
 void computer_1(Board &b, Color color); // computer level1's move
