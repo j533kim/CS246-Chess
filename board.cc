@@ -17,6 +17,12 @@ bool check_pos(int row_0, int col_0, int row_f, int col_f) {
 	return true;
 }
 
+bool check_row_col(int row, int col) {
+	if (row < 0 || row > 7) return false;
+	if (col < 0 || col > 7) return false;
+	return true;
+}
+
 bool valid_piece(string piece) { // returns true if such piece exists in Chess
 	if (lowercase(piece) == "k") return true;
 	if (lowercase(piece) == "q") return true;
@@ -85,14 +91,17 @@ void Board::removePiece(int row, int col, shared_ptr<Move> currMove) {
 
 void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> temp = theBoard.at(row_0).at(col_0).getPiece();
-	theBoard.at(row_0).at(col_0).setPiece(theBoard.at(row_f).at(col_f).getPiece());
+	shared_ptr<Piece> temp2 = theBoard.at(row_f).at(col_f).getPiece();
 	theBoard.at(row_f).at(col_f).setPiece(temp);
+	theBoard.at(row_0).at(col_0).setPiece(temp2);
 }
+
+
 
 void Board::move(string pos_in, string pos_fi, bool white_turn) { // 
 	if ((!valid_pos(pos_in)) || (!valid_pos(pos_fi)) || pos_in == pos_fi) {
 		cout << "It's an invalid move!" << endl;
-		throw InvalidMove();
+		throw InvalidMove();          // THROW INVALID MOVE //
 		return;
 	}
 	int row_0 = row_return(pos_in);
@@ -104,18 +113,18 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if ((moving_color == Color::White && white_turn == 0) 
 	|| (moving_color == Color::Black && white_turn == 1)) {
 		cout << "It's not your turn!" << endl;
-		throw InvalidMove();
+		throw InvalidMove();   // THROW INVALID MOVE //
 		return;
 	}
 	Color dest_color = theBoard.at(row_f).at(col_f).getPiece()->getColor();
 	if (moving_color == Color::Black && white_turn) {
 		cout << "you are trying to move black piece" << endl;
-		throw InvalidMove();
+		throw InvalidMove();   // THROW INVALID MOVE //
 		return;
 	}
 	if ((moving_color == Color::NoColor) || (moving_color == dest_color)) {
 		cout << "you are trying to move an empty cell or killing your own piece" << endl;
-		throw InvalidMove();
+		throw InvalidMove();  // THROW INVALID MOVE //
 		return;
 	}
 	string name_ = theBoard.at(row_0).at(col_0).getPiece()->getName();
@@ -138,35 +147,34 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 	if (getblack_check() && getTest() == false) {   // black check
-		cout << white_turn << endl;
 		cout << "black check" << endl;
 		setTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
-		} catch (InvalidMove in) {
+			cout << "try is successful" << endl;
+		} catch (InvalidMove in) {  
 			setTest(false);
+			cout << "throw's an invalid move in black check" << endl;
 			throw InvalidMove();
 		} 
-		//cout << theBoard.at(row_f).at(col_f).getPiece()->getCheck() << endl;
-		//cout << getblack_check() << endl;
+		cout << getblack_check() << endl;
 		if (getblack_check() == false){
 			setTest(false);
 			return;
 		} else {
-			this->undo();
+			this->undo(); //
 			setTest(false);
 			throw InvalidMove();
 			return;
 		}
 	}
+
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
 	// the corresponding piece is not movable to the given final position
-		cout << name_ << endl;
-		cout << row_0 << "," << col_0 << "     " << row_f << "," << col_f << endl;
-		cout << "canmove function doesnt allow the movement of the pieces" << endl;
-		throw InvalidMove();
+		throw InvalidMove();  // THROW INVALID MOVE //
 		return;
 	}
+
 	bool en_passant = 0;
 	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
 		Color enemy_color = theBoard.at(row_0).at(col_f).getPiece()->getColor();
@@ -315,31 +323,106 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 /// check code
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			Cell cell = theBoard.at(i).at(j);
-			shared_ptr<Piece> piece = cell.getPiece();
+			shared_ptr<Piece> piece = theBoard.at(i).at(j).getPiece();
 			if (piece->getName() == "king" && piece->getColor() == Color::Black) {
-				if (cell.getState().B == Danger::No) {
+				if (theBoard.at(i).at(j).getState().B == Danger::No) {
 					piece->setCheck(false);
 					setblack_check(false);
 				} else {
+					//setCheckedKing(cell);
 					piece->setCheck(true);
 					setblack_check(true);
 				}
 			} else if (piece->getName() == "king" && piece->getColor() == Color::White) {
-				if (cell.getState().W == Danger::No) {
+				//setCheckedKing(cell);
+				if (theBoard.at(i).at(j).getState().W == Danger::No) {
 					piece->setCheck(false);
 					setwhite_check(false);
 				} else {
+					//setCheckedKing(cell);
 					piece->setCheck(true);
 					setwhite_check(true);
 				}
 			}
 		}
 	}
-
-
 //// check code //
+//// checmate code //
 
+
+if (getwhite_check() || getblack_check()) {
+	bool isCheckMate = true;
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (theBoard.at(i).at(j).getPiece()->getName() == "king") {
+				int king_row = i;
+				int king_col = j;
+				Color king_color = theBoard.at(i).at(j).getPiece()->getColor();
+				if (king_color == Color::Black) {
+					if (check_row_col(king_row - 1, king_col - 1)) {
+						if (theBoard.at(king_row - 1).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false; 
+					}
+					if (check_row_col(king_row - 1, king_col)) {
+						if (theBoard.at(king_row - 1).at(king_col).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row - 1, king_col + 1)) {
+						if (theBoard.at(king_row - 1).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row, king_col - 1)) {
+						if (theBoard.at(king_row).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row, king_col + 1)) {
+						if (theBoard.at(king_row).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col - 1)) {
+						if (theBoard.at(king_row + 1).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col)) {
+						if (theBoard.at(king_row + 1).at(king_col).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col + 1)) {
+						if (theBoard.at(king_row + 1).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+					}
+					if (isCheckMate) {
+						setblack_checkmate(true);
+						return;
+					}
+				} else {
+					if (check_row_col(king_row - 1, king_col - 1)) {
+						if (theBoard.at(king_row - 1).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false; 
+					}
+					if (check_row_col(king_row - 1, king_col)) {
+						if (theBoard.at(king_row - 1).at(king_col).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row - 1, king_col + 1)) {
+						if (theBoard.at(king_row - 1).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row, king_col - 1)) {
+						if (theBoard.at(king_row).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row, king_col + 1)) {
+						if (theBoard.at(king_row).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col - 1)) {
+						if (theBoard.at(king_row + 1).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col)) {
+						if (theBoard.at(king_row + 1).at(king_col).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (check_row_col(king_row + 1, king_col + 1)) {
+						if (theBoard.at(king_row + 1).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+					}
+					if (isCheckMate) {
+						setwhite_checkmate(true);
+						return;
+					}
+				}
+			}
+		}
+	}
+}
+
+//// checkmate code //
 
 	////////////////////////////
 
@@ -579,9 +662,9 @@ bool Board::getwhite_check() const { return white_check; }
 
 bool Board::getblack_check() const { return black_check; }
 
-void Board::setwhite_checkmate() { white_checkmate = true; }
+void Board::setwhite_checkmate(bool check) { white_checkmate = check; }
 
-void Board::setblack_checkmate() { black_checkmate = true; }
+void Board::setblack_checkmate(bool check) { black_checkmate = check; }
 
 void Board::setStalemate() { stalemate = true; }
 

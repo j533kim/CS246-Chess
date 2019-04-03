@@ -39,6 +39,13 @@ public:
 	int getCol() const override;
 	void settheBoard(Board *theBoard) override;
 	Board *gettheBoard() override;
+	/*Cell operator=(const Cell &other) {
+		row = other.row;
+		col = other.col;
+		theBoard = theBoard;
+		piece = piece;
+		return *(this);
+	}*/
 };
 
 #endif

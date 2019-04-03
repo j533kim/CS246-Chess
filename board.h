@@ -26,6 +26,7 @@ class Board {
   TextDisplay *td = nullptr;
   std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
+  Cell *checkedKing;
   bool white_checkmate = false;
   bool black_checkmate = false;
   bool stalemate = false;
@@ -54,12 +55,14 @@ public:
   bool getwhite_checkmate() const;
   bool getblack_checkmate() const;
   bool getStalemate() const;
+  Cell *getCheckedKing() { return checkedKing;}
+  void setCheckedKing(Cell *checkedKing) { checkedKing = checkedKing;}
   bool getwhite_check() const;
   void setTest(bool test) {this->test = test;}
   bool getTest(){return test;}
   bool getblack_check() const;
-  void setwhite_checkmate();
-  void setblack_checkmate();
+  void setwhite_checkmate(bool check);
+  void setblack_checkmate(bool check);
   void setStalemate();
   void setwhite_check(bool check);
   void setblack_check(bool check);
