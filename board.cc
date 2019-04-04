@@ -564,6 +564,59 @@ void Board::undo() {
 			theBoard.at(row_0).at(col_0).setPiece(currMove->getLostPiece());
 		}
 	}
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			shared_ptr<Piece> piece = theBoard.at(i).at(j).getPiece();
+			if (piece->getName() == "king" && piece->getColor() == Color::Black) {
+			/*	cout << "Black King Row: " << i << "  " << "Col: " << j << "Cell_State ";
+				State other = theBoard.at(i).at(j).getState();
+				if (other.W == Danger::Yes) {
+  					cout<< "W : Yes";
+  				} else {
+  					cout << "W : No"; 
+  				}
+  					cout<< "   ";
+  				if (other.B == Danger::Yes) {
+  					cout << "B : Yes";
+  				} else {
+  					cout << "B : No";
+  				} */
+				if (theBoard.at(i).at(j).getState().B == Danger::No) {
+					piece->setCheck(false);
+					setblack_check(false);
+					//cout << cell.getRow() << "," << cell.getCol() << endl;
+				} else {
+					//setCheckedKing(cell);
+					piece->setCheck(true);
+					setblack_check(true);
+				}
+			} else if (piece->getName() == "king" && piece->getColor() == Color::White) {
+				//setCheckedKing(cell);
+				/*cout << "White King Row: " << i << "  " << "Col: " << j << "Cell_State ";
+				State other = theBoard.at(i).at(j).getState();
+				if (other.W == Danger::Yes) {
+  					cout<< "W : Yes";
+  				} else {
+  					cout << "W : No"; 
+  				}
+  					cout<< "   ";
+  				if (other.B == Danger::Yes) {
+  					cout << "B : Yes";
+  				} else {
+  					cout << "B : No";
+  				}*/
+				if (theBoard.at(i).at(j).getState().W == Danger::No) {
+					piece->setCheck(false);
+					setwhite_check(false);
+				} else {
+					//setCheckedKing(cell);
+					cout << "white goes in check" << endl;
+					piece->setCheck(true);
+					setwhite_check(true);
+				}
+			}
+		}
+	}
 }
 
 Color Board::winner() {
