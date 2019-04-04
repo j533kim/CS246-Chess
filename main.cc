@@ -106,8 +106,7 @@ int main(int argc, char *argv[]) {
         game_manually_set = false;
         ++round_num;
         cout << "  ROUND " << round_num << endl;
-  			cout << game_cmd_1 << "(W) vs " << game_cmd_2 << "(B)" << endl;
-        cout << endl;
+  			cout << game_cmd_1 << "(W) vs " << game_cmd_2 << "(B)" << endl << endl;
         cout << b << endl;
   			// human if level=0; if 1,2,3,4, it's a computer with that level
   			player1_level = determine_level(game_cmd_1); // white player

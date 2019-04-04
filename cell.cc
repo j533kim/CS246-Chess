@@ -25,7 +25,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 	else if (white_attack_count >= 1 && black_attack_count >= 1) setState({Danger::Yes, Danger::Yes});
 
 
-
+/*
 	if (whoFrom.getPiece()->getColor() == Color::White) {
 		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger
@@ -69,7 +69,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void Cell::removePiece() {
