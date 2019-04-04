@@ -31,7 +31,8 @@ class Board {
   bool black_checkmate = false;
   bool stalemate = false;
   bool white_check = false;
-  bool test = false;
+  bool checkTest = false;
+  bool checkmateTest = false;
   bool black_check = false;
 public:
   ~Board(); // destructor
@@ -58,8 +59,10 @@ public:
   Cell *getCheckedKing() { return checkedKing;}
   void setCheckedKing(Cell *checkedKing) { checkedKing = checkedKing;}
   bool getwhite_check() const;
-  void setTest(bool test) {this->test = test;}
-  bool getTest(){return test;}
+  void setCheckTest(bool test) {this->checkTest = test;}
+  bool getCheckTest(){return checkTest;}
+  void setCheckMateTest(bool checkmateTest) {this->checkmateTest = checkmateTest;}
+  bool getCheckMateTest(){return checkmateTest;}
   bool getblack_check() const;
   void setwhite_checkmate(bool check);
   void setblack_checkmate(bool check);
