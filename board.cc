@@ -150,6 +150,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			return;
 		} else {
 			this->undo();
+			if (getwhite_checkmate()) {
+				return;
+			}
 			setTest(false);
 			throw InvalidMove();
 			return;
@@ -173,6 +176,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			return;
 		} else {
 			this->undo(); //
+			if (getblack_checkmate()) {
+				return;
+			}
 			setTest(false);
 			throw InvalidMove();
 			return;
@@ -182,6 +188,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
 	// the corresponding piece is not movable to the given final position
 		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
+		cout << "can move is throwing invalid throw" << endl;
 		throw InvalidMove();
 		return;
 	}
@@ -371,12 +378,13 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
   					cout << "B : Yes";
   				} else {
   					cout << "B : No";
-  				} */
+  				}*/
 				if (theBoard.at(i).at(j).getState().W == Danger::No) {
 					piece->setCheck(false);
 					setwhite_check(false);
 				} else {
 					//setCheckedKing(cell);
+					cout << "white goes in check" << endl;
 					piece->setCheck(true);
 					setwhite_check(true);
 				}
@@ -397,63 +405,82 @@ if (getwhite_check() || getblack_check()) {
 				Color king_color = theBoard.at(i).at(j).getPiece()->getColor();
 				if (king_color == Color::Black) {
 					if (check_row_col(king_row - 1, king_col - 1)) {
-						if (theBoard.at(king_row - 1).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false; 
+						if (theBoard.at(king_row - 1).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row - 1, king_col)) {
 						if (theBoard.at(king_row - 1).at(king_col).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row - 1, king_col + 1)) {
 						if (theBoard.at(king_row - 1).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row, king_col - 1)) {
 						if (theBoard.at(king_row).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row, king_col + 1)) {
 						if (theBoard.at(king_row).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col - 1)) {
 						if (theBoard.at(king_row + 1).at(king_col - 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col)) {
 						if (theBoard.at(king_row + 1).at(king_col).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col + 1)) {
 						if (theBoard.at(king_row + 1).at(king_col + 1).getState().B != Danger::Yes) isCheckMate = false;
+						else cout << "not supposed to be here" << endl;
 					}
 					if (isCheckMate) {
+						cout << "supposed to be here" << endl;
 						setblack_checkmate(true);
 						return;
 					}
 				} else {
 					if (check_row_col(king_row - 1, king_col - 1)) {
 						if (theBoard.at(king_row - 1).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false; 
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row - 1, king_col)) {
 						if (theBoard.at(king_row - 1).at(king_col).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row - 1, king_col + 1)) {
 						if (theBoard.at(king_row - 1).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row, king_col - 1)) {
 						if (theBoard.at(king_row).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row, king_col + 1)) {
 						if (theBoard.at(king_row).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col - 1)) {
 						if (theBoard.at(king_row + 1).at(king_col - 1).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col)) {
 						if (theBoard.at(king_row + 1).at(king_col).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (check_row_col(king_row + 1, king_col + 1)) {
 						if (theBoard.at(king_row + 1).at(king_col + 1).getState().W != Danger::Yes) isCheckMate = false;
+						else cout << "W not supposed to be here" << endl;
 					}
 					if (isCheckMate) {
+						cout << "w is in check" << endl;
 						setwhite_checkmate(true);
 						return;
 					}
 				}
+				isCheckMate = true;
 			}
 		}
 	}
@@ -833,8 +860,8 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 		Danger y = Danger::Yes;
 		if (piece_0->getColor() == piece_f->getColor()) return false;
       	State danger_ = theBoard.at(row_f).at(col_f).getState();
-      	if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes)  return false;
-      	if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes)  return false;
+      	//if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes)  return false;
+      	//if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes)  return false;
     //  cout << "inside kign" << endl;
 	 	 if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
 	 	 if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
