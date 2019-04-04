@@ -137,6 +137,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	string name_ = theBoard.at(row_0).at(col_0).getPiece()->getName();
 	if (getwhite_check() && getTest() == false) {  // white check 
+		cout << "white check" << endl;
 		setTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
