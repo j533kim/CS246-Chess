@@ -889,4 +889,3 @@ void computer_4(Board &b, Color color) {
 		computer_3(b, Color::Black);
 	} 	
 } 
-
