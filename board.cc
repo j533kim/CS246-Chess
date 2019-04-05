@@ -161,9 +161,24 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	string name_ = theBoard.at(row_0).at(col_0).getPiece()->getName();
 
+///////   making moves to bring their own king out of check 
 
-	if (getwhite_check() && getCheckTest() == false) {  // white king is under check and the white player is making a move
-		cout << "white king in check" << endl;
+				cout << "Black King Row: " << 1 << "  " << "Col: " << 6 << "Cell_State ";
+				State other = theBoard.at(1).at(6).getState();
+				if (other.W == Danger::Yes) {
+  					cout<< "W : Yes";
+  				} else {
+  					cout << "W : No"; 
+  				}
+  					cout<< "   ";
+  				if (other.B == Danger::Yes) {
+  					cout << "B : Yes";
+  				} else {
+  					cout << "B : No";
+  				}
+
+	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
+		cout << "white king is under check and the white player is making a move" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
@@ -184,8 +199,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			return;
 		}
 	}
-	if (getblack_check() && getCheckTest() == false) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-		cout << "black king in check" << endl;
+	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
+		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); 
@@ -208,32 +223,40 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 
-	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false) && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king") { // when any of the kings move with none of them in check // 
+
+/////////
+
+	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
+
+	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
+		cout << "enters if a move will put it's own king in check" << endl;
 		setCheckTest(true);
-		cout << "trying to move a king when not under in check";
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
 			cout << "try is successful" << endl;
 		} catch (InvalidMove in) {  
-			//cout << "throw's an invalid move in black check" << endl;
+			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
 			setCheckTest(false);
 			throw InvalidMove();
 		} 
-		if (!white_turn) {     //black's turn
+		if (white_turn) {     //black's turn
 			if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
+				cout << "on white's turn, black king has been put in check" << endl;
+				//this->undo();
 				setCheckTest(false);
-				throw InvalidMove();
-				return;
+				
+				//throw InvalidMove();
+				//return;  // shouldn't return because you wanna check for checkmate as welll 
+
 			} else if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
+				cout << "on white's turn, white king has been put in check" << endl;
 				this->undo();
 				setCheckTest(false);
 				throw InvalidMove();
 				return;
-			} 
-		} else {
+			}
+
+			/*
 			if (getwhite_check() == true) {
 				cout << "the move will put you in check" << endl;
 				this->undo();
@@ -246,9 +269,38 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				setCheckTest(false);
 				throw InvalidMove();
 				return;
-			}
+			} */
+		} else {
+			if (getwhite_check() == true) {
+				cout << "on black's turn, white king has been put in check" << endl;
+				 //this->undo();
+				setCheckTest(false);
+				
+				//throw InvalidMove();
+				//return;
+			} else if (getblack_check() == true){
+				cout << "on black's turn, black king has been put in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} 
+			/*
+			if (getblack_check() == true){
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} else if (getwhite_check() == true) {
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} */
 		}
-		this->undo();
+		this->undo(); // 
 		setCheckTest(false);
 	}
 
@@ -460,18 +512,20 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 
-	if (getblack_check() && getwhite_check()) { // if both kings come under check //
+	if (getblack_check() && getwhite_check()) { // if both kings come under check , put the opponent's king in check//
 		if (white_turn) {
 			setblack_check(false);
 		} else {
 			setwhite_check(false);
 		}
 	}
+	
 
 //// check code //
 //// checmate code //
 
-	if ((getblack_check() || getwhite_check()) && getCheckMateTest() == false && getCheckTest() == false) {
+	if (((getblack_check() || getwhite_check()) && (getCheckMateTest() == false)) && (getCheckTest() == false)) {
+		cout << "checkmate function has been entered" << endl;
 		setCheckMateTest(true);
 		bool isCheckMate = true;
 		vector<shared_ptr<Piece>> Pieces;
@@ -480,7 +534,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
 				vector<int> vc;
-				if (getblack_check()) {
+				if (getblack_check()) {  
 					if (theBoard.at(i).at(j).getPiece()->getColor() == Color::Black) {
 						Pieces.push_back(theBoard.at(i).at(j).getPiece()); 
 						vc.push_back(i);
@@ -521,7 +575,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 						string pos_fi = posStr(l,m);
 						if (getblack_check()) {   // black check
 							//cout << white_turn << endl;
-							cout << "black check" << endl;
 							setCheckTest(true);
 							try {
 								move(pos_in, pos_fi, white_turn); // error //
@@ -536,6 +589,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 							if (getblack_check() == false){
 
 								// store the move which turns get black check false // 
+								cout << "shouldnt be here" << endl;
 								isCheckMate = false;
 								this->undo();
 
@@ -551,7 +605,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								continue;
 							}
 						} else if (getwhite_check()) {  // white check 
-							cout << "white check" << endl;
+
 							setCheckTest(true);
 							try {
 								move(pos_in, pos_fi, white_turn);
@@ -576,6 +630,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								//return;
 								continue;
 							}
+						} else {
+							cout << "else for checkmate function" << endl;
 						}
 					}
 
@@ -659,21 +715,24 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 }
 
 void Board::undo() {
+	//cout << "inside undo" << endl;
 	shared_ptr<Move> currMove = pastMoves.back();
-	int row_0 = currMove->getEnd().row;
-	int col_0 = currMove->getEnd().col;
-	int row_f = currMove->getStart().row;
-	int col_f = currMove->getStart().col;
+	int row_0 = currMove->getStart().row;    
+	int col_0 = currMove->getStart().col;
+	int row_f = currMove->getEnd().row;  
+	int col_f = currMove->getEnd().col;
 	pastMoves.pop_back();
 	if (currMove->getStart() == currMove->getEnd()) {    // add just the piece that was stored // not official move
 		//cout << "not here" << endl;
 	} else {
-		if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_f-row_0) == 2 && (col_f == col_0))) {
+		if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_0-row_f) == 2 && (col_0 == col_f))) {
 			theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+			//cout << "pawn two step chance is working" << endl;
 		}
-		swapPiece(row_f,col_f,row_0,col_0);  // moves from final to initial // the opposite //
+		swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
+		//swapPiece(row_f,col_f,row_0,col_0);
 		if (currMove->getLostPiece() != nullptr) {
-			theBoard.at(row_0).at(col_0).setPiece(currMove->getLostPiece());
+			theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
 		}
 	}
 	for (int i = 0; i < 8; i++) {

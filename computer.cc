@@ -77,16 +77,16 @@ void computer_1(Board &b, Color color) {
     		if (b.canmove(MyPieces.at(piece_index)->getName(), Row_Col.at(piece_index).at(0), Row_Col.at(piece_index).at(1), row, col)) {
     			string initial = ourpos_to_user(Row_Col.at(piece_index).at(0), Row_Col.at(piece_index).at(1));
     			string final = ourpos_to_user(row, col);
-    		//	try {
+    			try {
     				b.move(initial, final, w_turn);
     				return;
-    		/*	} catch (InvalidMove In) {
+    			} catch (InvalidMove In) {
     				if(w_turn == 1) {
     					computer_1(b, Color::White);
     				} else {
     					computer_1(b, Color::Black);
     				}	
-    			} */
+    			} 
     		} 
     	}
     	index_array.at(piece_index) = 1;
@@ -98,16 +98,16 @@ void computer_1(Board &b, Color color) {
     			if (b.canmove(MyPieces.at(m)->getName(), Row_Col.at(m).at(0), Row_Col.at(m).at(1), r, c)) {
     				string initial = ourpos_to_user(Row_Col.at(m).at(0), Row_Col.at(m).at(1));
     				string final = ourpos_to_user(r, c);
-    			//	try {
+    				try {
     					b.move(initial, final, w_turn);
     					return;
-    			/*	} catch (InvalidMove In) {
+    				} catch (InvalidMove In) {
     					if(w_turn == 1) {
     						computer_1(b, Color::White);
     					} else {
     						computer_1(b, Color::Black);
     					}	
-    				} */
+    				}
     			} 
     		}
     	}
