@@ -5,7 +5,9 @@ using namespace std;
 Cell::Cell(shared_ptr<Piece> piece, int row, int col): piece{piece}, row{row}, col{col} {}
 
 void Cell::notify(Subject<State> &whoFrom) {
+	
 	int n = getObservers().size();
+	
 	int white_attack_count = 0;
 	int black_attack_count = 0;
 	for (int i = n - 63; i < n; ++i) {
@@ -14,9 +16,9 @@ void Cell::notify(Subject<State> &whoFrom) {
 			int row_ = getObservers().at(i)->getRow();
 			int col_ = getObservers().at(i)->getCol();
 			if (color_ == Color::Black) {
-				if (gettheBoard()->canmove(name_,row_, col_, getRow(), getCol())) ++black_attack_count;
+				if (gettheBoard()->canAttack(name_,row_, col_, getRow(), getCol())) ++black_attack_count;
 			} else if (color_ == Color::White) {
-				if (gettheBoard()->canmove(name_,row_, col_, getRow(), getCol())) ++ white_attack_count;
+				if (gettheBoard()->canAttack(name_,row_, col_, getRow(), getCol())) ++ white_attack_count;
 			}
 	}
 	if (white_attack_count == 0 && black_attack_count == 0) setState({Danger::No, Danger::No});
@@ -25,14 +27,14 @@ void Cell::notify(Subject<State> &whoFrom) {
 	else if (white_attack_count >= 1 && black_attack_count >= 1) setState({Danger::Yes, Danger::Yes});
 
 
-/*
+	/*
 	if (whoFrom.getPiece()->getColor() == Color::White) {
-		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (gettheBoard()->canAttack(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger
 			else setState({Danger::Yes,Danger::Yes});
 		}
 	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
-		if (gettheBoard()->canmove(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
+		if (gettheBoard()->canAttack(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
 			if (getState().B == Danger::No) setState({Danger::Yes, Danger::No}); // cell's white_state get set to danger //
 			else setState({Danger::Yes,Danger::Yes});
 		}
@@ -46,7 +48,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 				Color color_ = getObservers().at(i)->getPiece()->getColor();
 				int row_ = getObservers().at(i)->getRow();
 				int col_ = getObservers().at(i)->getCol();
-				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::Black) {
+				if (gettheBoard()->canAttack(name_, row_, col_, row, col) && color_ == Color::Black) {
 					setState({Danger::Yes, black_});
 					break;
 				} else {
@@ -61,7 +63,7 @@ void Cell::notify(Subject<State> &whoFrom) {
 				Color color_ = getObservers().at(i)->getPiece()->getColor();
 				int row_ = getObservers().at(i)->getRow();
 				int col_ = getObservers().at(i)->getCol();
-				if (gettheBoard()->canmove(name_, row_, col_, row, col) && color_ == Color::White) {
+				if (gettheBoard()->canAttack(name_, row_, col_, row, col) && color_ == Color::White) {
 					setState({white_, Danger::Yes});
 					break;
 				} else {

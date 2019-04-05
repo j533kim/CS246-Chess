@@ -51,6 +51,7 @@ public:
   void placePiece(Piece &piece, int row, int col);
   void swapPiece(int row_0, int col_0, int row_f, int col_f);
   bool canmove(std::string name, int row_0, int col_0, int row_f, int col_f);
+  bool canAttack(std::string name, int row_0, int col_0, int row_f, int col_f);
   bool game_draw_pieces() const; // when there are not enough pieces to end
   std::vector<std::vector<Cell>> &get_theBoard();
   bool getwhite_checkmate() const;
