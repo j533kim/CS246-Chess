@@ -163,6 +163,191 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 ///////   making moves to bring their own king out of check 
 
+	
+
+
+	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
+		cout << "white king is under check and the white player is making a move" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn);
+		} catch (InvalidMove in) {
+			setCheckTest(false);
+			throw InvalidMove();
+		}
+		if (getwhite_check() == false){
+			setCheckTest(false);
+			return;
+		} else {
+			this->undo();
+			if (getwhite_checkmate()) {   // when making a move
+				return;
+			}
+			setCheckTest(false);
+			throw InvalidMove();
+			return;
+		}
+	}
+	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
+		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn); 
+		} catch (InvalidMove in) {  
+			setCheckTest(false);
+			throw InvalidMove();
+		} 
+
+		if (getblack_check() == false){
+			setCheckTest(false);
+			return;
+		} else {
+			this->undo(); //
+			if (getblack_checkmate()) {
+				return;
+			}
+			setCheckTest(false);
+			throw InvalidMove();
+			return;
+		}
+	}
+
+
+/////////
+
+	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
+
+	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
+		cout << "enters if a move will put it's own king in check" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn); // error //
+			cout << "try is successful" << endl;
+		} catch (InvalidMove in) {  
+			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
+			setCheckTest(false);
+			throw InvalidMove();
+		} 
+		if (white_turn) {     //black's turn
+			if (getblack_check() == true){
+				cout << "on white's turn, black king has been put in check" << endl;
+				//this->undo();
+				setCheckTest(false);
+				
+				//throw InvalidMove();
+				//return;  // shouldn't return because you wanna check for checkmate as welll 
+
+			} else if (getwhite_check() == true) {
+				cout << "on white's turn, white king has been put in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			}
+
+			/*
+			if (getwhite_check() == true) {
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} else if (getblack_check() == true){
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} */
+		} else {
+			if (getwhite_check() == true) {
+				cout << "on black's turn, white king has been put in check" << endl;
+				 //this->undo();
+				setCheckTest(false);
+				
+				//throw InvalidMove();
+				//return;
+			} else if (getblack_check() == true){
+				cout << "on black's turn, black king has been put in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} 
+			/*
+			if (getblack_check() == true){
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} else if (getwhite_check() == true) {
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} */
+		}
+		this->undo(); // 
+		setCheckTest(false);
+	}
+
+	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
+	// the corresponding piece is not movable to the given final position
+		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
+		cout << "can move is throwing invalid throw" << endl;
+		throw InvalidMove();
+		return;
+	}
+
+	bool en_passant = 0;
+	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
+		Color enemy_color = theBoard.at(row_0).at(col_f).getPiece()->getColor();
+		bool twice_before = theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore();
+		if (row_0 + 1 == row_f && moving_color == Color::Black) {
+			if (col_0 - 1 == col_f) {
+				if (enemy_color == Color::White) {
+					if (twice_before) {
+						en_passant = 1;
+					}
+				}
+			} else if (col_0 + 1 == col_f) {
+				if (enemy_color == Color::White) {
+					if (twice_before) {
+						en_passant = 1;
+					}
+				}
+			}
+		} else if (row_0 - 1 == row_f && moving_color == Color::White) {
+			if (col_0 - 1 == col_f) {
+				if (enemy_color == Color::Black) {
+					if (twice_before) {
+						en_passant = 1;
+					}
+				}
+			} else if (col_0 + 1 == col_f) {
+				if (enemy_color == Color::Black) {
+					if (twice_before) {
+						en_passant = 1;
+					}
+				}
+			}
+		}
+	}
+
+	bool castle = false;
+	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "king") {
+		if (row_0 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) castle = true;
+	}
+
+
+	if (!castle) {    // en_passant and rest of the moves comes under this. // 
+		removePiece(row_f, col_f,currMove);
+		swapPiece(row_0, col_0, row_f, col_f);
+		pastMoves.push_back(currMove);        // MAIN MOVE // END //
+	}
+
 	cout << 0 << "," << 0 << "-> ";
 	State other = theBoard.at(1).at(6).getState();
 	if (other.W == Danger::Yes) {
@@ -1124,189 +1309,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	cout << endl;
 
-
-	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
-		cout << "white king is under check and the white player is making a move" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn);
-		} catch (InvalidMove in) {
-			setCheckTest(false);
-			throw InvalidMove();
-		}
-		if (getwhite_check() == false){
-			setCheckTest(false);
-			return;
-		} else {
-			this->undo();
-			if (getwhite_checkmate()) {   // when making a move
-				return;
-			}
-			setCheckTest(false);
-			throw InvalidMove();
-			return;
-		}
-	}
-	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn); 
-		} catch (InvalidMove in) {  
-			setCheckTest(false);
-			throw InvalidMove();
-		} 
-
-		if (getblack_check() == false){
-			setCheckTest(false);
-			return;
-		} else {
-			this->undo(); //
-			if (getblack_checkmate()) {
-				return;
-			}
-			setCheckTest(false);
-			throw InvalidMove();
-			return;
-		}
-	}
-
-
-/////////
-
-	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
-
-	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
-		cout << "enters if a move will put it's own king in check" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn); // error //
-			cout << "try is successful" << endl;
-		} catch (InvalidMove in) {  
-			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
-			setCheckTest(false);
-			throw InvalidMove();
-		} 
-		if (white_turn) {     //black's turn
-			if (getblack_check() == true){
-				cout << "on white's turn, black king has been put in check" << endl;
-				//this->undo();
-				setCheckTest(false);
-				
-				//throw InvalidMove();
-				//return;  // shouldn't return because you wanna check for checkmate as welll 
-
-			} else if (getwhite_check() == true) {
-				cout << "on white's turn, white king has been put in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			}
-
-			/*
-			if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
-		} else {
-			if (getwhite_check() == true) {
-				cout << "on black's turn, white king has been put in check" << endl;
-				 //this->undo();
-				setCheckTest(false);
-				
-				//throw InvalidMove();
-				//return;
-			} else if (getblack_check() == true){
-				cout << "on black's turn, black king has been put in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} 
-			/*
-			if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
-		}
-		this->undo(); // 
-		setCheckTest(false);
-	}
-
-	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
-	// the corresponding piece is not movable to the given final position
-		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
-		cout << "can move is throwing invalid throw" << endl;
-		throw InvalidMove();
-		return;
-	}
-
-	bool en_passant = 0;
-	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
-		Color enemy_color = theBoard.at(row_0).at(col_f).getPiece()->getColor();
-		bool twice_before = theBoard.at(row_0).at(col_f).getPiece()->getmovedTwoStepsBefore();
-		if (row_0 + 1 == row_f && moving_color == Color::Black) {
-			if (col_0 - 1 == col_f) {
-				if (enemy_color == Color::White) {
-					if (twice_before) {
-						en_passant = 1;
-					}
-				}
-			} else if (col_0 + 1 == col_f) {
-				if (enemy_color == Color::White) {
-					if (twice_before) {
-						en_passant = 1;
-					}
-				}
-			}
-		} else if (row_0 - 1 == row_f && moving_color == Color::White) {
-			if (col_0 - 1 == col_f) {
-				if (enemy_color == Color::Black) {
-					if (twice_before) {
-						en_passant = 1;
-					}
-				}
-			} else if (col_0 + 1 == col_f) {
-				if (enemy_color == Color::Black) {
-					if (twice_before) {
-						en_passant = 1;
-					}
-				}
-			}
-		}
-	}
-
-	bool castle = false;
-	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "king") {
-		if (row_0 == row_f && (col_0 - 2 == col_f || col_0 + 2 == col_f)) castle = true;
-	}
-
-
-	if (!castle) {    // en_passant and rest of the moves comes under this. // 
-		removePiece(row_f, col_f,currMove);
-		swapPiece(row_0, col_0, row_f, col_f);
-		pastMoves.push_back(currMove);        // MAIN MOVE // END //
-	}
-
 	// castling movement //////
 	if (castle) {
 		shared_ptr<Move> nextCurrMove = make_shared<Move>();
@@ -2232,53 +2234,6 @@ bool Board::canAttack(string name, int row_0, int col_0, int row_f, int col_f) {
 	 	 if (row_0 + 1 == row_f && col_0 == col_f) return true;
 	 	 if (row_0 == row_f && col_0 - 1 == col_f) return true;
 	 	 if (row_0 == row_f && col_0 + 1 == col_f) return true;
-	 	 if (row_0 == row_f && (col_0 == col_f - 2 || col_0 == col_f + 2)) { //castling
-	 	 	int col_m = (col_f + col_0) / 2;
-	 	 	State mid_state = theBoard.at(row_0).at(col_m).getState();
-	  		State ini_state = theBoard.at(row_0).at(col_0).getState();
-	  		State fin_state = theBoard.at(row_0).at(col_f).getState();
-	  		if (mid_state.W == y) return false;
-	  		if (ini_state.W == y) return false;
-	  		if (fin_state.W == y) return false;
-	 	 	if (theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::White) { //castling white
-	 	 		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
-	  				for (int i = 0; i < 3; ++i) {
-	  					if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") return false;
-	  				}
-	  				if (theBoard.at(7).at(0).getPiece()->getName() != "rook") return false;
-	  				if (!(piece_0->getCastle())) return false;
-	  				if (!(theBoard.at(7).at(0).getPiece()->getCastle())) return false;
-	  				return true;
-	  			} else if (row_0 == 7 && col_0 == 4 && col_f == 6) { // white king to the right
-	  				for (int i = 0; i < 1; ++i) {
-	  					if (theBoard.at(row_0).at(5 + i).getPiece()->getName() != "nopiece") return false;
-	  				}
-	  				if (theBoard.at(7).at(7).getPiece()->getName() != "rook") return false;
-	  				if (!(piece_0->getCastle())) return false;
-	  				if (!(theBoard.at(7).at(7).getPiece()->getCastle())) return false;
-	  				return true;
-	  			}
-	  		} else if (theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::Black) { //castling black
-	  			if (row_0 == 0 && col_0 == 4 && col_f == 2) { // white king to the left
-	  				for (int i = 0; i < 3; ++i) {
-	  					if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") return false;
-	  				}
-	  				if (theBoard.at(0).at(0).getPiece()->getName() != "rook") return false;
-	  				if (!(piece_0->getCastle())) return false;
-	  				if (!(theBoard.at(0).at(0).getPiece()->getCastle())) return false;
-	  				return true;
-	  			} else if (row_0 == 0 && col_0 == 4 && col_f == 6) { // white king to the right
-	  				for (int i = 0; i < 1; ++i) {
-	  					if (theBoard.at(row_0).at(5 + i).getPiece()->getName() != "nopiece") return false;
-	  				}
-	  				if (theBoard.at(0).at(7).getPiece()->getName() != "rook") return false;
-	  				if (!(piece_0->getCastle())) return false;
-	  				if (!(theBoard.at(0).at(7).getPiece()->getCastle())) return false;
-	  				return true;
-	  			}
-	  		}
-	  	return false;
-	  }
 	}
 	return false;
 }
