@@ -17,7 +17,8 @@
 #include "knight.h"
 #include "pawn.h"
 #include "state.h"
-//#include "graphicaldisplay.h"
+#include "window.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 

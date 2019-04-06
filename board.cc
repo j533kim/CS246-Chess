@@ -91,7 +91,7 @@ void Board::init() {
 		black_check = false;
 	}
 	td = new TextDisplay(); // new display
-	ob = nullptr;
+	setObserver(new GraphicsDisplay());
 	for (int i = 0; i < 8; ++i) {
 		vector<Cell> vect;
 		theBoard.emplace_back(vect);
@@ -104,6 +104,7 @@ void Board::init() {
 	for (int i = 0; i < 8; ++i) { // setting neighbours for all subjects
 		for (int j = 0; j < 8; ++j) {
 			theBoard.at(i).at(j).attach(td); // attaching textdisplay
+			theBoard.at(i).at(j).attach(ob); // attaching graphicsdisplay
 			for (int i_ = 0; i_ < 8; ++i_) { // attaching cell observers to each
 				for (int j_ = 0; j_ < 8; ++j_) {
 					if (!((i == i_) && (j == j_))) {

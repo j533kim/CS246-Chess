@@ -16,6 +16,8 @@
 #include "cell.h"
 #include "king.h"
 #include "move.h"
+#include "window.h"
+#include "graphicsdisplay.h"
 
 class TextDisplay;
 template <typename StateType> class Observer;

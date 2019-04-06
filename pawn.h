@@ -14,17 +14,10 @@ class Pawn : public Piece {
 	bool movedTwoStepsBefore; // for En Passant
 public:
 	Pawn(Color color, bool twoStepChance);
-	bool getCheck() const;
-	bool getCastle() const;
 	bool gettwoStepChance() const override;
 	bool getmovedTwoStepsBefore() const;
-	bool getUpgrade() const;
-	void setUpgrade();
-	void setCastle();
-	void setCheck();
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
-	void upgrade(std::shared_ptr<Piece> piece) override;
 };
 
 #endif
