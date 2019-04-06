@@ -112,6 +112,8 @@ int main(int argc, char *argv[]) {
   			player1_level = determine_level(game_cmd_1); // white player
   			player2_level = determine_level(game_cmd_2); // black player
   			if ((player1_level == 0) && (player2_level == 0)) { // 2 humans
+          b.setHumans(Color::White, true);
+          b.setHumans(Color::Black, true);
   				while (true) {
   					cin >> game_cmd;
             
@@ -195,6 +197,8 @@ int main(int argc, char *argv[]) {
   				white_turn = 1; // resetting so white can start in new game
   			} else if (player1_level * player2_level == 0) { // 1 computer and 1 human
   				if (player1_level == 0) { // human is white, human starts first
+            b.setHumans(Color::White, true);
+            b.setHumans(Color::Black, false);
   					while (true) {
   						if (white_turn) { // human's turn
   							cin >> game_cmd;
@@ -249,6 +253,8 @@ int main(int argc, char *argv[]) {
   						}
   					}
   				} else { // computer is white, computer starts first
+            b.setHumans(Color::White, false);
+            b.setHumans(Color::Black, true);
   					while (true) {
   						if (white_turn) { // computer's turn
   							if (player1_level == 1) {
@@ -304,6 +310,8 @@ int main(int argc, char *argv[]) {
   					}
   				}
   			} else { // 2 computers
+          b.setHumans(Color::White, false);
+          b.setHumans(Color::Black, false);
   				while (true) {
   					if (white_turn) { // computer's turn
   						if (player1_level == 1) {

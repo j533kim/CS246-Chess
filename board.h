@@ -34,6 +34,9 @@ class Board {
   bool checkTest = false;
   bool checkmateTest = false;
   bool black_check = false;
+protected:
+  bool white_human = true;
+  bool black_human = true;
 public:
   ~Board(); // destructor
   void setObserver(Observer<State> *ob); // sets the observers for each
@@ -70,6 +73,7 @@ public:
   void setStalemate();
   void setwhite_check(bool check);
   void setblack_check(bool check);
+  void setHumans(Color color, bool human_player);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);

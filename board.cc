@@ -128,7 +128,10 @@ void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 
 }
 
-
+void Board::setHumans(Color color, bool human_player) {
+	if (color == Color::White) white_human = human_player;
+	else if (color == Color::Black) black_human = human_player;
+}
 
 void Board::move(string pos_in, string pos_fi, bool white_turn) { // 
 	if ((!valid_pos(pos_in)) || (!valid_pos(pos_fi)) || pos_in == pos_fi) {
@@ -429,22 +432,67 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();  // pawn 
 		shared_ptr<Move> nextCurrMove = make_shared<Move>(row_col{row_f,col_f},row_col{row_f,col_f},pawn,nullptr,false);   // make sure that this line is placed at the right position //
-		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
-			if (row_f == 0) {
-				shared_ptr<Piece> queen = make_shared<Queen>(Color::White);
-				theBoard.at(row_f).at(col_f).setPiece(queen); 
-				theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
-				nextCurrMove->setAddedPiece(queen);
-				pastMoves.push_back(nextCurrMove);
+		if (!((white_human && white_turn) || (black_human && (!white_turn)))) {
+			if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
+				if (row_f == 0) {
+					shared_ptr<Piece> queen = make_shared<Queen>(Color::White);
+					theBoard.at(row_f).at(col_f).setPiece(queen); 
+					theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
+					nextCurrMove->setAddedPiece(queen);
+					pastMoves.push_back(nextCurrMove);
+				}
+			} else {
+				if (row_f == 7) {
+					shared_ptr<Piece> queen = make_shared<Queen>(Color::Black);
+					theBoard.at(row_f).at(col_f).setPiece(queen);
+					theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
+					nextCurrMove->setAddedPiece(queen);
+					pastMoves.push_back(nextCurrMove);
+				}
 			}
 		} else {
-			if (row_f == 7) {
-				shared_ptr<Piece> queen = make_shared<Queen>(Color::Black);
-				theBoard.at(row_f).at(col_f).setPiece(queen);
-				theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
-				nextCurrMove->setAddedPiece(queen);
-				pastMoves.push_back(nextCurrMove);
+			shared_ptr<Piece> promote;
+			while (true) {
+				string what_you_want;
+				cin >> what_you_want;
+				if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
+					if (row_f == 0) {
+						if (what_you_want == "Q" || what_you_want == "Q") {
+							promote = make_shared<Queen>(Color::White);
+							break;
+						} else if (what_you_want == "n" || what_you_want == "N") {
+							promote = make_shared<Knight>(Color::White);
+							break;
+						} else if (what_you_want == "r" || what_you_want == "R") {
+							promote = make_shared<Rook>(Color::White, false);
+							break;
+						} else if (what_you_want == "b" || what_you_want == "B") {
+							promote = make_shared<Bishop>(Color::White);
+							break;
+						}
+					}
+				} else {
+					if (row_f == 7) {
+						if (what_you_want == "Q" || what_you_want == "Q") {
+							promote = make_shared<Queen>(Color::Black);
+							break;
+						} else if (what_you_want == "n" || what_you_want == "N") {
+							promote = make_shared<Knight>(Color::Black);
+							break;
+						} else if (what_you_want == "r" || what_you_want == "R") {
+							promote = make_shared<Rook>(Color::Black, false);
+							break;
+						} else if (what_you_want == "b" || what_you_want == "B") {
+							promote = make_shared<Bishop>(Color::Black);
+							break;
+						}
+					}
+				}
 			}
+			theBoard.at(row_f).at(col_f).setPiece(promote); 
+			theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
+			nextCurrMove->setAddedPiece(promote);
+			pastMoves.push_back(nextCurrMove);
 		}
 	}
 
@@ -1309,9 +1357,6 @@ bool Board::canAttack(string name, int row_0, int col_0, int row_f, int col_f) {
 	} else if (name == "king") {
 		Danger y = Danger::Yes;
       	State danger_ = theBoard.at(row_f).at(col_f).getState();
-      	//if (piece_0->getColor() == Color::White && danger_.W == Danger::Yes)  return false;
-      	//if (piece_0->getColor() == Color::Black && danger_.B == Danger::Yes)  return false;
-    //  cout << "inside kign" << endl;
 	 	 if (row_f - 1 == row_0 && col_f - 1 == col_0) return true;
 	 	 if (row_f - 1 == row_0 && col_f + 1 == col_0) return true;
 	 	 if (row_f + 1 == row_0 && col_f - 1 == col_0) return true;
