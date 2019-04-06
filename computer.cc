@@ -671,32 +671,23 @@ void computer_4(Board &b, Color color) {
 					(b.get_theBoard().at(final_row).at(final_col).getState().W == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);
-	    		//	try {
-	    				b.move(initial, final, w_turn);
-	    				return;
-	    		/*	} catch (InvalidMove In) {
-	    				if(w_turn == 1) {
-	    					computer_2(b, Color::White);
-	    				} else {
-	    					computer_2(b, Color::Black);
-	    				}	
-	    			} */
-	    		} 
+	    			try {
+   						b.move(initial, final, w_turn);
+   						return;
+   				    } catch (InvalidMove In) {
+   						continue;	
+    				} 
 			} else {
 				if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
 					(b.get_theBoard().at(final_row).at(final_col).getState().B == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);
-	    		//	try {
-	    				b.move(initial, final, w_turn);
-	    				return;
-	    		/*	} catch (InvalidMove In) {
-	    				if(w_turn == 1) {
-	    					computer_2(b, Color::White);
-	    				} else {
-	    					computer_2(b, Color::Black);
-	    				}	
-	    			} */
+	    			try {
+   						b.move(initial, final, w_turn);
+   						return;
+   				    } catch (InvalidMove In) {
+   						continue;	
+    				} 
 	    		}
 			}	
 		}
@@ -728,8 +719,12 @@ void computer_4(Board &b, Color color) {
 						(b.get_theBoard().at(i).at(j).getState().W == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);
+	   					try {
 	   						b.move(initial, final, w_turn);
 	   						return;
+	   				    } catch (InvalidMove In) {
+	   						continue;	
+	    				} 
 					}
 				} else {
 					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) && 
@@ -737,8 +732,12 @@ void computer_4(Board &b, Color color) {
 						(b.get_theBoard().at(i).at(j).getState().B == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);
-	   					b.move(initial, final, w_turn);
-	   					return;
+	   					try {
+	   						b.move(initial, final, w_turn);
+	   						return;
+	   				    } catch (InvalidMove In) {
+	   						continue;	
+	    				} 
 					}
 				}	
 			}
