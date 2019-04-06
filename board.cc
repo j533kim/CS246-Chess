@@ -132,7 +132,7 @@ void Board::swapPiece(int row_0, int col_0, int row_f, int col_f) {
 
 void Board::move(string pos_in, string pos_fi, bool white_turn) { // 
 	if ((!valid_pos(pos_in)) || (!valid_pos(pos_fi)) || pos_in == pos_fi) {
-		//cout << "It's an invalid move!" << endl;
+		cout << "It's an invalid move!" << endl;
 		throw InvalidMove();
 		return;
 	}
@@ -150,12 +150,13 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 	Color dest_color = theBoard.at(row_f).at(col_f).getPiece()->getColor();
 	if (moving_color == Color::Black && white_turn) {
-		//cout << "you are trying to move black piece." << endl;
+		cout << "you are trying to move black piece." << endl;
 		throw InvalidMove();
 		return;
 	}
 	if ((moving_color == Color::NoColor) || (moving_color == dest_color)) {
-		//cout << "you are trying to move an empty cell or killing your own piece" << endl;
+		cout << pos_in << "   " << pos_fi << endl;
+
 		throw InvalidMove();
 		return;
 	}
@@ -167,7 +168,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 
 	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
-		//cout << "white king is under check and the white player is making a move" << endl;
+		cout << "white king is under check and the white player is making a move" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
@@ -189,7 +190,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-		//cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
+		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); 
@@ -218,7 +219,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
 
 	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
-		//cout << "enters if a move will put it's own king in check" << endl;
+		cout << "enters if a move will put it's own king in check" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
@@ -294,973 +295,12 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
-	// the corresponding piece is not movable to the given final position
+	cout <<  "the corresponding piece is not movable to the given final position" << endl;
 		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
 		//cout << "can move is throwing invalid throw" << endl;
 		throw InvalidMove();
 		return;
 	}
-
-	cout << 0 << "," << 0 << "-> ";
-	State other = theBoard.at(1).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-
-	cout << 0 << "," << 1 << "-> ";
-	other = theBoard.at(0).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 2 << "-> ";
-	 other = theBoard.at(0).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 3 << "-> ";
-	 other = theBoard.at(0).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 4 << "-> ";
-	 other = theBoard.at(0).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 5 << "-> ";
-	 other = theBoard.at(0).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 6 << "-> ";
-	 other = theBoard.at(0).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 0 << "," << 7 << "-> ";
-	 other = theBoard.at(0).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 0 << "-> ";
-	 other = theBoard.at(1).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 1 << "-> ";
-	 other = theBoard.at(1).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 2 << "-> ";
-	 other = theBoard.at(1).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 3 << "-> ";
-	 other = theBoard.at(1).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 4 << "-> ";
-	 other = theBoard.at(1).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 5 << "-> ";
-	 other = theBoard.at(1).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 6 << "-> ";
-	 other = theBoard.at(1).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 1 << "," << 7 << "-> ";
-	 other = theBoard.at(1).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 0 << "-> ";
-	 other = theBoard.at(2).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 1 << "-> ";
-	 other = theBoard.at(2).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 2 << "-> ";
-	 other = theBoard.at(2).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 3 << "-> ";
-	 other = theBoard.at(2).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 4 << "-> ";
-	 other = theBoard.at(2).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 5 << "-> ";
-	 other = theBoard.at(2).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 6 << "-> ";
-		other = theBoard.at(2).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 2 << "," << 7 << "-> ";
-	 other = theBoard.at(2).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 0 << "-> ";
-	 other = theBoard.at(3).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 1 << "-> ";
-	 other = theBoard.at(3).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 2 << "-> ";
-	 other = theBoard.at(3).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 3 << "-> ";
-	 other = theBoard.at(3).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 4 << "-> ";
-	 other = theBoard.at(3).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 5 << "-> ";
-	 other = theBoard.at(3).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 6 << "-> ";
-	 other = theBoard.at(3).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 3 << "," << 7 << "-> ";
-	 other = theBoard.at(3).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 0 << "-> ";
-	 other = theBoard.at(4).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 1 << "-> ";
-	 other = theBoard.at(4).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 2 << "-> ";
-	 other = theBoard.at(4).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 3 << "-> ";
-	 other = theBoard.at(4).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 4 << "-> ";
-	 other = theBoard.at(4).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 5 << "-> ";
-	 other = theBoard.at(4).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 6 << "-> ";
-	 other = theBoard.at(4).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 4 << "," << 7 << "-> ";
-	 other = theBoard.at(4).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 0 << "-> ";
-	 other = theBoard.at(5).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 1 << "-> ";
-	 other = theBoard.at(5).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 2 << "-> ";
-	 other = theBoard.at(5).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 3 << "-> ";
-	 other = theBoard.at(5).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 4 << "-> ";
-	 other = theBoard.at(5).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 5 << "-> ";
-	 other = theBoard.at(5).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 6 << "-> ";
-	 other = theBoard.at(5).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 5 << "," << 7 << "-> ";
-	 other = theBoard.at(5).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 0 << "-> ";
-	 other = theBoard.at(6).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 1 << "-> ";
-		other = theBoard.at(6).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 2 << "-> ";
-	 other = theBoard.at(6).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 3 << "-> ";
-	 other = theBoard.at(6).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 4 << "-> ";
-	 other = theBoard.at(6).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 5 << "-> ";
-	 other = theBoard.at(6).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 6 << "-> ";
-	 other = theBoard.at(6).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 6 << "," << 7 << "-> ";
-	 other = theBoard.at(6).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 0 << "-> ";
-	 other = theBoard.at(7).at(0).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 1 << "-> ";
-	 other = theBoard.at(7).at(1).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 2 << "-> ";
-	 other = theBoard.at(7).at(2).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 3 << "-> ";
-	 other = theBoard.at(7).at(3).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 4 << "-> ";
-	 other = theBoard.at(7).at(4).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 5 << "-> ";
-	 other = theBoard.at(7).at(5).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 6 << "-> ";
-	 other = theBoard.at(7).at(6).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl;
-
-	cout << 7 << "," << 7 << "-> ";
-	 other = theBoard.at(7).at(7).getState();
-	if (other.W == Danger::Yes) {
-		cout<< "W : Yes";
-	} else {
-		cout << "W : No"; 
-	}
-		cout<< "   ";
-	if (other.B == Danger::Yes) {
-		cout << "B : Yes";
-	} else {
-		cout << "B : No";
-	}
-	cout << endl; 
 
 	bool en_passant = 0;
 	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
@@ -1313,9 +353,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (castle) {
 		shared_ptr<Move> nextCurrMove = make_shared<Move>();
 		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
-			nextCurrMove->setStart({7,0});
+			nextCurrMove->setStart({7,0});  // rook's initial 
 			removePiece(7, 0,nextCurrMove); // rook removed
-			removePiece(row_0, col_0,currMove);  // king being removed
+			removePiece(row_0, col_0, currMove);  // king being removed
 			theBoard.at(7).at(2).setPiece(make_shared<King>(Color::White, false));
 			theBoard.at(7).at(3).setPiece(make_shared<Rook>(Color::White, false));
 			nextCurrMove->setEnd({7,3});
@@ -1343,7 +383,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 		pastMoves.push_back(currMove);
 		pastMoves.push_back(nextCurrMove);
+		cout << "good" << endl;
 	}
+
 	////////////////////////////////////////
 
 	// movement for en_passant /////////
@@ -1385,7 +427,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 	// upgrading pawns if necessary
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
-		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();
+		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();  // pawn 
 		shared_ptr<Move> nextCurrMove = make_shared<Move>(row_col{row_f,col_f},row_col{row_f,col_f},pawn,nullptr,false);   // make sure that this line is placed at the right position //
 		if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
 			if (row_f == 0) {
@@ -1475,7 +517,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 //// checmate code //
 
 	if (((getblack_check() || getwhite_check()) && (getCheckMateTest() == false)) && (getCheckTest() == false)) {
-		//cout << "checkmate function has been entered" << endl;
+		cout << (*this) << endl;
+		cout << "enters checkmate function right now" << endl;
 		setCheckMateTest(true);
 		bool isCheckMate = true;
 		vector<shared_ptr<Piece>> Pieces;
@@ -1521,31 +564,40 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 					///////
 
 					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && (Row_Col_Pieces.at(k).at(0) != l) && (Row_Col_Pieces.at(k).at(1) != m)) {
-						string pos_ = posStr(Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1));
-						string pos_fi = posStr(l,m);
+						string pos_initial = posStr(Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1));
+						string pos_final = posStr(l,m);
+
+
 						if (getblack_check()) {   // black check
+							cout << "not here for white check" << endl;
 							//cout << white_turn << endl;
 							setCheckTest(true);
 							try {
-								move(pos_in, pos_fi, white_turn); // error //
+
+								if (white_turn) {
+									white_turn = 0;
+								}
+								move(pos_initial, pos_final, white_turn); // error //
+																	
 								//cout << "try is successful" << endl;
 							} catch (InvalidMove in) {  
 								setCheckTest(false);
 								//cout << "throw's an invalid move in black check" << endl;
 								//throw InvalidMove();
+							
 								continue;
 							} 
 							//cout << getblack_check() << endl;
 							if (getblack_check() == false){
 
 								// store the move which turns get black check false // 
-								//cout << "shouldnt be here" << endl;
+								cout << "shouldn't be here if it's giving a black checkmate" << endl;
 								isCheckMate = false;
 								this->undo();
 
 								setCheckTest(false);
 								setCheckMateTest(false);
-								//return;
+								return;
 							} else {
 								this->undo(); //
 								setCheckTest(false);
@@ -1557,21 +609,49 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 						} else if (getwhite_check()) {  // white check 
 
 							setCheckTest(true);
+
+							if (!white_turn) {
+								white_turn = 1;
+							}
+
 							try {
-								move(pos_in, pos_fi, white_turn);
+
+
+								if (Pieces.at(k)->getName() == "king") {
+									if (l == 6 && m == 4) {
+										cout << "it's a king allright" << endl;
+									}
+								}
+
+								move(pos_initial, pos_final, white_turn);
+
+								if (Pieces.at(k)->getName() == "king") {
+									if (l == 6 && m == 4) {
+										cout << "pretty good" << endl;
+									}
+								}
+
+
 							} catch (InvalidMove in) {
 								setCheckTest(false);
+
+								if (Pieces.at(k)->getName() == "king") {
+									if (l == 6 && m == 4) {
+										cout << "shouldn't happen" << endl;
+									}
+								}
 
 								continue;
 							}
 							if (getwhite_check() == false){
 
 								// store the move which turns white check false // 
+								cout << "shouldn't be here if it's giving a white checkmate" << endl;
 								isCheckMate = false;
 								this->undo();
 								setCheckTest(false);
 								setCheckMateTest(false);
-								//return;
+								return;
 
 							} else {
 								this->undo();
@@ -1581,7 +661,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								continue;
 							}
 						} else {
-							//cout << "else for checkmate function" << endl;
+							cout << "else for checkmate function" << endl;
 						}
 					}
 
@@ -1673,17 +753,22 @@ void Board::undo() {
 	int col_f = currMove->getEnd().col;
 	pastMoves.pop_back();
 	if (currMove->getStart() == currMove->getEnd()) {    // add just the piece that was stored // not official move
-		//cout << "not here" << endl;
-	} else {
-		if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_0-row_f) == 2 && (col_0 == col_f))) {
-			theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
-			//cout << "pawn two step chance is working" << endl;
-		}
-		swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
-		//swapPiece(row_f,col_f,row_0,col_0);
-		if (currMove->getLostPiece() != nullptr) {
-			theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
-		}
+		theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
+		currMove = pastMoves.back();
+		pastMoves.pop_back();
+		row_0 = currMove->getStart().row;    
+		col_0 = currMove->getStart().col;
+		row_f = currMove->getEnd().row;  
+		col_f = currMove->getEnd().col;
+	}
+	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_0-row_f) == 2 && (col_0 == col_f))) {
+		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+		//cout << "pawn two step chance is working" << endl;
+	}
+	swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
+	//swapPiece(row_f,col_f,row_0,col_0);
+	if (currMove->getLostPiece() != nullptr) {
+		theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
 	}
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {

@@ -133,8 +133,22 @@ int main(int argc, char *argv[]) {
   							b.move(game_cmd_1, game_cmd_2, white_turn);
                 cout << endl;
                 cout << b << endl;
-                cout << 3 << "," << 3 << "-> ";
-                State other = b.get_theBoard().at(3).at(3).getState();
+                cout << 0 << "," << 4 << "-> ";
+                State other = b.get_theBoard().at(0).at(4).getState();
+                if (other.W == Danger::Yes) {
+                  cout<< "W : Yes";
+                } else {
+                  cout << "W : No"; 
+                }
+                  cout<< "   ";
+                if (other.B == Danger::Yes) {
+                  cout << "B : Yes";
+                } else {
+                  cout << "B : No";
+                }
+                cout << endl;
+                 cout << 1 << "," << 5 << "-> ";
+                other = b.get_theBoard().at(1).at(5).getState();
                 if (other.W == Danger::Yes) {
                   cout<< "W : Yes";
                 } else {
