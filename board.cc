@@ -1903,6 +1903,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); //
 	if (piece_0->getColor() == piece_f->getColor()) return false;
+	if (piece_0->getColor() == Color::NoColor) return false;
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
 			if (row_f + 2 == row_0 && col_0 == col_f && piece_0->gettwoStepChance() == true && piece_f->getColor() == Color::NoColor) {
@@ -2102,7 +2103,7 @@ bool Board::canAttack(string name, int row_0, int col_0, int row_f, int col_f) {
 	if (!check_pos(row_0, col_0, row_f, col_f)) return false;
 	shared_ptr<Piece> piece_0 = theBoard.at(row_0).at(col_0).getPiece(); // initial piece
 	shared_ptr<Piece> piece_f = theBoard.at(row_f).at(col_f).getPiece(); // 
-	if (piece_0->getColor() == piece_f->getColor() || piece_0->getColor() == Color::NoColor || piece_f->getColor() == Color::NoColor) return false;
+	if (piece_0->getColor() == Color::NoColor) return false;
 	if (name == "pawn") {
 		if (piece_0->getColor() == Color::White) {
 			if (row_f + 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
