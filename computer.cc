@@ -677,6 +677,7 @@ void computer_4(Board &b, Color color) {
    				    } catch (InvalidMove In) {
    						continue;	
     				} 
+    			}
 			} else {
 				if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
 					(b.get_theBoard().at(final_row).at(final_col).getState().B == Danger::No)) {
@@ -750,5 +751,5 @@ void computer_4(Board &b, Color color) {
 		computer_3(b, Color::White);
 	} else {
 		computer_3(b, Color::Black);
-	} 	
-} 
+	}
+}
