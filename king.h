@@ -14,15 +14,15 @@ public:
 	King(Color color, bool castlingPossible);
 	bool getCheck() const;
 	bool getCastle() const;
-	bool gettwoStepChance() const;
-	bool getmovedTwoStepsBefore() const;
-	bool getUpgrade() const;
-	void setUpgrade();
+	//bool gettwoStepChance() const;
+	//bool getmovedTwoStepsBefore() const;
+	//bool getUpgrade() const;
+	//void setUpgrade();
 	void setCastle();
 	void setCheck(bool check);
-	void settwoStepChance();
-	void setmovedTwoStepsBefore();
-	void upgrade(std::shared_ptr<Piece> piece);
+	//void settwoStepChance();
+	//void setmovedTwoStepsBefore();
+	//void upgrade(std::shared_ptr<Piece> piece);
 };
 
 #endif

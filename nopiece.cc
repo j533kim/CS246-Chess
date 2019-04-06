@@ -4,6 +4,8 @@ using namespace std;
 
 NoPiece::NoPiece(): Piece{Color::NoColor, 0, "nopiece"} {}
 
+/*
+
 bool NoPiece::getCheck() const { return false; }
 
 bool NoPiece::getCastle() const { return false; }
@@ -25,3 +27,4 @@ void NoPiece::settwoStepChance() { return; }
 void NoPiece::setmovedTwoStepsBefore() { return; }
 
 void NoPiece::upgrade(shared_ptr<Piece> piece) { return; }
+*/

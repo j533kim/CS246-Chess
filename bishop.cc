@@ -4,6 +4,8 @@ using namespace std;
 
 Bishop::Bishop(Color color): Piece{color, 3, "bishop"} {}
 
+/*
+
 bool Bishop::getCheck() const { return false; }
 
 bool Bishop::getCastle() const { return false; }
@@ -25,3 +27,4 @@ void Bishop::settwoStepChance() { return; }
 void Bishop::setmovedTwoStepsBefore() { return; }
 
 void Bishop::upgrade(shared_ptr<Piece> piece) { return; }
+*/

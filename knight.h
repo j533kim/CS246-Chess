@@ -10,17 +10,17 @@
 class Knight : public Piece {
 public:
 	Knight(Color color);
-	bool getCheck() const;
-	bool getCastle() const;
-	bool gettwoStepChance() const;
-	bool getmovedTwoStepsBefore() const;
-	bool getUpgrade() const;
-	void setUpgrade();
-	void setCastle();
-	void setCheck();
-	void settwoStepChance();
-	void setmovedTwoStepsBefore();
-	void upgrade(std::shared_ptr<Piece> piece);
+	//bool getCheck() const;
+	//bool getCastle() const;
+	//bool gettwoStepChance() const;
+	//bool getmovedTwoStepsBefore() const;
+	//bool getUpgrade() const;
+	//void setUpgrade();
+	//void setCastle();
+	//void setCheck();
+	//void settwoStepChance();
+	//void setmovedTwoStepsBefore();
+	//void upgrade(std::shared_ptr<Piece> piece);
 };
 
 #endif
