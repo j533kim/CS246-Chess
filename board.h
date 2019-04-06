@@ -26,6 +26,12 @@ class Board {
   TextDisplay *td = nullptr;
   std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
+<<<<<<< HEAD
+=======
+  Cell *checkedKing;
+  bool pastCastle = false;
+  bool pastEmPassant = false;
+>>>>>>> bdaff0f368f466b20a0c1d466ac69f49680eb4c1
   bool white_checkmate = false;
   bool black_checkmate = false;
   bool stalemate = false;
@@ -70,6 +76,10 @@ public:
   void setStalemate();
   void setwhite_check(bool check);
   void setblack_check(bool check);
+  void setPastCastle(bool castle) {this->pastCastle = castle;}
+  bool getPastCastle() { return pastCastle; }
+  void setPastEmPassant(bool emPassant) {this->pastEmPassant = emPassant;}
+  bool getPastEmPassant() { return pastEmPassant; }
   void setHumans(Color color, bool human_player);
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)

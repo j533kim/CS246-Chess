@@ -18,18 +18,20 @@ struct row_col{
 
 
 class Move {
-	row_col start;
-	row_col end;
 	std::shared_ptr<Piece> lostPiece;
 	std::shared_ptr<Piece> addedPiece; // for pawnPromotion usually // 
 	bool officialMove;
 public:
+	int row_0;
+	int col_0;
+	int row_f;
+	int col_f;
 	Move() {}
-	Move(row_col start, row_col end, std::shared_ptr<Piece> lostPiece, std::shared_ptr<Piece> addedPiece, bool officialMove): start{start}, end{end}, lostPiece{lostPiece}, addedPiece{addedPiece}, officialMove{officialMove} {}
-	void setStart(row_col start);
-	row_col getStart();
-	void setEnd(row_col end);
-	row_col getEnd();
+	Move(int row_0, int col_0, int row_f, int col_f, std::shared_ptr<Piece> lostPiece, std::shared_ptr<Piece> addedPiece, bool officialMove): row_0{row_0}, col_0{col_0}, row_f{row_f}, col_f{col_f}, lostPiece{lostPiece}, addedPiece{addedPiece}, officialMove{officialMove} {}
+	//void setStart(int row_0, int col_0);
+	//row_col getStart();
+	//void setEnd(int row_f, int col_f);;
+	//row_col getEnd();
 	void setLostPiece(std::shared_ptr<Piece> LP);
 	std::shared_ptr<Piece> getLostPiece();
 	void setAddedPiece(std::shared_ptr<Piece> addedPiece);
