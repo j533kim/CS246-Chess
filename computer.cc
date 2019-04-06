@@ -194,16 +194,12 @@ void computer_2(Board &b, Color color) {
 			if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), Row_Col_OpPieces.at(index_maxcapture).at(0), Row_Col_OpPieces.at(index_maxcapture).at(1))) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
     			string final = ourpos_to_user(Row_Col_OpPieces.at(index_maxcapture).at(0), Row_Col_OpPieces.at(index_maxcapture).at(1));
-    		//	try {
+    			try {
     				b.move(initial, final, w_turn);
     				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-    				} else {
-    					computer_2(b, Color::Black);
-    				}	
-    			} */
+    			} catch (InvalidMove In) {
+    				continue;	
+    			} 
     		} 
 		}
 		index_capture.at(index_maxcapture) = 1;
@@ -227,57 +223,41 @@ void computer_2(Board &b, Color color) {
 				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col + 1)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + 1, king_col + 1);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-    					} else {
-    						computer_2(b, Color::Black);
-    					}	
-    				} */ 
+	    			try {
+	    				b.move(initial, final, w_turn);
+	    				return;
+	    			} catch (InvalidMove In) {
+	    				continue;	
+	    			}
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 1)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + 1, king_col - 1);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-    					} else {
-    						computer_2(b, Color::Black);
-    					}	
-    				} */ 
-    			}
+	    			try {
+	    				b.move(initial, final, w_turn);
+	    				return;
+	    			} catch (InvalidMove In) {
+	    				continue;	
+	    			}
+	    		}
     		} else {
     			if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col + 1)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - 1, king_col + 1);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-    					} else {
-    						computer_2(b, Color::Black);
-    					}	
-    				} */  
+	    			try {
+		    				b.move(initial, final, w_turn);
+		    				return;
+		    			} catch (InvalidMove In) {
+		    				continue;	
+		    			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col - 1)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - 1, king_col - 1);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-    					} else {
-    						computer_2(b, Color::Black);
-    					}	
-    				} */ 
+	    			try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		    			continue;	
+		   			}
     			}
     		}
 		}
@@ -285,107 +265,75 @@ void computer_2(Board &b, Color color) {
 			if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 2, king_col + 1)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row + 2, king_col + 1);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
 			} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 2, king_col - 1)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row + 2, king_col - 1);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
 			} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 2, king_col + 1)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row - 2, king_col + 1);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			}  
     		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 2, king_col - 1)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row - 2, king_col - 1);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
     		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 2)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row + 1, king_col - 2);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
 			} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + 1, king_col - 2)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row + 1, king_col - 2);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
     		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col + 2)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row - 1, king_col + 2);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
     		} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - 1, king_col - 2)) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     			string final = ourpos_to_user(king_row - 1, king_col - 2);
-    		//	try {
-    				b.move(initial, final, w_turn);
-    				return;
-    		/*	} catch (InvalidMove In) {
-    				if(w_turn == 1) {
-    					computer_2(b, Color::White);
-   					} else {
-   						computer_2(b, Color::Black);
-   					}	
-   				} */ 
+    			try {
+	    			b.move(initial, final, w_turn);
+	    			return;
+	    		} catch (InvalidMove In) {
+	   				continue;	
+	   			} 
     		}
     	}	
 		if (MyPieces.at(r)->getName() == "bishop") {
@@ -393,55 +341,39 @@ void computer_2(Board &b, Color color) {
 				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			}  
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				}
 			} 	
 		}
@@ -450,55 +382,39 @@ void computer_2(Board &b, Color color) {
 				if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				}
 			} 
 		}
@@ -507,108 +423,76 @@ void computer_2(Board &b, Color color) {
 				if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove("bishop", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				}
 				if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row + a, king_col)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row + a, king_col);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row - a, king_col)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row - a, king_col);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			}  
 				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col + a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row, king_col + a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			}  
 				} else if (b.canmove("rook", Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), king_row, king_col - a)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
     				string final = ourpos_to_user(king_row, king_col - a);
-    			//	try {
-    					b.move(initial, final, w_turn);
-    					return;
-    			/*	} catch (InvalidMove In) {
-    					if(w_turn == 1) {
-    						computer_2(b, Color::White);
-   						} else {
-   							computer_2(b, Color::Black);
-   						}	
-   					} */ 
+    				try {
+		    			b.move(initial, final, w_turn);
+		    			return;
+		    		} catch (InvalidMove In) {
+		   				continue;	
+		   			} 
 				}
 			} 	
 		}
@@ -683,16 +567,12 @@ void computer_3(Board &b, Color color) {
 					(Row_Col.at(r).at(0) != i) && (Row_Col.at(r).at(1) != j)) {
 					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
    					string final = ourpos_to_user(i, j);
-   				//	try {
+   				    try {
    						b.move(initial, final, w_turn);
    						return;
-   				/*  } catch (InvalidMove In) {
-   						if(w_turn == 1) {
-    						computer_3(b, Color::White);
-	    				} else {
-    						computer_3(b, Color::Black);
-  						}	
-    				} */
+   				    } catch (InvalidMove In) {
+   						continue;	
+    				} 
 				}
 			}
 		}
@@ -791,32 +671,24 @@ void computer_4(Board &b, Color color) {
 					(b.get_theBoard().at(final_row).at(final_col).getState().W == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);
-	    		//	try {
-	    				b.move(initial, final, w_turn);
-	    				return;
-	    		/*	} catch (InvalidMove In) {
-	    				if(w_turn == 1) {
-	    					computer_2(b, Color::White);
-	    				} else {
-	    					computer_2(b, Color::Black);
-	    				}	
-	    			} */
-	    		} 
+	    			try {
+   						b.move(initial, final, w_turn);
+   						return;
+   				    } catch (InvalidMove In) {
+   						continue;	
+    				} 
+    			}
 			} else {
 				if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
 					(b.get_theBoard().at(final_row).at(final_col).getState().B == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);
-	    		//	try {
-	    				b.move(initial, final, w_turn);
-	    				return;
-	    		/*	} catch (InvalidMove In) {
-	    				if(w_turn == 1) {
-	    					computer_2(b, Color::White);
-	    				} else {
-	    					computer_2(b, Color::Black);
-	    				}	
-	    			} */
+	    			try {
+   						b.move(initial, final, w_turn);
+   						return;
+   				    } catch (InvalidMove In) {
+   						continue;	
+    				} 
 	    		}
 			}	
 		}
@@ -824,7 +696,7 @@ void computer_4(Board &b, Color color) {
 		max = 0;
 		index_maxcapture = 0;
 	}
-	vector<int> index_avoidcapture; // stores if the Piece at a specific index of Pieces vector has been tried. 0 for no and 1 for yes
+	/* vector<int> index_avoidcapture; // stores if the Piece at a specific index of Pieces vector has been tried. 0 for no and 1 for yes
 	for (int a = 0; a < my_totalpieces; ++a) {
 		index_avoidcapture.emplace_back(0);
 	}
@@ -848,16 +720,12 @@ void computer_4(Board &b, Color color) {
 						(b.get_theBoard().at(i).at(j).getState().W == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);
-	   				//	try {
+	   					try {
 	   						b.move(initial, final, w_turn);
 	   						return;
-	   				/*  } catch (InvalidMove In) {
-	   						if(w_turn == 1) {
-	    						computer_3(b, Color::White);
-		    				} else {
-	    						computer_3(b, Color::Black);
-	  						}	
-	    				} */
+	   				    } catch (InvalidMove In) {
+	   						continue;	
+	    				} 
 					}
 				} else {
 					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) && 
@@ -865,24 +733,20 @@ void computer_4(Board &b, Color color) {
 						(b.get_theBoard().at(i).at(j).getState().B == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);
-	   				//	try {
+	   					try {
 	   						b.move(initial, final, w_turn);
 	   						return;
-	   				/*  } catch (InvalidMove In) {
-	   						if(w_turn == 1) {
-	    						computer_3(b, Color::White);
-		    				} else {
-	    						computer_3(b, Color::Black);
-	  						}	
-	    				} */
+	   				    } catch (InvalidMove In) {
+	   						continue;	
+	    				} 
 					}
 				}	
 			}
-		}
+		} 
 		index_avoidcapture.at(index_avoidfirst) = 1;
 		avoid_max = 0;
 		index_avoidfirst = 0;
-	}
+	} */
 	if (w_turn == 1) {
 		computer_3(b, Color::White);
 	} else {
