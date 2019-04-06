@@ -133,6 +133,20 @@ int main(int argc, char *argv[]) {
   							b.move(game_cmd_1, game_cmd_2, white_turn);
                 cout << endl;
                 cout << b << endl;
+                cout << 3 << "," << 3 << "-> ";
+                State other = b.get_theBoard().at(3).at(3).getState();
+                if (other.W == Danger::Yes) {
+                  cout<< "W : Yes";
+                } else {
+                  cout << "W : No"; 
+                }
+                  cout<< "   ";
+                if (other.B == Danger::Yes) {
+                  cout << "B : Yes";
+                } else {
+                  cout << "B : No";
+                }
+                cout << endl;
   						} catch (InvalidMove In) { // when the move is invalid
                 cout << "Try again." << endl << endl;
   							continue;
