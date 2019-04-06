@@ -517,7 +517,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 //// checmate code //
 
 	if (((getblack_check() || getwhite_check()) && (getCheckMateTest() == false)) && (getCheckTest() == false)) {
-		cout << (*this) << endl;
 		cout << "enters checkmate function right now" << endl;
 		setCheckMateTest(true);
 		bool isCheckMate = true;
