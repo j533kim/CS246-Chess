@@ -167,7 +167,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 
 	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
-		cout << "white king is under check and the white player is making a move" << endl;
+		//cout << "white king is under check and the white player is making a move" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
@@ -189,7 +189,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
+		//cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); 
@@ -218,19 +218,19 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
 
 	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
-		cout << "enters if a move will put it's own king in check" << endl;
+		//cout << "enters if a move will put it's own king in check" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
-			cout << "try is successful" << endl;
+			//cout << "try is successful" << endl;
 		} catch (InvalidMove in) {  
-			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
+			//cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
 			setCheckTest(false);
 			throw InvalidMove();
 		} 
 		if (white_turn) {     //black's turn
 			if (getblack_check() == true){
-				cout << "on white's turn, black king has been put in check" << endl;
+				//cout << "on white's turn, black king has been put in check" << endl;
 				//this->undo();
 				setCheckTest(false);
 				
@@ -238,7 +238,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				//return;  // shouldn't return because you wanna check for checkmate as welll 
 
 			} else if (getwhite_check() == true) {
-				cout << "on white's turn, white king has been put in check" << endl;
+				//cout << "on white's turn, white king has been put in check" << endl;
 				this->undo();
 				setCheckTest(false);
 				throw InvalidMove();
@@ -261,14 +261,14 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			} */
 		} else {
 			if (getwhite_check() == true) {
-				cout << "on black's turn, white king has been put in check" << endl;
+				//cout << "on black's turn, white king has been put in check" << endl;
 				 //this->undo();
 				setCheckTest(false);
 				
 				//throw InvalidMove();
 				//return;
 			} else if (getblack_check() == true){
-				cout << "on black's turn, black king has been put in check" << endl;
+				//cout << "on black's turn, black king has been put in check" << endl;
 				this->undo();
 				setCheckTest(false);
 				throw InvalidMove();
@@ -296,7 +296,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
 	// the corresponding piece is not movable to the given final position
 		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
-		cout << "can move is throwing invalid throw" << endl;
+		//cout << "can move is throwing invalid throw" << endl;
 		throw InvalidMove();
 		return;
 	}
@@ -1260,7 +1260,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	} else {
 		cout << "B : No";
 	}
-	cout << endl;
+	cout << endl; 
 
 	bool en_passant = 0;
 	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
@@ -1430,7 +1430,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 					//cout << cell.getRow() << "," << cell.getCol() << endl;
 				} else {
 					//setCheckedKing(cell);
-					cout << "black goes in check" << endl;
+					//cout << "black goes in check" << endl;
 					piece->setCheck(true);
 					setblack_check(true);
 				}
@@ -1454,7 +1454,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 					setwhite_check(false);
 				} else {
 					//setCheckedKing(cell);
-					cout << "white goes in check" << endl;
+					//cout << "white goes in check" << endl;
 					piece->setCheck(true);
 					setwhite_check(true);
 				}
@@ -1475,7 +1475,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 //// checmate code //
 
 	if (((getblack_check() || getwhite_check()) && (getCheckMateTest() == false)) && (getCheckTest() == false)) {
-		cout << "checkmate function has been entered" << endl;
+		//cout << "checkmate function has been entered" << endl;
 		setCheckMateTest(true);
 		bool isCheckMate = true;
 		vector<shared_ptr<Piece>> Pieces;
@@ -1539,13 +1539,13 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 							if (getblack_check() == false){
 
 								// store the move which turns get black check false // 
-								cout << "shouldnt be here" << endl;
+								//cout << "shouldnt be here" << endl;
 								isCheckMate = false;
 								this->undo();
 
 								setCheckTest(false);
 								setCheckMateTest(false);
-								return;
+								//return;
 							} else {
 								this->undo(); //
 								setCheckTest(false);
@@ -1571,7 +1571,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								this->undo();
 								setCheckTest(false);
 								setCheckMateTest(false);
-								return;
+								//return;
 
 							} else {
 								this->undo();
@@ -1581,7 +1581,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								continue;
 							}
 						} else {
-							cout << "else for checkmate function" << endl;
+							//cout << "else for checkmate function" << endl;
 						}
 					}
 
@@ -1704,7 +1704,7 @@ void Board::undo() {
 					setwhite_check(false);
 				} else {
 					//setCheckedKing(cell);
-					cout << "white goes in check" << endl;
+					//cout << "white goes in check" << endl;
 					piece->setCheck(true);
 					setwhite_check(true);
 				}
