@@ -26,12 +26,8 @@ class Board {
   TextDisplay *td = nullptr;
   std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
-<<<<<<< HEAD
-=======
-  Cell *checkedKing;
   bool pastCastle = false;
   bool pastEmPassant = false;
->>>>>>> bdaff0f368f466b20a0c1d466ac69f49680eb4c1
   bool white_checkmate = false;
   bool black_checkmate = false;
   bool stalemate = false;
@@ -60,7 +56,6 @@ public:
   void swapPiece(int row_0, int col_0, int row_f, int col_f);
   bool canmove(std::string name, int row_0, int col_0, int row_f, int col_f);
   bool canAttack(std::string name, int row_0, int col_0, int row_f, int col_f);
-  bool game_draw_pieces() const; // when there are not enough pieces to end
   std::vector<std::vector<Cell>> &get_theBoard();
   bool getwhite_checkmate() const;
   bool getblack_checkmate() const;

@@ -3,20 +3,6 @@
 #include "piece.h"
 #include <memory>
 
-
-struct row_col{
-	int row;
-	int col;
-	bool operator==(row_col other) {
-		if (row == other.row && col == other.col) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-};
-
-
 class Move {
 	std::shared_ptr<Piece> lostPiece;
 	std::shared_ptr<Piece> addedPiece; // for pawnPromotion usually // 
