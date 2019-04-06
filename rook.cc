@@ -17,7 +17,13 @@ bool Rook::getUpgrade() const { return false; }
 
 void Rook::setUpgrade() {}
 
-void Rook::setCastle() { castlingPossible = false; }
+void Rook::setCastle() { 
+	if (castlingPossible) {
+		castlingPossible = false; 
+	} else {
+		castlingPossible = true;
+	}
+}
 
 void Rook::setCheck() {}
 

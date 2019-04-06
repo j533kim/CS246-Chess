@@ -27,6 +27,8 @@ class Board {
   std::vector<std::shared_ptr<Move>> pastMoves;
   Observer<State> *ob = nullptr;
   Cell *checkedKing;
+  bool pastCastle = false;
+  bool pastEmPassant = false;
   bool white_checkmate = false;
   bool black_checkmate = false;
   bool stalemate = false;
@@ -70,6 +72,10 @@ public:
   void setStalemate();
   void setwhite_check(bool check);
   void setblack_check(bool check);
+  void setPastCastle(bool castle) {this->pastCastle = castle;}
+  bool getPastCastle() { return pastCastle; }
+  void setPastEmPassant(bool emPassant) {this->pastEmPassant = emPassant;}
+  bool getPastEmPassant() { return pastEmPassant; }
   // placePiece() calls move and remove functions
   // placePiece()'s positions are in the users' perspective (be aware of change)
   friend std::ostream &operator<<(std::ostream &out, const Board &b);

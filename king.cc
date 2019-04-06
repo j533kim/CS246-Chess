@@ -18,7 +18,13 @@ bool King::getUpgrade() const { return false; }
 
 void King::setUpgrade() { return; }
 
-void King::setCastle() { castlingPossible = false; }
+void King::setCastle() { 
+	if (castlingPossible) {
+		castlingPossible = false; 
+	} else {
+		castlingPossible = true;
+	}
+ }
 // always from true to false
 
 void King::setCheck(bool check) { checked = check; }
