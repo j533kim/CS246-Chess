@@ -191,7 +191,7 @@ void computer_2(Board &b, Color color) {
 			}
 		}
 		for (int m = 0; m < my_totalpieces; ++m) {
-			if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), Row_Col_OpPieces.at(index_maxcapture).at(0), Row_Col_OpPieces.at(index_maxcapture).at(1))) {
+			if (b.canAttack(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), Row_Col_OpPieces.at(index_maxcapture).at(0), Row_Col_OpPieces.at(index_maxcapture).at(1))) {
 				string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
     			string final = ourpos_to_user(Row_Col_OpPieces.at(index_maxcapture).at(0), Row_Col_OpPieces.at(index_maxcapture).at(1));
     		//	try {
@@ -787,7 +787,7 @@ void computer_4(Board &b, Color color) {
 			int final_row = Row_Col_OpPieces.at(index_maxcapture).at(0);
 			int final_col = Row_Col_OpPieces.at(index_maxcapture).at(1);
 			if (w_turn == 1) {
-				if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
+				if (b.canAttack(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
 					(b.get_theBoard().at(final_row).at(final_col).getState().W == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);
@@ -803,7 +803,7 @@ void computer_4(Board &b, Color color) {
 	    			} */
 	    		} 
 			} else {
-				if (b.canmove(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
+				if (b.canAttack(MyPieces.at(m)->getName(), Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1), final_row, final_col) &&
 					(b.get_theBoard().at(final_row).at(final_col).getState().B == Danger::No)) {
 					string initial = ourpos_to_user(Row_Col_MyPieces.at(m).at(0), Row_Col_MyPieces.at(m).at(1));
 	    			string final = ourpos_to_user(final_row, final_col);

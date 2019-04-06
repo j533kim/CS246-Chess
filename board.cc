@@ -163,6 +163,144 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 ///////   making moves to bring their own king out of check 
 
+	
+
+
+	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
+		cout << "white king is under check and the white player is making a move" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn);
+		} catch (InvalidMove in) {
+			setCheckTest(false);
+			throw InvalidMove();
+		}
+		if (getwhite_check() == false){
+			setCheckTest(false);
+			return;
+		} else {
+			this->undo();
+			if (getwhite_checkmate()) {   // when making a move
+				return;
+			}
+			setCheckTest(false);
+			throw InvalidMove();
+			return;
+		}
+	}
+	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
+		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn); 
+		} catch (InvalidMove in) {  
+			setCheckTest(false);
+			throw InvalidMove();
+		} 
+
+		if (getblack_check() == false){
+			setCheckTest(false);
+			return;
+		} else {
+			this->undo(); //
+			if (getblack_checkmate()) {
+				return;
+			}
+			setCheckTest(false);
+			throw InvalidMove();
+			return;
+		}
+	}
+
+
+/////////
+
+	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
+
+	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
+		cout << "enters if a move will put it's own king in check" << endl;
+		setCheckTest(true);
+		try {
+			move(pos_in, pos_fi, white_turn); // error //
+			cout << "try is successful" << endl;
+		} catch (InvalidMove in) {  
+			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
+			setCheckTest(false);
+			throw InvalidMove();
+		} 
+		if (white_turn) {     //black's turn
+			if (getblack_check() == true){
+				cout << "on white's turn, black king has been put in check" << endl;
+				//this->undo();
+				setCheckTest(false);
+				
+				//throw InvalidMove();
+				//return;  // shouldn't return because you wanna check for checkmate as welll 
+
+			} else if (getwhite_check() == true) {
+				cout << "on white's turn, white king has been put in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			}
+
+			/*
+			if (getwhite_check() == true) {
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} else if (getblack_check() == true){
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} */
+		} else {
+			if (getwhite_check() == true) {
+				cout << "on black's turn, white king has been put in check" << endl;
+				 //this->undo();
+				setCheckTest(false);
+				
+				//throw InvalidMove();
+				//return;
+			} else if (getblack_check() == true){
+				cout << "on black's turn, black king has been put in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} 
+			/*
+			if (getblack_check() == true){
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} else if (getwhite_check() == true) {
+				cout << "the move will put you in check" << endl;
+				this->undo();
+				setCheckTest(false);
+				throw InvalidMove();
+				return;
+			} */
+		}
+		this->undo(); // 
+		setCheckTest(false);
+	}
+
+	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
+	// the corresponding piece is not movable to the given final position
+		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
+		cout << "can move is throwing invalid throw" << endl;
+		throw InvalidMove();
+		return;
+	}
+
 	cout << 0 << "," << 0 << "-> ";
 	State other = theBoard.at(1).at(6).getState();
 	if (other.W == Danger::Yes) {
@@ -1123,142 +1261,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		cout << "B : No";
 	}
 	cout << endl;
-
-
-	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
-		cout << "white king is under check and the white player is making a move" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn);
-		} catch (InvalidMove in) {
-			setCheckTest(false);
-			throw InvalidMove();
-		}
-		if (getwhite_check() == false){
-			setCheckTest(false);
-			return;
-		} else {
-			this->undo();
-			if (getwhite_checkmate()) {   // when making a move
-				return;
-			}
-			setCheckTest(false);
-			throw InvalidMove();
-			return;
-		}
-	}
-	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-		cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn); 
-		} catch (InvalidMove in) {  
-			setCheckTest(false);
-			throw InvalidMove();
-		} 
-
-		if (getblack_check() == false){
-			setCheckTest(false);
-			return;
-		} else {
-			this->undo(); //
-			if (getblack_checkmate()) {
-				return;
-			}
-			setCheckTest(false);
-			throw InvalidMove();
-			return;
-		}
-	}
-
-
-/////////
-
-	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
-
-	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
-		cout << "enters if a move will put it's own king in check" << endl;
-		setCheckTest(true);
-		try {
-			move(pos_in, pos_fi, white_turn); // error //
-			cout << "try is successful" << endl;
-		} catch (InvalidMove in) {  
-			cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
-			setCheckTest(false);
-			throw InvalidMove();
-		} 
-		if (white_turn) {     //black's turn
-			if (getblack_check() == true){
-				cout << "on white's turn, black king has been put in check" << endl;
-				//this->undo();
-				setCheckTest(false);
-				
-				//throw InvalidMove();
-				//return;  // shouldn't return because you wanna check for checkmate as welll 
-
-			} else if (getwhite_check() == true) {
-				cout << "on white's turn, white king has been put in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			}
-
-			/*
-			if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
-		} else {
-			if (getwhite_check() == true) {
-				cout << "on black's turn, white king has been put in check" << endl;
-				 //this->undo();
-				setCheckTest(false);
-				
-				//throw InvalidMove();
-				//return;
-			} else if (getblack_check() == true){
-				cout << "on black's turn, black king has been put in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} 
-			/*
-			if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
-		}
-		this->undo(); // 
-		setCheckTest(false);
-	}
-
-	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
-	// the corresponding piece is not movable to the given final position
-		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
-		cout << "can move is throwing invalid throw" << endl;
-		throw InvalidMove();
-		return;
-	}
 
 	bool en_passant = 0;
 	if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "pawn") {
