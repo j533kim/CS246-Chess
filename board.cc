@@ -145,8 +145,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	int col_f = col_return(pos_fi);
 	shared_ptr<Move> currMove = make_shared<Move>(row_0, col_0, row_f, col_f, nullptr, nullptr, true); // main move // START //
 	Color moving_color = theBoard.at(row_0).at(col_0).getPiece()->getColor();
-	if ((moving_color == Color::White && white_turn == 0) 
-	|| (moving_color == Color::Black && white_turn == 1)) {
+	if ((moving_color == Color::White && white_turn == 0) || (moving_color == Color::Black && white_turn == 1)) {
 		cout << "It's not your turn!" << endl;
 		throw InvalidMove();   // THROW INVALID MOVE //
 		return;
@@ -158,7 +157,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		return;
 	}
 	if ((moving_color == Color::NoColor) || (moving_color == dest_color)) {
-		//cout << pos_in << "   " << pos_fi << endl;
 
 		throw InvalidMove();
 		return;
@@ -171,7 +169,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 
 	if ((getwhite_check() && (getCheckTest() == false)) && white_turn) {  // white king is under check and the white player is making a move
-	//	cout << "white king is under check and the white player is making a move" << endl;
+		//cout << "white king is under check and the white player is making a move" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn);
@@ -193,7 +191,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 	}
 	if ((getblack_check() && (getCheckTest() == false)) && (!white_turn)) {   // BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE
-	//	cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
+		//cout << " BLACK KING IS UNDER CHECK AND AND THE BLACK PLAYER IS MAKING A MOVE" << endl;
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); 
@@ -219,7 +217,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 /////////
 
-	// && theBoard.at(row_0).at(col_0).getPiece()->getName() == "king"
 
 	if ((!(getblack_check() || getwhite_check())) && (getCheckTest() == false)) { // when any of the kings move with none of them in check // 
 		//cout << "enters if a move will put it's own king in check" << endl;
@@ -248,21 +245,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				throw InvalidMove();
 				return;
 			}
-
-			/*
-			if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
 		} else {
 			if (getwhite_check() == true) {
 				//cout << "on black's turn, white king has been put in check" << endl;
@@ -278,20 +260,6 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				throw InvalidMove();
 				return;
 			} 
-			/*
-			if (getblack_check() == true){
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} else if (getwhite_check() == true) {
-				cout << "the move will put you in check" << endl;
-				this->undo();
-				setCheckTest(false);
-				throw InvalidMove();
-				return;
-			} */
 		}
 		//cout << "enters if a move will put it's own king in check end undo" << endl;
 		this->undo(); // 
@@ -458,7 +426,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();  // pawn 
 		shared_ptr<Move> nextCurrMove = make_shared<Move>(row_f,col_f,row_f,col_f,pawn,nullptr,false);   // make sure that this line is placed at the right position //
-		if (!((white_human && white_turn) || (black_human && (!white_turn)))) {
+		if (!((white_human && white_turn) || (black_human && (!white_turn)))) { //computer //
 			if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
 				if (row_f == 0) {
 					shared_ptr<Piece> queen = make_shared<Queen>(Color::White);
@@ -476,49 +444,57 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 					pastMoves.push_back(nextCurrMove);
 				}
 			}
-		} else {
+		} else {    
 			shared_ptr<Piece> promote;
-			while (true) {
-				string what_you_want;
-				cin >> what_you_want;
-				if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
-					if (row_f == 0) {
-						if (what_you_want == "Q" || what_you_want == "Q") {
-							promote = make_shared<Queen>(Color::White);
-							break;
-						} else if (what_you_want == "n" || what_you_want == "N") {
-							promote = make_shared<Knight>(Color::White);
-							break;
-						} else if (what_you_want == "r" || what_you_want == "R") {
-							promote = make_shared<Rook>(Color::White, false);
-							break;
-						} else if (what_you_want == "b" || what_you_want == "B") {
-							promote = make_shared<Bishop>(Color::White);
-							break;
-						}
+			if (row_f == 0 || row_f == 7) {
+				while (true) {
+					string what_you_want;
+					if (getCheckTest()) {
+						cout << "which piece do you want your pawn to get promoted to?" << endl;
+						cin >> what_you_want;
+						setpastWhat_you_want(what_you_want);
+					} else {
+						what_you_want = getpastWhat_you_want();
 					}
-				} else {
-					if (row_f == 7) {
-						if (what_you_want == "Q" || what_you_want == "Q") {
-							promote = make_shared<Queen>(Color::Black);
-							break;
-						} else if (what_you_want == "n" || what_you_want == "N") {
-							promote = make_shared<Knight>(Color::Black);
-							break;
-						} else if (what_you_want == "r" || what_you_want == "R") {
-							promote = make_shared<Rook>(Color::Black, false);
-							break;
-						} else if (what_you_want == "b" || what_you_want == "B") {
-							promote = make_shared<Bishop>(Color::Black);
-							break;
+					if (theBoard.at(row_f).at(col_f).getPiece()->getColor() == Color::White) {
+						if (row_f == 0) {
+							if (what_you_want == "Q" || what_you_want == "q") {
+								promote = make_shared<Queen>(Color::White);
+								break;
+							} else if (what_you_want == "n" || what_you_want == "N") {
+								promote = make_shared<Knight>(Color::White);
+								break;
+							} else if (what_you_want == "r" || what_you_want == "R") {
+								promote = make_shared<Rook>(Color::White, false);
+								break;
+							} else if (what_you_want == "b" || what_you_want == "B") {
+								promote = make_shared<Bishop>(Color::White);
+								break;
+							}
+						} 
+					} else {
+						if (row_f == 7) {
+							if (what_you_want == "Q" || what_you_want == "q") {
+								promote = make_shared<Queen>(Color::Black);
+								break;
+							} else if (what_you_want == "n" || what_you_want == "N") {
+								promote = make_shared<Knight>(Color::Black);
+								break;
+							} else if (what_you_want == "r" || what_you_want == "R") {
+								promote = make_shared<Rook>(Color::Black, false);
+								break;
+							} else if (what_you_want == "b" || what_you_want == "B") {
+								promote = make_shared<Bishop>(Color::Black);
+								break;
+							}
 						}
 					}
 				}
+				theBoard.at(row_f).at(col_f).setPiece(promote); 
+				theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
+				nextCurrMove->setAddedPiece(promote);
+				pastMoves.push_back(nextCurrMove);
 			}
-			theBoard.at(row_f).at(col_f).setPiece(promote); 
-			theBoard.at(row_f).at(col_f).getPiece()->setpawnPromotion(true);
-			nextCurrMove->setAddedPiece(promote);
-			pastMoves.push_back(nextCurrMove);
 		}
 	}
 

@@ -28,6 +28,7 @@ class Board {
   Observer<State> *ob = nullptr;
   Cell *checkedKing;
   bool pastCastle = false;
+  std::string pastWhat_you_want;
   bool pastEmPassant = false;
   bool white_checkmate = false;
   bool black_checkmate = false;
@@ -69,6 +70,8 @@ public:
   bool getCheckTest(){return checkTest;}
   void setCheckMateTest(bool checkmateTest) {this->checkmateTest = checkmateTest;}
   bool getCheckMateTest(){return checkmateTest;}
+  void setpastWhat_you_want(std::string str) {this->pastWhat_you_want = str;}
+  std::string getpastWhat_you_want(){return pastWhat_you_want;}
   bool getblack_check() const;
   void setwhite_checkmate(bool check);
   void setblack_checkmate(bool check);
