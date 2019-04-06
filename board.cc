@@ -2117,7 +2117,7 @@ bool Board::canAttack(string name, int row_0, int col_0, int row_f, int col_f) {
 				}
 			}
 			return false;
-		} else if (piece_0->getColor() == Color::Black && piece_f->getColor() == Color::White) { // color is black
+		} else if (piece_0->getColor() == Color::Black) { // color is black
 			if (row_f - 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
 				return true;
 			} else if (row_0 == 4 && row_f == 5 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
