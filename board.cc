@@ -223,9 +223,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setCheckTest(true);
 		try {
 			move(pos_in, pos_fi, white_turn); // error //
-			//cout << "try is successful" << endl;
 		} catch (InvalidMove in) {  
-			//cout << "throw's an invalid move in to check if a move will put its own king in check" << endl;
 			setCheckTest(false);
 			throw InvalidMove();
 		} 
@@ -264,14 +262,14 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			} 
 		}
 		//cout << "enters if a move will put it's own king in check end undo" << endl;
-		
+		//cout << *this << endl;
 		this->undo(); // 
-
+		//cout << *this << endl;
 		setCheckTest(false);
 	}
 
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
-		cout <<  "the corresponding piece is not movable to the given final position" << endl;
+		//cout <<  "the corresponding piece is not movable to the given final position" << endl;
 		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
 		//cout << "can move is throwing invalid throw" << endl;
 		throw InvalidMove();
@@ -411,13 +409,16 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	///////////////////////////////////
 
 	// cancelling all the getmoved for other pieces
-	for (int i = 0; i < 8; ++i) {
-		for (int j = 0; j < 8; ++j) {
-			shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
-			if (curr->getmovedTwoStepsBefore()) {
-				curr->setmovedTwoStepsBefore();
-			}
-		}
+	if (getCheckTest() == false && getCheckMateTest() == false) {
+
+		for (int i = 0; i < 8; ++i) {
+	      for (int j = 0; j < 8; ++j) {
+	        shared_ptr<Piece> curr = theBoard.at(i).at(j).getPiece();
+	        if (curr->getmovedTwoStepsBefore()) {
+	            curr->setmovedTwoStepsBefore();
+	        }
+	      }
+	    }
 	}
 	/////////////////////////
 
@@ -812,6 +813,9 @@ void Board::undo() {
 	pastMoves.pop_back();
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn" && (abs(row_0-row_f) == 2 && (col_0 == col_f))) {
 		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
+		theBoard.at(row_f).at(col_f).getPiece()->setmovedTwoStepsBefore();
+		//cout << theBoard.at(row_f).at(col_f).getPiece()->getmovedTwoStepsBefore() << endl;
+
 		//cout << "pawn two step chance is working" << endl;
 	}
 	if (currMove->getOfficialMove() == false) {    // add just the piece that was stored // not official move
@@ -1093,6 +1097,7 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 			} else if (row_f - 1 == row_0 && (col_0 - 1 == col_f || col_0 + 1 == col_f) && piece_f->getColor() == Color::White) {
 				return true;
 			} else if (row_0 == 4 && row_f == 5 && (col_0 - 1 == col_f || col_0 + 1 == col_f)) {
+				
 				if (col_f == col_0 - 1) {
 					if (theBoard.at(4).at(col_0 - 1).getPiece()->getName() == "pawn" && theBoard.at(4).at(col_0 - 1).getPiece()->getmovedTwoStepsBefore()) return true;
 				} else if (col_f == col_0 + 1) {
