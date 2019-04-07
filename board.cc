@@ -737,6 +737,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			setStalemate();
 			return;
 		}
+	}
+		/*
 		//cout << "inside" << endl;
 		for (int k = 0; k < totalpieces; ++k) {
 			for (int l = 0; l < 8; ++l) {
@@ -787,6 +789,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setCheckTest(false);
 		setCheckMateTest(false);
 	}
+	*/
+	
 	
 }
 
