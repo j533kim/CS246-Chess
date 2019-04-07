@@ -563,8 +563,7 @@ void computer_3(Board &b, Color color) {
 		int r = index_avoidfirst;
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
-				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), i, j) && 
-					(Row_Col.at(r).at(0) != i) && (Row_Col.at(r).at(1) != j)) {
+				if (b.canmove(Pieces.at(r)->getName(), Row_Col.at(r).at(0), Row_Col.at(r).at(1), i, j)) {
 					string initial = ourpos_to_user(Row_Col.at(r).at(0), Row_Col.at(r).at(1));
    					string final = ourpos_to_user(i, j);
    				    try {
@@ -715,8 +714,7 @@ void computer_4(Board &b, Color color) {
 		for (int i = 0; i < 8; ++i) {
 			for (int j = 0; j < 8; ++j) {
 				if (w_turn == 1) {
-					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) && 
-						(Row_Col_MyPieces.at(r).at(0) != i) && (Row_Col_MyPieces.at(r).at(1) != j) &&
+					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) &&
 						(b.get_theBoard().at(i).at(j).getState().W == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);
@@ -728,8 +726,7 @@ void computer_4(Board &b, Color color) {
 	    				} 
 					}
 				} else {
-					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) && 
-						(Row_Col_MyPieces.at(r).at(0) != i) && (Row_Col_MyPieces.at(r).at(1) != j) &&
+					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) &&
 						(b.get_theBoard().at(i).at(j).getState().B == Danger::No)) {
 						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
 	   					string final = ourpos_to_user(i, j);

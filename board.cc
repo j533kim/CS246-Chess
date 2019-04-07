@@ -706,63 +706,48 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 //// checkmate code //
 
 	// checking for stalemate /////////////
-	/*
-	vector<shared_ptr<Piece>> Pieces;
-	vector<vector<int>> Row_Col_Pieces;    // stores the row and col index for the pieces array    
-	int totalpieces = 0;                     
-	for (int i = 0; i < 8; ++i) {
-		for (int j = 0; j < 8; ++j) {
-			vector<int> vc;
-			if (theBoard.at(i).at(j).getPiece()->getColor() != Color::NoColor) {
-				Pieces.push_back(theBoard.at(i).at(j).getPiece()); 
-				vc.push_back(i);
-				vc.push_back(j);
-				Row_Col_Pieces.push_back(vc);
-				totalpieces += 1;
-			}			
-		}
-	} 
-	vector<int> index_v;
-	int king_index1;
-	int king_index2;
-	int total_kings = 0;
-	for (int i = 0; i < totalpieces; ++i) {
-		index_v.push_back(0);
-	}
-	for (int j = 0; j < totalpieces; ++j) {
-		if (Pieces.at(j)->getValue() == 10) {
-			if (total_kings < 1) {
-				king_index1 = j;
-				total_kings += 1;
-			} else {
-				king_index2 = j;
-				total_kings += 1;
+	if (getCheckMateTest() == false && getCheckTest() == false) {
+		cout << "inside" << endl;
+		vector<shared_ptr<Piece>> Pieces;
+		vector<vector<int>> Row_Col_Pieces;    // stores the row and col index for the pieces array    
+		int totalpieces = 0;                     
+		for (int i = 0; i < 8; ++i) {
+			for (int j = 0; j < 8; ++j) {
+				vector<int> vc;
+				if (theBoard.at(i).at(j).getPiece()->getColor() != Color::NoColor) {
+					Pieces.push_back(theBoard.at(i).at(j).getPiece()); 
+					vc.push_back(i);
+					vc.push_back(j);
+					Row_Col_Pieces.push_back(vc);
+					totalpieces += 1;
+				}			
 			}
-		}
-		if (total_kings == 2) {
-			break;
-		}
-	}
-	int king1_row = Row_Col_Pieces.at(king_index1).at(0);
-	int king1_col = Row_Col_Pieces.at(king_index1).at(1);
-	int king2_row = Row_Col_Pieces.at(king_index2).at(0);
-	int king2_col = Row_Col_Pieces.at(king_index2).at(1);
-	if (theBoard.at(king1_row).at(king1_col).getPiece()->getCheck() == true) return;
-	if (theBoard.at(king2_row).at(king2_col).getPiece()->getCheck() == true) return;
-
-	for (int k = 0; k < totalpieces; ++k) {
-		for (int l = 0; l < 8; ++l) {
-			for (int m = 0; m < 8; ++m) {
-				if (!white_turn) {
-					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && (Row_Col_Pieces.at(k).at(0) != l) && (Row_Col_Pieces.at(k).at(1) != m) && Pieces.at(k)->getColor() == Color::White) return;
-				} else {
-					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && (Row_Col_Pieces.at(k).at(0) != l) && (Row_Col_Pieces.at(k).at(1) != m) && Pieces.at(k)->getColor() == Color::Black) return;
+		} 
+		int kings = 0;
+		if (totalpieces == 2) {
+			for (int k = 0; k < totalpieces; ++k) {
+				if (Pieces.at(k)->getValue() == 10) {
+					kings += 1;
 				}
 			}
 		}
+		if (kings == 2) {
+			setStalemate();
+			return;
+		}
+		for (int k = 0; k < totalpieces; ++k) {
+			for (int l = 0; l < 8; ++l) {
+				for (int m = 0; m < 8; ++m) {
+					if (!white_turn) {
+						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::White) return;
+					} else {
+						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::Black) return;
+					}
+				}
+			}
+		}
+		setStalemate();
 	}
-	setStalemate();
-	*/
 }
 
 void Board::undo() {
