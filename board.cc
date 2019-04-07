@@ -1223,10 +1223,10 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	 	 	State mid_state = theBoard.at(row_0).at(col_m).getState();
 	  		State ini_state = theBoard.at(row_0).at(col_0).getState();
 	  		State fin_state = theBoard.at(row_0).at(col_f).getState();
-	  		if (mid_state.W == y) return false;
-	  		if (ini_state.W == y) return false;
-	  		if (fin_state.W == y) return false;
 	 	 	if (theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::White) { //castling white
+	 	 		if (mid_state.W == y) return false;
+	  			if (ini_state.W == y) return false;
+	  			if (fin_state.W == y) return false;
 	 	 		if (row_0 == 7 && col_0 == 4 && col_f == 2) { // white king to the left
 	  				for (int i = 0; i < 3; ++i) {
 	  					if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") return false;
@@ -1245,6 +1245,9 @@ bool Board::canmove(string name, int row_0, int col_0, int row_f, int col_f) {
 	  				return true;
 	  			}
 	  		} else if (theBoard.at(row_0).at(col_0).getPiece()->getColor() == Color::Black) { //castling black
+	  			if (mid_state.B == y) return false;
+		  		if (ini_state.B == y) return false;
+		  		if (fin_state.B == y) return false;
 	  			if (row_0 == 0 && col_0 == 4 && col_f == 2) { // white king to the left
 	  				for (int i = 0; i < 3; ++i) {
 	  					if (theBoard.at(row_0).at(1 + i).getPiece()->getName() != "nopiece") return false;
