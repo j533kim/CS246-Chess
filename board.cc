@@ -265,7 +265,9 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			} 
 		}
 		//cout << "enters if a move will put it's own king in check end undo" << endl;
+		
 		this->undo(); // 
+
 		setCheckTest(false);
 	}
 
@@ -373,6 +375,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			//nextCurrMove->setEnd(make_shared<row_col>(0,5));
 		}
 		pastMoves.push_back(currMove);
+		nextCurrMove->setOfficialMove(false);
 		pastMoves.push_back(nextCurrMove);
 		setPastCastle(true);
 	}
@@ -402,6 +405,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			nextCurrMove->setOfficialMove(false);
 
 		}
+		nextCurrMove->setOfficialMove(false);
 		pastMoves.push_back(nextCurrMove);
 		setPastEmPassant(true);
 	}
@@ -738,8 +742,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			setStalemate();
 			return;
 		}
-	}
-		/*
+	
+		
 		//cout << "inside" << endl;
 		for (int k = 0; k < totalpieces; ++k) {
 			for (int l = 0; l < 8; ++l) {
@@ -790,7 +794,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setCheckTest(false);
 		setCheckMateTest(false);
 	}
-	*/
+	
 	
 	
 }
@@ -811,8 +815,14 @@ void Board::undo() {
 		theBoard.at(row_f).at(col_f).getPiece()->settwoStepChance();
 		//cout << "pawn two step chance is working" << endl;
 	}
-	if (row_0 == row_f && col_0 == col_f) {    // add just the piece that was stored // not official move
-		theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
+	if (currMove->getOfficialMove() == false) {    // add just the piece that was stored // not official move
+		if (row_0 == row_f && col_0 == col_f) {
+			theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
+		} else {
+			swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
+			theBoard.at(row_0).at(col_0).getPiece()->setCastle();
+
+		}
 		currMove = pastMoves.back();
 		pastMoves.pop_back();
 		row_0 = currMove->row_0;    
@@ -823,33 +833,13 @@ void Board::undo() {
 		swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
 
 		//swapPiece(row_f,col_f,row_0,col_0);
-		if (currMove->getLostPiece() != nullptr) {
+		if (theBoard.at(row_0).at(col_0).getPiece()->getName() == "king") {
+			theBoard.at(row_0).at(col_0).getPiece()->setCastle();
+		} else {
+			if (currMove->getLostPiece() != nullptr) {
 			theBoard.at(row_f).at(col_f).setPiece(currMove->getLostPiece());
-
+			}
 		}
-		if (getPastEmPassant()) {
-			setPastEmPassant(false);
-		}
-
-	} else if (getPastCastle()) {
-		swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
-		theBoard.at(row_0).at(col_0).getPiece()->setCastle();
-		cout << theBoard.at(row_0).at(col_0).getPiece()->getCastle() << endl;
-
-
-		currMove = pastMoves.back();
-		pastMoves.pop_back();
-
-		row_0 = currMove->row_0;    
-		col_0 = currMove->col_0;
-		row_f = currMove->row_f;  
-		col_f = currMove->col_f;
-		swapPiece(row_0,col_0,row_f,col_f);  
-		theBoard.at(row_0).at(col_0).getPiece()->setCastle();
-		cout << theBoard.at(row_0).at(col_0).getPiece()->getCastle() << endl;
-
-
-		setPastCastle(false);
 
 	} else {
 		swapPiece(row_0,col_0,row_f,col_f);  // moves from final to initial // the opposite //
