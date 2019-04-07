@@ -73,6 +73,7 @@ public:
   bool getblack_check() const;
   void setwhite_checkmate(bool check);
   void setblack_checkmate(bool check);
+  void printHistory(int turn);
   void setStalemate();
   void setwhite_check(bool check);
   void setblack_check(bool check);

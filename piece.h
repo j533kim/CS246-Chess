@@ -16,17 +16,14 @@ public:
 	std::string getName() const;
 	int getValue() const;
 	Color getColor() const;
-	virtual void upgrade(std::shared_ptr<Piece> piece);
 	virtual bool getCheck() const;
 	virtual bool getCastle() const;
 	virtual bool gettwoStepChance() const;
 	virtual bool getmovedTwoStepsBefore() const;
-	virtual bool getUpgrade() const ;
-	virtual void setUpgrade();
 	virtual void setCastle();
 	virtual void setCheck(bool check);
 	virtual bool getpawnPromotion() const {}
-	virtual bool setpawnPromotion(bool value) {}
+	virtual void setpawnPromotion(bool value) {}
 	virtual void settwoStepChance();
 	virtual void setmovedTwoStepsBefore();
 };

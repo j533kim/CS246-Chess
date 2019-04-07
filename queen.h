@@ -11,6 +11,8 @@ class Queen : public Piece {
 	bool pawnPromotion;
 public:
 	Queen(Color color);
+	bool getpawnPromotion() const;
+	void setpawnPromotion(bool value);
 };
 
 #endif

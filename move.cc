@@ -1,14 +1,6 @@
 #include "move.h"
 using namespace std;
 
-//void Move::setStart(row_co start) { start = start; }
-
-//row_col Move::getStart() { return start; }
-
-//oid Move::setEnd(row_col end) { end = end; }
-
-//row_col Move::getEnd() { return end; }
-
 void Move::setLostPiece(shared_ptr<Piece> LP) { lostPiece = LP; }
 
 shared_ptr<Piece> Move::getLostPiece() { return lostPiece; }

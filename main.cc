@@ -153,6 +153,10 @@ int main(int argc, char *argv[]) {
               }
               if (white_turn == 1) white_turn = 0; // turn changes
               else white_turn = 1;
+            } else if (game_cmd == "history") {
+              cout << endl;
+              b.printHistory(white_turn);
+              cout << endl;
             }
   					if (b.gameEnd()) { // always check if the game is over
   						if (b.winner() == Color::Black) {

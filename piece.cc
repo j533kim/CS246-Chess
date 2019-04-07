@@ -12,8 +12,6 @@ int Piece::getValue() const { return value; }
 
 Color Piece::getColor() const { return color; }
 
-void Piece::upgrade(shared_ptr<Piece> piece) {}
-
 bool Piece::getCheck() const {}
 
 bool Piece::getCastle() const {}
@@ -22,10 +20,6 @@ bool Piece::gettwoStepChance() const {}
 
 bool Piece::getmovedTwoStepsBefore() const {}
 
-bool Piece::getUpgrade() const {}
-
-void Piece::setUpgrade() {}
-
 void Piece::setCastle() {}
 	
 void Piece::setCheck(bool check) {}
@@ -33,4 +27,3 @@ void Piece::setCheck(bool check) {}
 void Piece::settwoStepChance() {}
 
 void Piece::setmovedTwoStepsBefore() {}
-

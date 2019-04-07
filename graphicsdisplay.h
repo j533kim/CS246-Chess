@@ -28,7 +28,6 @@ public:
 	~GraphicsDisplay(); // destructor
 	int getRow() const override;
   	int getCol() const override;
-  	Xwindow getWindow();
   	std::shared_ptr<Piece> getPiece() const override;
 };
 #endif
