@@ -230,6 +230,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			throw InvalidMove();
 		} 
 		if (white_turn) {     //black's turn
+			//cout << "inside white" << endl;
 			if (getblack_check() == true){
 				//cout << "on white's turn, black king has been put in check" << endl;
 				//this->undo();
@@ -246,6 +247,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				return;
 			}
 		} else {
+			//cout << "inside black" << endl;
 			if (getwhite_check() == true) {
 				//cout << "on black's turn, white king has been put in check" << endl;
 				 //this->undo();
@@ -267,7 +269,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	}
 
 	if (!canmove(name_, row_0, col_0, row_f, col_f)) { 
-		//cout <<  "the corresponding piece is not movable to the given final position" << endl;
+		cout <<  "the corresponding piece is not movable to the given final position" << endl;
 		//cout << "canmove function doesnt allow the movement of the pieces" << endl;
 		//cout << "can move is throwing invalid throw" << endl;
 		throw InvalidMove();
@@ -587,7 +589,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				for (int m = 0; m < 8; ++m) {
 
 					///////
-
+					bool turn = white_turn;
 					if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m)) {
 						//cout << "can move" << endl;
 						//cout << l << "," << m << endl;
@@ -602,10 +604,10 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 								setCheckTest(true);
 								try {
 
-									if (white_turn) {
-										white_turn = 0;
+									if (turn) {
+										turn = 0;
 									}
-									move(pos_initial, pos_final, white_turn); // error //
+									move(pos_initial, pos_final, turn); // error //
 																		
 									//cout << "try is successful" << endl;
 								} catch (InvalidMove in) {  
@@ -639,13 +641,13 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 								setCheckTest(true);
 
-								if (!white_turn) {
-									white_turn = 1;
+								if (!turn) {
+									turn = 1;
 								}
 
 								try {
 									
-									move(pos_initial, pos_final, white_turn);
+									move(pos_initial, pos_final, turn);
 									//cout << "try" << endl;
 									//cout << Pieces.at(k)->getName() << endl;
 									
@@ -707,7 +709,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 
 	// checking for stalemate /////////////
 	if (getCheckMateTest() == false && getCheckTest() == false) {
-		cout << "inside" << endl;
+		setCheckMateTest(true);
 		vector<shared_ptr<Piece>> Pieces;
 		vector<vector<int>> Row_Col_Pieces;    // stores the row and col index for the pieces array    
 		int totalpieces = 0;                     
@@ -731,23 +733,61 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 				}
 			}
 		}
-		if (kings == 2) {
+		if (kings == 2 && totalpieces == 2) {
 			setStalemate();
 			return;
 		}
+		//cout << "inside" << endl;
 		for (int k = 0; k < totalpieces; ++k) {
 			for (int l = 0; l < 8; ++l) {
 				for (int m = 0; m < 8; ++m) {
-					if (!white_turn) {
-						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::White) return;
+					bool turn = white_turn;
+					string pos_initial = posStr(Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1));
+					string pos_final = posStr(l,m);
+					if (!turn) {
+						if (!turn) {
+							turn = 1;
+						}
+						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::White) {
+							try {
+
+								move(pos_initial, pos_final, turn);
+								this->undo ();
+								setCheckTest(false);
+								setCheckMateTest(false);
+								return; 
+							} catch (InvalidMove in) {
+								continue;
+							}
+						}
 					} else {
-						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::Black) return;
+						if (turn) {
+							turn = 0;
+						}
+						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::Black) {
+							try {
+
+								//cout << turn << endl;
+								move(pos_initial, pos_final, turn);
+								//cout << Pieces.at(k)->getName() << endl;
+								//cout << "no" << endl << pos_initial << " " << pos_final << endl;
+								setCheckTest(false);
+								setCheckMateTest(false);
+								this->undo ();
+								return; 
+							} catch (InvalidMove in) {
+								continue;
+							}
+						}
 					}
 				}
 			}
 		}
 		setStalemate();
+		setCheckTest(false);
+		setCheckMateTest(false);
 	}
+	
 }
 
 void Board::undo() {
