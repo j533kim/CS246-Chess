@@ -10,6 +10,7 @@
 class NoPiece : public Piece {
 public:
 	NoPiece();
+	/*
 	bool getCheck() const;
 	bool getCastle() const;
 	bool gettwoStepChance() const;
@@ -21,6 +22,7 @@ public:
 	void settwoStepChance();
 	void setmovedTwoStepsBefore();
 	void upgrade(std::shared_ptr<Piece> piece);
+	*/
 };
 
 #endif

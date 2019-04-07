@@ -751,8 +751,12 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 }
 
 void Board::undo() {
-
-	shared_ptr<Move> currMove = pastMoves.back();
+	shared_ptr<Move> currMove;
+	if (!pastMoves.empty()){
+		currMove = pastMoves.back();
+	} else {
+		throw InvalidMove();
+	}
 	int row_0 = currMove->row_0;    
 	int col_0 = currMove->col_0;
 	int row_f = currMove->row_f;  
@@ -1360,4 +1364,19 @@ bool Board::canAttack(string name, int row_0, int col_0, int row_f, int col_f) {
 	 	 if (row_0 == row_f && col_0 + 1 == col_f) return true;
 	}
 	return false;
+}
+
+void Board::printHistory(int turn) {
+	int size = pastMoves.size();
+	string tur = turn == 0 ?  "W" : "B" ;
+	for (int i = size-1; i >= 0; i--) {
+		if (pastMoves.at(i)->getOfficialMove()) {
+			cout << tur << ": " << posStr(pastMoves.at(i)->row_0, pastMoves.at(i)->col_0) << " " << posStr(pastMoves.at(i)->row_f, pastMoves.at(i)->col_f) << endl;
+			if (tur == "B") {
+				tur = "W";
+			} else {
+				tur = "B";
+			}
+		}
+	}
 }

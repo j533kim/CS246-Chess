@@ -10,13 +10,13 @@ bool King::getCheck() const { return checked; }
 
 bool King::getCastle() const { return castlingPossible; }
 
-bool King::gettwoStepChance() const { return false; }
+//bool King::gettwoStepChance() const { return false; }
 	
-bool King::getmovedTwoStepsBefore() const { return false; }
+//bool King::getmovedTwoStepsBefore() const { return false; }
 
-bool King::getUpgrade() const { return false; }
+//bool King::getUpgrade() const { return false; }
 
-void King::setUpgrade() { return; }
+//void King::setUpgrade() { return; }
 
 void King::setCastle() { 
 	if (castlingPossible) {
@@ -29,8 +29,8 @@ void King::setCastle() {
 
 void King::setCheck(bool check) { checked = check; }
 
-void King::settwoStepChance() { return; }
+//void King::settwoStepChance() { return; }
 
-void King::setmovedTwoStepsBefore() { return; }
+//void King::setmovedTwoStepsBefore() { return; }
 
-void King::upgrade(shared_ptr<Piece> piece) { return; }
+//v//oid King::upgrade(shared_ptr<Piece> piece) { return; }
