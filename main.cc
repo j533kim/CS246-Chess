@@ -150,8 +150,8 @@ int main(int argc, char *argv[]) {
                 cout << "Try again." << endl << endl;
   							continue;
   						}
-              b.setPastCastle(false);
-              b.setPastEmPassant(false);
+              //b.setPastCastle(false);
+             // b.setPastEmPassant(false);
   						if (white_turn == 1) white_turn = 0; // turn changes
   						else white_turn = 1;
   					} else if (game_cmd == "undo") {
