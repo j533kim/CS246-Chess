@@ -136,8 +136,16 @@ int main(int argc, char *argv[]) {
   							b.move(game_cmd_1, game_cmd_2, white_turn);
                 cout << endl;
                 cout << b << endl;
-               
                 cout << endl;
+                if (b.getwhite_checkmate()) {
+                  cout << "Checkmate! White wins!" << endl;
+                } else if (b.getblack_checkmate()) {
+                  cout << "Checkmate! Black wins!" << endl;
+                } else if (b.getwhite_check()) {
+                  cout << "White is in check." << endl;
+                } else if (b.getblack_check()) {
+                  cout << "Black is in check." << endl;
+                }
   						} catch (InvalidMove In) { // when the move is invalid
                 cout << "Try again." << endl << endl;
   							continue;
@@ -197,6 +205,15 @@ int main(int argc, char *argv[]) {
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << endl;
                     cout << b << endl;
+                    if (b.getwhite_checkmate()) {
+                      cout << "Checkmate! White wins!" << endl;
+                    } else if (b.getblack_checkmate()) {
+                      cout << "Checkmate! Black wins!" << endl;
+                    } else if (b.getwhite_check()) {
+                      cout << "White is in check." << endl;
+                    } else if (b.getblack_check()) {
+                      cout << "Black is in check." << endl;
+                    }
   								} catch (InvalidMove In) { // when the move is invalid
                     cout << "Try again." << endl << endl;
   									continue;
@@ -215,6 +232,15 @@ int main(int argc, char *argv[]) {
   							}
                 cout << endl;
                 cout << b << endl;
+                if (b.getwhite_checkmate()) {
+                  cout << "Checkmate! White wins!" << endl;
+                } else if (b.getblack_checkmate()) {
+                  cout << "Checkmate! Black wins!" << endl;
+                } else if (b.getwhite_check()) {
+                  cout << "White is in check." << endl;
+                } else if (b.getblack_check()) {
+                  cout << "Black is in check." << endl;
+                }
   							white_turn = 1; // making it human's turn again
   						}
   						if (b.gameEnd()) { // always check if the game is over
@@ -247,6 +273,15 @@ int main(int argc, char *argv[]) {
   							} else { // computer level 4
   								computer_4(b, Color::White);
   							}
+                if (b.getwhite_checkmate()) {
+                  cout << "Checkmate! White wins!" << endl;
+                } else if (b.getblack_checkmate()) {
+                  cout << "Checkmate! Black wins!" << endl;
+                } else if (b.getwhite_check()) {
+                  cout << "White is in check." << endl;
+                } else if (b.getblack_check()) {
+                  cout << "Black is in check." << endl;
+                }
                 cout << endl;
                 cout << b << endl;
   							white_turn = 0; // making it human's turn again
@@ -266,6 +301,15 @@ int main(int argc, char *argv[]) {
   									b.move(game_cmd_1, game_cmd_2, white_turn);
                     cout << endl;
                     cout << b << endl;
+                    if (b.getwhite_checkmate()) {
+                      cout << "Checkmate! White wins!" << endl;
+                    } else if (b.getblack_checkmate()) {
+                      cout << "Checkmate! Black wins!" << endl;
+                    } else if (b.getwhite_check()) {
+                      cout << "White is in check." << endl;
+                    } else if (b.getblack_check()) {
+                      cout << "Black is in check." << endl;
+                    }
   								} catch (InvalidMove In) { // when the move is invalid
                     cout << "Try again." << endl << endl;
   									continue;
@@ -306,6 +350,15 @@ int main(int argc, char *argv[]) {
   						}
               cout << endl;
               cout << b << endl;
+              if (b.getwhite_checkmate()) {
+                  cout << "Checkmate! White wins!" << endl;
+                } else if (b.getblack_checkmate()) {
+                  cout << "Checkmate! Black wins!" << endl;
+                } else if (b.getwhite_check()) {
+                  cout << "White is in check." << endl;
+                } else if (b.getblack_check()) {
+                  cout << "Black is in check." << endl;
+                }
   						white_turn = 0; // making it human's turn again
   					} else { // computer's turn
   						if (player2_level == 1) {
@@ -319,6 +372,15 @@ int main(int argc, char *argv[]) {
   						}
               cout << endl;
               cout << b << endl;
+              if (b.getwhite_checkmate()) {
+                  cout << "Checkmate! White wins!" << endl;
+                } else if (b.getblack_checkmate()) {
+                  cout << "Checkmate! Black wins!" << endl;
+                } else if (b.getwhite_check()) {
+                  cout << "White is in check." << endl;
+                } else if (b.getblack_check()) {
+                  cout << "Black is in check." << endl;
+                }
   						white_turn = 1; // making it human's turn again
   					}
   					if (b.gameEnd()) { // always check if the game is over
