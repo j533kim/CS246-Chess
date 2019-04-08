@@ -5,9 +5,7 @@ using namespace std;
 Cell::Cell(shared_ptr<Piece> piece, int row, int col): piece{piece}, row{row}, col{col} {}
 
 void Cell::notify(Subject<State> &whoFrom) {
-	
 	int n = getObservers().size();
-	
 	int white_attack_count = 0;
 	int black_attack_count = 0;
 	for (int i = n - 63; i < n; ++i) {
@@ -25,8 +23,6 @@ void Cell::notify(Subject<State> &whoFrom) {
 	else if (white_attack_count >= 1 && black_attack_count == 0) setState({Danger::No, Danger::Yes});
 	else if (white_attack_count == 0 && black_attack_count >= 1) setState({Danger::Yes, Danger::No});
 	else if (white_attack_count >= 1 && black_attack_count >= 1) setState({Danger::Yes, Danger::Yes});
-
-
 
 	white_attack_count = 0;
 	black_attack_count = 0;
@@ -106,7 +102,6 @@ void Cell::placePiece_setup(string piece) { // just for SETUP and default settin
 		throw InvalidMove();
 		return;
 	}
-	//delete this->piece;
 	// we already checked that the piece is valid type of piece
 	if (piece == "K") {
 		if (getRow() == 7 && getCol() == 4) this->piece = make_shared<King>(Color::White, true);
@@ -152,6 +147,6 @@ void Cell::setPiece(shared_ptr<Piece> piece) {
 	notifyObservers();
 }
 
-void Cell::settheBoard(Board *theBoard)  { this->theBoard = theBoard; }
+void Cell::settheBoard(Board *theBoard) { this->theBoard = theBoard; }
 
-Board *Cell::gettheBoard()  { return theBoard; }
+Board *Cell::gettheBoard() { return theBoard; }

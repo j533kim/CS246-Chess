@@ -145,7 +145,7 @@ int main(int argc, char *argv[]) {
                   cout << "White is in check." << endl;
                 } else if (b.getblack_check()) {
                   cout << "Black is in check." << endl;
-                }
+                } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   						} catch (InvalidMove In) { // when the move is invalid
                 cout << "Try again." << endl << endl;
   							continue;
@@ -213,7 +213,7 @@ int main(int argc, char *argv[]) {
                       cout << "White is in check." << endl;
                     } else if (b.getblack_check()) {
                       cout << "Black is in check." << endl;
-                    }
+                    } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   								} catch (InvalidMove In) { // when the move is invalid
                     cout << "Try again." << endl << endl;
   									continue;
@@ -240,7 +240,7 @@ int main(int argc, char *argv[]) {
                   cout << "White is in check." << endl;
                 } else if (b.getblack_check()) {
                   cout << "Black is in check." << endl;
-                }
+                } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   							white_turn = 1; // making it human's turn again
   						}
   						if (b.gameEnd()) { // always check if the game is over
@@ -281,7 +281,7 @@ int main(int argc, char *argv[]) {
                   cout << "White is in check." << endl;
                 } else if (b.getblack_check()) {
                   cout << "Black is in check." << endl;
-                }
+                } else if (b.getStalemate()) cout << "Stalemate!" << endl;
                 cout << endl;
                 cout << b << endl;
   							white_turn = 0; // making it human's turn again
@@ -309,7 +309,7 @@ int main(int argc, char *argv[]) {
                       cout << "White is in check." << endl;
                     } else if (b.getblack_check()) {
                       cout << "Black is in check." << endl;
-                    }
+                    } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   								} catch (InvalidMove In) { // when the move is invalid
                     cout << "Try again." << endl << endl;
   									continue;
@@ -358,7 +358,7 @@ int main(int argc, char *argv[]) {
                   cout << "White is in check." << endl;
                 } else if (b.getblack_check()) {
                   cout << "Black is in check." << endl;
-                }
+                } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   						white_turn = 0; // making it human's turn again
   					} else { // computer's turn
   						if (player2_level == 1) {
@@ -380,7 +380,7 @@ int main(int argc, char *argv[]) {
                   cout << "White is in check." << endl;
                 } else if (b.getblack_check()) {
                   cout << "Black is in check." << endl;
-                }
+                } else if (b.getStalemate()) cout << "Stalemate!" << endl;
   						white_turn = 1; // making it human's turn again
   					}
   					if (b.gameEnd()) { // always check if the game is over
