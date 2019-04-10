@@ -695,55 +695,6 @@ void computer_4(Board &b, Color color) {
 		max = 0;
 		index_maxcapture = 0;
 	}
-	/* vector<int> index_avoidcapture; // stores if the Piece at a specific index of Pieces vector has been tried. 0 for no and 1 for yes
-	for (int a = 0; a < my_totalpieces; ++a) {
-		index_avoidcapture.emplace_back(0);
-	}
-	int index_avoidfirst = 0;
-	int avoid_max = 0;
-	for (int l = 0; l < my_totalpieces; ++l) {
-		for (int k = 0; k < my_totalpieces; ++k) {
-			if (index_avoidcapture.at(k) == 0) {
-				if (MyPieces.at(k)->getValue() > avoid_max) {
-					avoid_max = MyPieces.at(k)->getValue();
-					index_avoidfirst = k;
-				}
-			}
-		}
-		int r = index_avoidfirst;
-		for (int i = 0; i < 8; ++i) {
-			for (int j = 0; j < 8; ++j) {
-				if (w_turn == 1) {
-					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) &&
-						(b.get_theBoard().at(i).at(j).getState().W == Danger::No)) {
-						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
-	   					string final = ourpos_to_user(i, j);
-	   					try {
-	   						b.move(initial, final, w_turn);
-	   						return;
-	   				    } catch (InvalidMove In) {
-	   						continue;	
-	    				} 
-					}
-				} else {
-					if (b.canmove(MyPieces.at(r)->getName(), Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1), i, j) &&
-						(b.get_theBoard().at(i).at(j).getState().B == Danger::No)) {
-						string initial = ourpos_to_user(Row_Col_MyPieces.at(r).at(0), Row_Col_MyPieces.at(r).at(1));
-	   					string final = ourpos_to_user(i, j);
-	   					try {
-	   						b.move(initial, final, w_turn);
-	   						return;
-	   				    } catch (InvalidMove In) {
-	   						continue;	
-	    				} 
-					}
-				}	
-			}
-		} 
-		index_avoidcapture.at(index_avoidfirst) = 1;
-		avoid_max = 0;
-		index_avoidfirst = 0;
-	} */
 	if (w_turn == 1) {
 		computer_3(b, Color::White);
 	} else {

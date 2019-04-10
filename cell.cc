@@ -41,51 +41,6 @@ void Cell::notify(Subject<State> &whoFrom) {
 	else if (white_attack_count >= 1 && black_attack_count == 0) whoFrom.setState({Danger::No, Danger::Yes});
 	else if (white_attack_count == 0 && black_attack_count >= 1) whoFrom.setState({Danger::Yes, Danger::No});
 	else if (white_attack_count >= 1 && black_attack_count >= 1) whoFrom.setState({Danger::Yes, Danger::Yes});
-/*
-	if (whoFrom.getPiece()->getColor() == Color::White) {
-		if (gettheBoard()->canAttack(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
-			if (getState().W == Danger::No) setState({Danger::No, Danger::Yes});  // cell's black_state gets set to danger
-			else setState({Danger::Yes,Danger::Yes});
-		}
-	} else if (whoFrom.getPiece()->getColor() == Color::Black) {
-		if (gettheBoard()->canAttack(whoFrom.getPiece()->getName(), whoFrom.getRow(), whoFrom.getCol(), row, col)) {
-			if (getState().B == Danger::No) setState({Danger::Yes, Danger::No}); // cell's white_state get set to danger //
-			else setState({Danger::Yes,Danger::Yes});
-		}
-	} else if (whoFrom.getPiece()->getColor() == Color::NoColor) { // Color::NoColor
-		State original = getState();
-		if (original.W == Danger::No && original.B == Danger::No) return;
-		if (original.W == Danger::Yes) {
-			Danger black_ = getState().B;
-			for (int i = n - 63; i < n; ++i) {
-				string name_ = getObservers().at(i)->getPiece()->getName();
-				Color color_ = getObservers().at(i)->getPiece()->getColor();
-				int row_ = getObservers().at(i)->getRow();
-				int col_ = getObservers().at(i)->getCol();
-				if (gettheBoard()->canAttack(name_, row_, col_, row, col) && color_ == Color::Black) {
-					setState({Danger::Yes, black_});
-					break;
-				} else {
-					setState({Danger::No, black_});   // 
-				}
-			}
-		}
-		if (original.B == Danger::Yes) {
-			Danger white_ = getState().W;
-			for (int i = n - 63; i < n; ++i) {
-				string name_ = getObservers().at(i)->getPiece()->getName();
-				Color color_ = getObservers().at(i)->getPiece()->getColor();
-				int row_ = getObservers().at(i)->getRow();
-				int col_ = getObservers().at(i)->getCol();
-				if (gettheBoard()->canAttack(name_, row_, col_, row, col) && color_ == Color::White) {
-					setState({white_, Danger::Yes});
-					break;
-				} else {
-					setState({white_, Danger::No});
-				}
-			}
-		}
-	}*/
 }
 
 void Cell::removePiece() {

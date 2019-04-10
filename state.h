@@ -8,7 +8,6 @@ enum class Danger {Yes, No};
 struct State {
   Danger W; // White's perspective
   Danger B; // Black's perspective
-  //friend std::ostream &operator<<(std::ostream& stream, State &other);
 };
 
 #endif
