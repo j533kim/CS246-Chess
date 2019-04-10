@@ -388,6 +388,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 	/////////////////////////
 
 	// upgrading pawns if necessary
+	//if (getCheckTest() == false) {
 	if (theBoard.at(row_f).at(col_f).getPiece()->getName() == "pawn") {
 		shared_ptr<Piece> pawn = theBoard.at(row_f).at(col_f).getPiece();  // pawn 
 		shared_ptr<Move> nextCurrMove = make_shared<Move>(row_f,col_f,row_f,col_f,pawn,nullptr,false);   // make sure that this line is placed at the right position
@@ -462,6 +463,7 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 			}
 		}
 	}
+	//}
 
 /// check code
 	for (int i = 0; i < 8; i++) {
@@ -596,6 +598,8 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		setCheckMateTest(false);
 		return;
 	}
+
+	
 	
 	//// checkmate code //
 
@@ -627,47 +631,11 @@ void Board::move(string pos_in, string pos_fi, bool white_turn) { //
 		}
 		if (kings == 2 && totalpieces == 2) {
 			setStalemate();
+			setCheckTest(false);
+			setCheckMateTest(false);
 			return;
 		}
-		for (int k = 0; k < totalpieces; ++k) {
-			for (int l = 0; l < 8; ++l) {
-				for (int m = 0; m < 8; ++m) {
-					bool turn = white_turn;
-					string pos_initial = posStr(Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1));
-					string pos_final = posStr(l,m);
-					if (!turn) {
-						if (!turn) turn = 1;
-						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::White) {
-							try {
-								move(pos_initial, pos_final, turn);
-								this->undo ();
-								setCheckTest(false);
-								setCheckMateTest(false);
-								return; 
-							} catch (InvalidMove in) {
-								continue;
-							}
-						}
-					} else {
-						if (turn) turn = 0;
-						if (canmove(Pieces.at(k)->getName(), Row_Col_Pieces.at(k).at(0), Row_Col_Pieces.at(k).at(1), l, m) && Pieces.at(k)->getColor() == Color::Black) {
-							try {
-								move(pos_initial, pos_final, turn);
-								setCheckTest(false);
-								setCheckMateTest(false);
-								this->undo ();
-								return; 
-							} catch (InvalidMove in) {
-								continue;
-							}
-						}
-					}
-				}
-			}
-		}
-		setStalemate();
-		setCheckTest(false);
-		setCheckMateTest(false);
+
 	}
 }
 

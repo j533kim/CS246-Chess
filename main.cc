@@ -219,7 +219,20 @@ int main(int argc, char *argv[]) {
   									continue;
   								}
   								white_turn = 0; // turn changes
-  							}
+  							} else if (game_cmd == "undo") {
+                    try {
+                      b.undo();
+                      cout << b;
+                    } catch (InvalidMove in) {
+                      cout << "you have reached the beginning of the game" << endl;
+                    }
+                    if (white_turn == 1) white_turn = 0; // turn changes
+                    else white_turn = 1;
+                } else if (game_cmd == "history") {
+                    cout << endl;
+                    b.printHistory(white_turn);
+                    cout << endl;
+                }
   						} else { // computer's turn
   							if (player2_level == 1) {
   								computer_1(b, Color::Black); // computer's move
@@ -315,7 +328,20 @@ int main(int argc, char *argv[]) {
   									continue;
   								}
   								white_turn = 1; // turn changes
-  							}
+  							} else if (game_cmd == "undo") {
+                  try {
+                    b.undo();
+                    cout << b;
+                  } catch (InvalidMove in) {
+                    cout << "you have reached the beginning of the game" << endl;
+                  }
+                  if (white_turn == 1) white_turn = 0; // turn changes
+                  else white_turn = 1;
+                } else if (game_cmd == "history") {
+                  cout << endl;
+                  b.printHistory(white_turn);
+                  cout << endl;
+                }
   						}
   						if (b.gameEnd()) { // always check if the game is over
   							if (b.winner() == Color::Black) {
